@@ -1,0 +1,84 @@
+ * Running on http://0.0.0.0:3000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [08/Dec/2016 19:33:09] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [08/Dec/2016 19:33:09] "GET /favicon.ico HTTP/1.1" 404 -
+54.89.92.4 - - [08/Dec/2016 19:34:00] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [08/Dec/2016 19:36:05] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/recipe.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+ * Detected change in '/home/ubuntu/just_energy/justenergy_api.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [08/Dec/2016 19:46:33] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 659, in inner
+    srv.serve_forever()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 499, in serve_forever
+    HTTPServer.serve_forever(self)
+  File "/usr/lib/python2.7/SocketServer.py", line 233, in serve_forever
+    self._handle_request_noblock()
+  File "/usr/lib/python2.7/SocketServer.py", line 292, in _handle_request_noblock
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 290, in _handle_request_noblock
+    self.process_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 318, in process_request
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 247, in handle_one_request
+    self.raw_requestline = self.rfile.readline()
+IOError: [Errno 104] Connection reset by peer
+
+ * Detected change in '/home/ubuntu/just_energy/justenergy_api.py', reloading
+ * Restarting with stat
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "POST /populate/pjm/ppl/interval HTTP/1.1" 405 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "POST /populate/pjm/ppl/interval HTTP/1.1" 405 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /compute/pjm/ppl/interval HTTP/1.1" 405 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /compute/pjm/ppl/interval HTTP/1.1" 405 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "POST /populate/pjm/ppl/interval HTTP/1.1" 405 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 01:38:08] "POST /populate/pjm/ppl/interval HTTP/1.1" 405 -
+65.36.162.66 - - [12/Dec/2016 01:38:08] "GET /compute/pjm/ppl/interval HTTP/1.0" 405 -
+54.165.241.61 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+54.174.114.150 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+76.31.50.1 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+76.31.50.1 - - [12/Dec/2016 01:38:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+76.31.50.1 - - [12/Dec/2016 01:38:09] "GET /favicon.ico HTTP/1.1" 404 -
+76.31.50.1 - - [12/Dec/2016 01:38:14] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+76.31.50.1 - - [12/Dec/2016 01:40:27] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+66.249.88.56 - - [12/Dec/2016 02:14:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+66.249.88.56 - - [12/Dec/2016 02:14:50] "GET /favicon.ico HTTP/1.1" 404 -
+73.77.81.115 - - [12/Dec/2016 02:21:46] "POST /populate/pjm/ppl/interval HTTP/1.1" 405 -
+73.77.81.115 - - [12/Dec/2016 02:21:46] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [12/Dec/2016 02:21:46] "POST /populate/pjm/ppl/interval HTTP/1.1" 405 -
+73.77.81.115 - - [12/Dec/2016 02:21:46] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
