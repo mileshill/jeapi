@@ -8,26 +8,26 @@
 				{
 					"recon":
 					{
-						"default":1.09,
-						"description":"Reconcilation Factor",	
-						"min":1.019991716, 
-						"max":1.1851755708,
-						"step":40.0
+						"recon_default":1.09,
+						"recon_description":"Reconcilation Factor",	
+						"recon_min":1.019991716, 
+						"recon_max":1.1851755708,
+						"recon_step":40.0
 					},
 					"usage":
 					{
-						"default": null,
-						"description": "Average CP Usage",
-						"min":0.00033,
-						"max":35267.00
+						"usage_default": null,
+						"usage_description": "Average CP Usage",
+						"usage_min":0.00033,
+						"usage_max":35267.00
 					},
 					"rclf":
 					{
-						"default":1.08472,
-						"description":"Rate Class Loss Factor",
-						"min":1.0268241,
-						"max":1.08047231,
-						"step":100.00
+						"rclf_default":1.08472,
+						"rclf_description":"Rate Class Loss Factor",
+						"rclf_min":1.0268241,
+						"rclf_max":1.08047231,
+						"rclf_step":100.00
 					}
 				}
 			}

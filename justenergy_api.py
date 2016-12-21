@@ -1,17 +1,37 @@
 #!flask/bin/python
 import json
 from recipe import Recipe
-
 from flask import Flask
 from flask import jsonify, make_response, request
+
+# App instance
 api_app = Flask(__name__)
+
+# Mongo Client
+#from flask_pymongo import PyMongo
+
+from pymongo import MongoClient
+#mongo = PyMongo(api_app)
+client = MongoClient('localhost', 27017)
+db = client.ppl
+col = db.recipe
+'''
+with api_app.app_context():
+	print(dir(mongo.db))
+	print(mongo.db.recipe.find_one_or_404({'UtilityId':'PPL'}))
+'''
+
+# Handle cross-domain errors
+from flask_cors import CORS, cross_origin
+CORS(api_app)
 
 ############################## Globals ############################## 
 class Global:
 	''' Container for persistent variables '''
 	def __init__(self):
 		pass
-
+	def change():
+		pass
 def validate_route_keys(g, endpoint_input):
 	'''Confirms endpont_input matches they keys
 	in recipe.json.
@@ -49,6 +69,7 @@ def index():
 
 #-- Recipe Population
 @api_app.route('/populate/<iso>/<utility>/<meter_type>', methods=['GET'])
+#@crossdomain(origin='*')
 def populate_recipe(iso, utility, meter_type):
 	'''Populate recipe accepts the ISO/utility/meter_type combination
 	and returns the necessary information to build UI widgets.
@@ -66,6 +87,7 @@ def populate_recipe(iso, utility, meter_type):
 
 #-- Compute Sensitivity
 @api_app.route('/compute/<iso>/<utility>/<meter_type>', methods=['POST'])
+#@crossdomain(origin='*')
 def compute_recipe(iso, utility, meter_type):
 	'''Compute the sensitivity array for given input params.
 	INPUT: Consumes JSON with params
@@ -98,11 +120,30 @@ def compute_recipe(iso, utility, meter_type):
 	results = {'array': recipe.array_,
 		'rows': recipe.rows_,
 		'cols': recipe.cols_,
+		'max': recipe.max_,
+		'min': recipe.min_,
 		'x_label':recipe.x_,
 		'y_label':recipe.y_}
 	
 	return make_response(jsonify(results), 200)
 
+import numpy as np
+import pandas as pd
+@api_app.route('/gethistory/<iso>/<utility>/<premise_id>', methods=['GET'])
+def get_history(iso, utility, premise_id):
+	params = {'Utility':utility.upper(), 'PremiseId':long(premise_id)}
+	results = [r for r in col.find(params, {'_id':False})]
+
+	if not results:
+		return make_response(jsonify({}), 404)	
+	
+	df = pd.DataFrame(list(results))
+	df['PercentChange'] = df.RecipeICap.pct_change()
+	df['MAD'] = df['RecipeICap'].mad()
+	out = df.to_dict(orient='records')	
+	
+	
+	return make_response(jsonify(out), 200)	
 ############################## Error Handling ############################## 
 @api_app.errorhandler(404)
 def error_not_found(error):
@@ -119,6 +160,7 @@ def error_bad_input(bad_input):
 if __name__ == '__main__':
 	host = '0.0.0.0'
 	port = 3000
-	debug = False
-
-	api_app.run(debug=debug, host=host, port=port)
+	debug = True 
+	threaded=True
+	
+	api_app.run(debug=debug, host=host, port=port, threaded=threaded)

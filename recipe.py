@@ -22,10 +22,15 @@ class Recipe():
 		'''
 		d = dict()
 		for k,v in request.items():
-			if 'step' in k:
-				d[k] = int(v)
-				continue
-			d[k] = float(v)
+			try:
+				if 'step' in k:
+					d[k] = int(v)
+					continue
+				d[k] = float(v)
+			except ValueError:
+				pass
+			except KeyError:
+				pass
 		return d
 
 	def compute_array(self):
@@ -44,12 +49,21 @@ class Recipe():
 		'''
 		f = self.request
 		# x-axis vector must be iterate in reverse for proper structure	
-		usage_vec = np.linspace(f['usage_max'], f['usage_min'], num=f['usage_steps'], dtype=np.float)
-		recon_vec = np.linspace(f['recon_min'], f['recon_max'], num=f['recon_steps'], dtype=np.float)
+		usage_vec = np.linspace(f['usage_max'], f['usage_min'], num=80, dtype=np.float)
+		recon_vec = np.linspace(f['recon_min'], f['recon_max'], num=40, dtype=np.float)[::-1]
 
-		array = np.outer(usage_vec, recon_vec)
+		array = np.fliplr(np.outer(recon_vec, usage_vec))
+		rows, cols = array.shape
+		array_max = array.max()
+		array_min = array.min()
+
+		array_list = [[i, recon_vec[i], j, usage_vec[::-1][j] ,array[i,j]] for i in range(rows) 
+						for j in range(cols)]
 		self.rows_, self.cols_ = array.shape
-		self.array_ = array.tolist()
+		#self.array_ = array.tolist()
+		self.array_ = array_list
+		self.max_ = array_max
+		self.min_ = array_min
 		self.x_ = 'Average CP Usage'
 		self.y_ = 'Average Reconcilation' 		
 		
