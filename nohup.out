@@ -4016,3 +4016,9 @@ IOError: [Errno 104] Connection reset by peer
 8.40.128.88 - - [20/Dec/2016 17:00:02] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
 8.40.128.88 - - [20/Dec/2016 17:00:12] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
 8.40.128.88 - - [20/Dec/2016 17:00:12] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/justenergy_api.py', reloading
+ * Restarting with stat
+  File "./justenergy_api.py", line 157
+    return make_response(response), 200)
+                                       ^
+SyntaxError: invalid syntax

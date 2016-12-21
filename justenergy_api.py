@@ -144,6 +144,19 @@ def get_history(iso, utility, premise_id):
 	
 	
 	return make_response(jsonify(out), 200)	
+
+from icap.database.icapdatabase import ICapDatabase
+from icap.correlation.correlation import Correlation
+@api_app.route('/correlation/<year>/<iso>/<utility>/<premise>', methods=['GET'])
+def correlation_analysis(year, iso, utility, premise):
+	fp = 'icap/database/icapdatabase.json'
+	conn = ICapDatabase(fp).connect()
+
+	corr = Correlation(conn, year=year, iso=iso, utility=utility, premise=premise)
+	r = corr.analyze()
+	response = jsonify(r.results())
+	return make_response(response, 200)
+
 ############################## Error Handling ############################## 
 @api_app.errorhandler(404)
 def error_not_found(error):
