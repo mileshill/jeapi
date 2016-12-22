@@ -10,7 +10,7 @@ class InstanceException(Exception):
 
 class ICapDatabase():
     '''Handles connection to AWS Database'''
-    def __init__(self, fp=None):
+    def __init__(self, fp='icapdatabase.json'):
 
         # requires filepath for config file
         if not fp:

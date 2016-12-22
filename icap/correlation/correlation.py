@@ -93,8 +93,9 @@ class ZonalLoad():
             order by UsageDate, HourEnding
         """
         # load data for year and load area
-        params = {'year':self.year, 'zone':self.zone.upper()}
+        params = {'year':self.year, 'zone':self.zone}
         df = pd.read_sql(usage_query.format(**params), self.conn)
+
         # normalize usage to given range [0.0, 1.0]
         df['ZoneNormalizedUsage'] = MinMaxScaler().fit_transform(
                 df.ZoneUsage.values.reshape(-1,1))
