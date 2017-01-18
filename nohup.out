@@ -5635,3 +5635,21 @@ IOError: [Errno 104] Connection reset by peer
 8.40.128.88 - - [18/Jan/2017 17:41:51] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
 8.40.128.88 - - [18/Jan/2017 17:41:51] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
 8.40.128.88 - - [18/Jan/2017 17:41:53] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:43:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:43:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:44:00] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:44:57] "GET /correlation/2015/pjm-rto/ppl/0454550004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:45:35] "GET /correlation/2015/pjm-rto/ppl/0389322436 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:49:43] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:49:43] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:49:45] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 18:04:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 18:04:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 18:04:23] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/icap/correlation/correlation.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [18/Jan/2017 18:05:42] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 18:05:42] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 18:05:43] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -

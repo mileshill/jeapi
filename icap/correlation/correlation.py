@@ -274,7 +274,7 @@ class Correlation():
         results.rsqr_prem_util = round(linregress(
             prem_util.PremNormalizedUsage, prem_util.ZoneNormalizedUsage)[2]**2)
         results.rsqr_prem_iso = round(linregress(
-            prem_iso.PremNormalizedUsage, prem_util.ZoneNormalizedUsage)[2]**2)
+            prem_iso.PremNormalizedUsage, prem_iso.ZoneNormalizedUsage)[2]**2)
         results.rsqr_util_iso = round(linregress(
             util_iso.ZoneNormalizedUsage_x, util_iso.ZoneNormalizedUsage_y)[2]**2)
         # END STATISTICAL DESCRIPTION
