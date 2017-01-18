@@ -4022,3 +4022,1616 @@ IOError: [Errno 104] Connection reset by peer
     return make_response(response), 200)
                                        ^
 SyntaxError: invalid syntax
+ * Running on http://0.0.0.0:3000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [27/Dec/2016 17:09:19] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/justenergy_api.py', reloading
+ * Restarting with stat
+  File "./justenergy_api.py", line 157
+    results = sorted(r.results(), key=len(r.get))
+                                                ^
+IndentationError: unindent does not match any outer indentation level
+  File "./justenergy_api.py", line 157
+    results = sorted(r.results(), key=len(r.get))
+                                                ^
+IndentationError: unindent does not match any outer indentation level
+ * Running on http://0.0.0.0:3000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [27/Dec/2016 17:22:47] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+8.40.128.88 - - [27/Dec/2016 17:24:24] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+Traceback (most recent call last):
+  File "./justenergy_api.py", line 178, in <module>
+    api_app.run(debug=debug, host=host, port=port, threaded=threaded)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/flask/app.py", line 843, in run
+    run_simple(host, port, self, **options)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 677, in run_simple
+    s.bind((hostname, port))
+  File "/usr/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+8.40.128.88 - - [27/Dec/2016 17:25:10] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+8.40.128.88 - - [27/Dec/2016 17:25:49] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+52.91.184.228 - - [27/Dec/2016 17:26:09] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+8.40.128.88 - - [27/Dec/2016 17:27:42] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:45:31] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:45:35] "GET /favicon.ico HTTP/1.1" 404 -
+73.77.81.115 - - [27/Dec/2016 22:45:42] "GET /correlation/2015/pjm-rto/ppl/ HTTP/1.1" 404 -
+73.77.81.115 - - [27/Dec/2016 22:47:17] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:47:17] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:47:18] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:49:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:49:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:49:49] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:50:03] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:50:03] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:50:04] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:50:12] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:50:13] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:50:14] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:50:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:50:23] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:50:23] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:52:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:52:59] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:53:00] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+Exception in thread Thread-29:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 251, in handle_one_request
+    return self.run_wsgi()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 193, in run_wsgi
+    execute(self.server.app)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 184, in execute
+    write(data)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 165, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+
+73.77.81.115 - - [27/Dec/2016 22:53:01] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:53:01] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:53:02] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:55:52] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:55:53] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:55:54] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:56:23] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:56:23] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [27/Dec/2016 22:56:24] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+8.40.128.88 - - [29/Dec/2016 14:36:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [29/Dec/2016 14:36:38] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [29/Dec/2016 14:37:06] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [29/Dec/2016 14:37:06] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+185.66.57.250 - - [29/Dec/2016 14:37:11] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+185.66.57.250 - - [29/Dec/2016 14:37:12] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.243.92.84 - - [29/Dec/2016 14:37:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.243.92.84 - - [29/Dec/2016 14:37:17] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.55.152.114 - - [29/Dec/2016 14:37:17] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.55.152.114 - - [29/Dec/2016 14:37:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+Traceback (most recent call last):
+  File "./justenergy_api.py", line 178, in <module>
+    api_app.run(debug=debug, host=host, port=port, threaded=threaded)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/flask/app.py", line 843, in run
+    run_simple(host, port, self, **options)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 677, in run_simple
+    s.bind((hostname, port))
+  File "/usr/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "./justenergy_api.py", line 178, in <module>
+    api_app.run(debug=debug, host=host, port=port, threaded=threaded)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/flask/app.py", line 843, in run
+    run_simple(host, port, self, **options)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 677, in run_simple
+    s.bind((hostname, port))
+  File "/usr/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+8.40.128.88 - - [29/Dec/2016 14:37:44] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [29/Dec/2016 14:37:44] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [29/Dec/2016 14:40:30] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [29/Dec/2016 14:40:33] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [29/Dec/2016 14:40:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [29/Dec/2016 14:40:40] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+66.102.6.6 - - [29/Dec/2016 15:03:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+66.102.6.4 - - [29/Dec/2016 15:03:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 14:58:39] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 14:58:39] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 14:58:40] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 14:59:36] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 14:59:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 14:59:37] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:00:42] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:00:43] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:00:44] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:01:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:01:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:01:23] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:02:14] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:02:14] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:02:15] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:02:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:02:23] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:02:23] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:03:13] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:03:13] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:03:14] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:03:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:03:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:03:57] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:03:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:04:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:04:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:04:17] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:04:36] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:04:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:04:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:04:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:04:48] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:07:25] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:07:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:07:27] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:09:39] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:09:39] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:09:40] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:11:46] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:11:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:11:47] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:12:11] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:12:12] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:12:13] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:12:28] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:12:29] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:12:29] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:12:45] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:12:46] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:12:47] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:15:21] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:15:21] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:15:22] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:15:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:15:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:15:48] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:17:40] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:17:41] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:17:41] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:18:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:18:39] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:18:40] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:19:53] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:19:54] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:19:54] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:21:01] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:21:01] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:21:02] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:22:49] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:22:50] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:22:50] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:23:15] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:23:15] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:23:16] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:24:41] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:24:42] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:24:43] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:26:45] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:26:45] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:26:46] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:32:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:32:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:32:48] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:34:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:34:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:34:23] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:38:56] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:38:56] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:38:57] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:39:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:39:39] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:39:40] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:40:25] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:40:25] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:40:26] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:40:42] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:40:42] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:40:43] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:41:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:41:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:41:23] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:41:59] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:41:59] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:42:00] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:42:51] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:42:52] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:42:52] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:43:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:43:20] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:43:21] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:43:50] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:43:51] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:43:51] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:44:25] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:44:25] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:44:26] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:45:45] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:45:45] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:45:46] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:46:46] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:46:46] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:46:47] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:47:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:47:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:47:17] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:48:21] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:48:21] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:48:22] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:55:30] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:55:31] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:55:31] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:56:06] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:56:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:56:07] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:58:03] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:58:04] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:58:04] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:59:01] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:59:01] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 15:59:02] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:27] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+Exception in thread Thread-208:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 251, in handle_one_request
+    return self.run_wsgi()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 193, in run_wsgi
+    execute(self.server.app)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 184, in execute
+    write(data)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 165, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+
+73.77.81.115 - - [30/Dec/2016 16:02:29] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:29] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:30] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:41] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:41] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:42] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:57] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:57] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:02:58] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:04:05] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:04:06] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:04:07] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:04:46] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:04:46] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:04:47] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:05:04] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:05:04] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:05:05] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:05:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:05:20] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:05:21] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:05:41] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:05:42] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:05:42] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:06:14] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:06:15] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:06:15] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:06:24] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:06:25] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:06:25] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:06:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:06:38] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:06:39] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:07:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:07:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:07:08] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:07:28] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:07:28] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:07:29] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:07:51] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:07:52] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:07:53] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:08:04] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:08:05] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:08:05] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:08:18] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:08:19] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:08:19] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:08:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:08:49] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [30/Dec/2016 16:08:50] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.32.169.54 - - [30/Dec/2016 19:11:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [30/Dec/2016 19:11:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [30/Dec/2016 19:11:23] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+Exception in thread Thread-264:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 247, in handle_one_request
+    self.raw_requestline = self.rfile.readline()
+IOError: [Errno 104] Connection reset by peer
+
+Traceback (most recent call last):
+  File "./justenergy_api.py", line 178, in <module>
+    api_app.run(debug=debug, host=host, port=port, threaded=threaded)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/flask/app.py", line 843, in run
+    run_simple(host, port, self, **options)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 677, in run_simple
+    s.bind((hostname, port))
+  File "/usr/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "./justenergy_api.py", line 178, in <module>
+    api_app.run(debug=debug, host=host, port=port, threaded=threaded)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/flask/app.py", line 843, in run
+    run_simple(host, port, self, **options)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 677, in run_simple
+    s.bind((hostname, port))
+  File "/usr/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+Traceback (most recent call last):
+  File "./justenergy_api.py", line 178, in <module>
+    api_app.run(debug=debug, host=host, port=port, threaded=threaded)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/flask/app.py", line 843, in run
+    run_simple(host, port, self, **options)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 677, in run_simple
+    s.bind((hostname, port))
+  File "/usr/lib/python2.7/socket.py", line 228, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+8.40.128.88 - - [03/Jan/2017 15:25:18] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [03/Jan/2017 15:25:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [03/Jan/2017 15:25:19] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+8.40.128.88 - - [03/Jan/2017 15:26:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [03/Jan/2017 16:02:02] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [03/Jan/2017 16:02:02] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [03/Jan/2017 16:02:05] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:10:50] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:10:55] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:12:13] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:12:14] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:12:14] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:15:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:15:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:15:17] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:16:57] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:16:57] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:16:58] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:19:52] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:19:53] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:19:54] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:21:44] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:21:44] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:21:45] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:22:02] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:22:03] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:22:03] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:22:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:22:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:22:59] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:25:39] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:25:40] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:25:41] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:27:39] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:27:39] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:27:40] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:30:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:30:27] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:30:28] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:31:00] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:31:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:31:01] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:32:21] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:32:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:32:23] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:34:43] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:34:44] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:34:45] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:35:03] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:35:03] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:35:04] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:35:52] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:35:52] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:35:53] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:36:00] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:36:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:36:01] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:44:04] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:44:05] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:44:06] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:45:05] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:45:06] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:45:07] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:45:37] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:45:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:45:38] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:46:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:46:20] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:46:21] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:46:28] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:46:29] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:46:30] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:46:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:46:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:46:48] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:50:02] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:50:03] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:50:04] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:50:33] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:50:33] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:50:34] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:51:27] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:51:27] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:51:28] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:52:00] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:52:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:52:01] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:52:15] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:52:15] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:52:16] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:58:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:58:09] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [04/Jan/2017 04:58:10] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+8.40.128.88 - - [04/Jan/2017 18:40:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [04/Jan/2017 18:40:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [04/Jan/2017 18:40:27] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+8.40.128.88 - - [05/Jan/2017 12:43:30] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [05/Jan/2017 12:43:31] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [05/Jan/2017 12:43:32] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+8.40.128.88 - - [05/Jan/2017 12:48:36] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [05/Jan/2017 12:48:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [05/Jan/2017 12:48:38] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+8.40.128.88 - - [05/Jan/2017 13:09:48] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+ * Running on http://0.0.0.0:3000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+172.56.30.40 - - [06/Jan/2017 02:32:23] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:32:23] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:32:25] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:34:05] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:34:05] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:34:06] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:34:51] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:35:00] "GET /favicon.ico HTTP/1.1" 404 -
+172.56.30.40 - - [06/Jan/2017 02:35:28] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:35:28] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:35:29] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:38:21] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:38:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:38:23] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:39:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:39:08] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:39:09] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+Exception in thread Thread-20:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 251, in handle_one_request
+    return self.run_wsgi()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 193, in run_wsgi
+    execute(self.server.app)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 184, in execute
+    write(data)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 165, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+
+172.56.30.40 - - [06/Jan/2017 02:39:12] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:39:13] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:39:14] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:40:55] "GET /correlation/2015/pjm-rto/ppl/2758052034 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:42:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:42:08] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:42:09] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:43:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:43:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:43:49] "GET /correlation/2015/pjm-rto/ppl/9997049009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:45:05] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:45:06] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:45:32] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:45:33] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:47:35] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:47:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:48:09] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:48:10] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:48:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:48:21] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:48:31] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:48:31] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:50:04] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:50:05] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:50:14] "GET /correlation/2015/pjm-rto/ppl/2469615112 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:50:29] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:50:30] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:50:37] "GET /correlation/2015/pjm-rto/ppl/4246723039 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:51:19] "GET /correlation/2015/pjm-rto/ppl/5356011021 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:51:53] "GET /correlation/2015/pjm-rto/ppl/8737645017 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:53:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:53:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:53:39] "GET /correlation/2015/pjm-rto/ppl/8737645017 HTTP/1.1" 200 -
+Exception in thread Thread-58:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 251, in handle_one_request
+    return self.run_wsgi()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 193, in run_wsgi
+    execute(self.server.app)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 184, in execute
+    write(data)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 165, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+
+172.56.30.40 - - [06/Jan/2017 02:53:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:53:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:53:52] "GET /correlation/2015/pjm-rto/ppl/2398052038 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:54:08] "GET /correlation/2015/pjm-rto/ppl/9861601004 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:55:06] "GET /correlation/2015/pjm-rto/ppl/0454550004 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:55:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:55:17] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:56:06] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:56:06] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:56:13] "GET /correlation/2015/pjm-rto/ppl/4501046004 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:56:32] "GET /correlation/2015/pjm-rto/ppl/2758052034 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:57:37] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:57:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:57:42] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:57:42] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:57:51] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:57:52] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:58:01] "GET /correlation/2015/pjm-rto/ppl/4559143005 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:58:17] "GET /correlation/2015/pjm-rto/ppl/8737645017 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:59:12] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:59:12] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:59:24] "GET /correlation/2015/pjm-rto/ppl/8737645017 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 02:59:45] "GET /correlation/2015/pjm-rto/ppl/8752049011 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:00:30] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:00:31] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:00:35] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:00:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:00:43] "GET /correlation/2015/pjm-rto/ppl/9990093009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:00:59] "GET /correlation/2015/pjm-rto/ppl/5294003012 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:01:18] "GET /correlation/2015/pjm-rto/ppl/9861601004 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:01:39] "GET /correlation/2015/pjm-rto/ppl/2342078006 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:05:01] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:05:02] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:06:00] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:06:01] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:06:41] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:06:42] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:06:54] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:06:54] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:07:37] "GET /correlation/2015/pjm-rto/ppl/2342078006 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:10:30] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:10:30] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:11:09] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:11:10] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:11:35] "GET /correlation/2015/pjm-rto/ppl/2398052038 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:11:43] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:11:44] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:11:51] "GET /correlation/2015/pjm-rto/ppl/0454550004 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:12:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:12:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:12:43] "GET /correlation/2015/pjm-rto/ppl/8737645017 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:13:35] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:13:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:14:15] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:14:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:14:28] "GET /correlation/2015/pjm-rto/ppl/2758052034 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:14:41] "GET /correlation/2015/pjm-rto/ppl/1053274008 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:15:17] "GET /correlation/2015/pjm-rto/ppl/4501046004 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:15:34] "GET /correlation/2015/pjm-rto/ppl/5234003005 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:16:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:16:59] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:17] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:17] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:37] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:42] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:43] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:17:54] "GET /correlation/2015/pjm-rto/ppl/5356011021 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:18:15] "GET /correlation/2015/pjm-rto/ppl/2391036009 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:18:37] "GET /correlation/2015/pjm-rto/ppl/4246723039 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:18:55] "GET /correlation/2015/pjm-rto/ppl/0534078003 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:19:26] "GET /correlation/2015/pjm-rto/ppl/0767446319 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:21:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:21:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:21:55] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:21:56] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:22:28] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:22:29] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:22:35] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:22:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:22:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:23:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:23:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:23:20] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:23:21] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:23:21] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:23:21] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:25:03] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:25:04] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:25:04] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:25:05] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:25:05] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:25:10] "GET /correlation/2015/pjm-rto/ppl/2058028034 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:30:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:30:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:30:49] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:30:49] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:32:49] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:32:50] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:32:50] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:32:50] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:32:56] "GET /correlation/2015/pjm-rto/ppl/2342078006 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:34:57] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:34:57] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:34:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:34:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:35:37] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:35:37] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:35:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:35:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:35:38] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:36:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:36:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:36:08] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:36:09] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:36:51] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:36:52] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:36:52] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:36:53] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:37:00] "GET /correlation/2015/pjm-rto/ppl/0767446319 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:38:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:38:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:38:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:38:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:38:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:39:25] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:39:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:39:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:39:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:39:35] "GET /correlation/2015/pjm-rto/ppl/5356011021 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:41:24] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:41:24] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:41:24] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:41:25] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:41:30] "GET /correlation/2015/pjm-rto/ppl/0454550004 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:41:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:41:59] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:41:59] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:41:59] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:42:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:42:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:42:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:42:08] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:42:08] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:42:17] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:42:17] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:42:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:42:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:43:14] "GET /correlation/2015/pjm-rto/ppl/0454550004 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:46:35] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:46:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:46:44] "GET /correlation/2015/pjm-rto/ppl/0454550004 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:47:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:47:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:47:38] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:47:38] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:47:44] "GET /correlation/2015/pjm-rto/ppl/5356011021 HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:48:54] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:48:54] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:48:54] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:48:55] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+172.56.30.40 - - [06/Jan/2017 03:49:03] "GET /correlation/2015/pjm-rto/ppl/5356011021 HTTP/1.1" 200 -
+Exception in thread Thread-242:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 247, in handle_one_request
+    self.raw_requestline = self.rfile.readline()
+IOError: [Errno 104] Connection reset by peer
+
+93.174.93.151 - - [06/Jan/2017 12:30:57] "GET / HTTP/1.1" 404 -
+73.32.169.54 - - [06/Jan/2017 15:20:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [06/Jan/2017 15:20:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [06/Jan/2017 15:21:01] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [06/Jan/2017 15:21:02] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [06/Jan/2017 15:21:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [06/Jan/2017 15:21:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+169.54.233.118 - - [09/Jan/2017 15:25:30] "GET / HTTP/1.1" 404 -
+91.197.234.22 - - [10/Jan/2017 04:44:59] code 400, message Bad HTTP/0.9 request type ("\x03\x00\x00,'\xe0\x00\x00\x00\x00\x00Cookie:")
+91.197.234.22 - - [10/Jan/2017 04:44:59] "  ,'à     Cookie: mstshash=eltons" 400 -
+188.143.232.18 - - [10/Jan/2017 05:22:57] "GET / HTTP/1.0" 404 -
+8.40.128.88 - - [10/Jan/2017 17:33:29] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [10/Jan/2017 17:33:29] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [10/Jan/2017 17:33:56] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [10/Jan/2017 17:33:57] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [10/Jan/2017 17:34:19] "GET /correlation/2015/pjm-rto/ppl/1875133002 HTTP/1.1" 200 -
+8.40.128.88 - - [10/Jan/2017 17:36:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [10/Jan/2017 17:36:12] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [10/Jan/2017 20:31:34] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [10/Jan/2017 20:31:34] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [10/Jan/2017 20:32:11] "GET /correlation/2015/pjm-rto/ppl/1875133002 HTTP/1.1" 200 -
+216.183.93.178 - - [10/Jan/2017 20:51:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+216.183.93.178 - - [10/Jan/2017 20:51:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+216.183.93.178 - - [10/Jan/2017 20:52:33] "GET /correlation/2015/pjm-rto/ppl/0536120000 HTTP/1.1" 200 -
+Exception in thread Thread-265:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 251, in handle_one_request
+    return self.run_wsgi()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 193, in run_wsgi
+    execute(self.server.app)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 184, in execute
+    write(data)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 165, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+
+216.183.93.178 - - [10/Jan/2017 20:52:36] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 01:55:46] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 13:56:43] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 13:56:44] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 13:57:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 13:57:39] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 13:57:51] "GET /correlation/2015/pjm-rto/ppl/2058028034 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:00:15] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:00:15] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:00:17] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:00:37] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:00:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:00:43] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:01:10] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:01:10] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:01:15] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:01:34] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:01:34] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:01:49] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:01:49] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:02:14] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:02:15] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:02:17] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:02:33] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:02:34] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:02:36] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:07:35] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:07:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:07:37] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:07:52] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:07:52] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:07:54] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+216.183.93.178 - - [11/Jan/2017 14:07:56] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+216.183.93.178 - - [11/Jan/2017 14:07:56] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+216.183.93.178 - - [11/Jan/2017 14:08:09] "GET /correlation/2015/pjm-rto/ppl/0536120000 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:08:40] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:08:40] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:08:42] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:08:55] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:08:56] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:08:57] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:09:17] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:09:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:09:19] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:09:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:09:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:10:00] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:10:04] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:10:04] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:10:06] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:15:03] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:15:04] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:15:05] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:15:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:15:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:15:50] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:16:45] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:16:46] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:16:47] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:16:57] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:16:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:16:59] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:18:37] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:18:38] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:18:39] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:21:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:21:08] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:21:10] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:21:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:21:39] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:21:40] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:22:35] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:22:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:22:37] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:22:50] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:22:51] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:22:52] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:27:50] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:27:51] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:27:53] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:28:32] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:28:32] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:28:34] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+Exception in thread Thread-355:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 251, in handle_one_request
+    return self.run_wsgi()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 193, in run_wsgi
+    execute(self.server.app)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 184, in execute
+    write(data)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 165, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+
+73.77.81.115 - - [11/Jan/2017 14:28:36] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:28:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:28:39] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:29:35] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:29:45] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:29:59] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:30:08] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:30:12] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:31:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:31:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:31:09] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:31:21] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:31:21] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:31:23] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:35:53] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:35:54] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:35:56] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:36:37] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:36:43] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:36:55] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:36:55] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:36:57] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:38:32] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:38:32] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:38:34] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:39:27] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:39:28] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:39:29] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:39:49] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:39:49] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:39:51] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:40:00] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:40:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:40:02] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:41:19] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:41:19] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:41:21] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:41:28] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:41:29] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:41:31] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:41:39] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:41:40] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:41:42] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:42:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:42:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:42:24] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:42:43] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:42:43] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:42:45] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:42:59] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:43:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.77.81.115 - - [11/Jan/2017 14:43:02] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [11/Jan/2017 15:30:51] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [11/Jan/2017 15:30:52] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [11/Jan/2017 15:30:54] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [11/Jan/2017 15:31:31] "GET /correlation/2015/pjm-rto/ppl/2322078000 HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:09:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:09:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:09:18] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:09:26] "GET /correlation/2015/pjm-rto/ppl/0389322436 HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:21:25] "GET /correlation/2015/pjm-rto/ppl/0534078003 HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:27:53] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:27:53] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:27:55] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:32:53] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:33:24] "GET /correlation/2015/pjm-rto/ppl/4093102002 HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:34:45] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:35:02] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:35:02] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:35:04] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:35:15] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:35:24] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:37:03] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:39:19] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+173.46.7.83 - - [12/Jan/2017 15:39:24] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:40:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:40:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:41:14] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:41:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 15:43:10] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 15:43:54] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:04:46] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:04:46] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:04:47] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:06:15] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:06:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:06:17] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:07:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:07:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:07:09] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:07:27] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:07:28] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:07:29] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:10:28] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:10:28] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:10:30] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:11:23] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:11:23] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:11:25] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:11:44] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:11:45] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:11:46] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:12:56] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:12:56] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:12:57] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:13:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:13:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:13:50] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:15:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:15:23] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:15:24] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:17:40] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:17:40] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:17:41] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:19:00] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:19:01] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:19:02] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:24:32] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:24:33] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:24:34] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:24:51] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:24:51] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:24:53] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:25:25] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:25:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:25:27] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:25:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:25:48] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:25:49] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:25:59] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:26:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:26:01] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:27:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:27:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:27:59] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:31:09] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:31:10] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:31:11] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:31:25] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:31:25] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:31:27] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:31:31] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:31:32] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:31:33] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:33:34] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:33:35] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:33:36] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:34:55] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:34:55] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:34:57] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:35:18] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:35:19] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:35:20] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:40:00] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:40:01] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:40:02] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:41:29] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:41:29] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:41:31] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:46:50] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:46:50] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:46:51] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:50:04] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:50:05] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:50:06] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:50:46] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:50:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:50:48] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:53:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:53:38] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:53:40] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:53:46] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:53:46] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 19:53:48] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:01:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:01:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:01:18] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:01:45] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:01:45] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:01:47] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:03:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:03:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:03:08] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:03:56] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:03:57] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:03:58] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:04:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:04:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:04:28] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:07:55] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:07:56] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:07:57] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:10:59] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:11:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:11:01] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:12:21] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:12:21] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:12:22] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:17:42] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:17:43] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:17:44] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:18:36] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:18:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:18:38] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:27:11] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:27:11] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:27:13] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:34:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:34:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:34:27] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:36:13] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:36:13] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:36:14] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:44:15] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:44:15] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [12/Jan/2017 20:44:16] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.55.152.114 - - [12/Jan/2017 20:46:07] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.55.152.114 - - [12/Jan/2017 20:46:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.55.152.114 - - [12/Jan/2017 20:46:09] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.55.152.114 - - [12/Jan/2017 20:46:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.55.152.114 - - [12/Jan/2017 20:47:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+91.197.234.23 - - [12/Jan/2017 22:01:42] code 400, message Bad HTTP/0.9 request type ("\x03\x00\x00,'\xe0\x00\x00\x00\x00\x00Cookie:")
+91.197.234.23 - - [12/Jan/2017 22:01:42] "  ,'à     Cookie: mstshash=eltons" 400 -
+38.142.29.4 - - [12/Jan/2017 22:25:41] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [12/Jan/2017 22:25:41] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [12/Jan/2017 22:25:43] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 22:39:17] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 22:39:17] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [12/Jan/2017 22:39:19] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [12/Jan/2017 23:13:11] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [12/Jan/2017 23:13:11] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [12/Jan/2017 23:13:16] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [12/Jan/2017 23:55:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [12/Jan/2017 23:55:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [12/Jan/2017 23:55:27] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 15:05:43] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 15:05:44] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 15:05:45] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 15:08:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 15:08:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 15:08:27] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 15:08:49] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 15:08:49] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 15:08:50] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 16:49:04] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 16:49:04] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 16:49:06] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:10:54] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:10:55] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:11:13] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:11:13] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:11:15] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:20:32] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:20:35] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:21:12] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:21:13] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:21:14] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:21:18] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:21:19] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:21:20] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:23:11] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:23:11] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:23:13] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:23:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:23:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:23:18] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:23:59] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:23:59] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:24:01] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:24:53] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:24:55] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:25:40] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:25:42] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:26:05] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:26:05] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:26:07] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+Exception in thread Thread-652:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 251, in handle_one_request
+    return self.run_wsgi()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 193, in run_wsgi
+    execute(self.server.app)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 184, in execute
+    write(data)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 165, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+
+38.142.29.4 - - [13/Jan/2017 17:26:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:26:09] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:26:10] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:27:12] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:27:12] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:27:14] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:29:18] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:29:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [13/Jan/2017 17:29:20] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:30:42] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:30:42] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:30:44] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:31:33] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:31:34] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:31:35] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:32:13] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:32:13] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:32:14] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:42:56] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:42:57] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 17:42:58] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 18:37:11] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 18:37:11] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 18:37:13] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+66.240.236.119 - - [13/Jan/2017 18:59:36] "GET / HTTP/1.1" 404 -
+74.240.146.3 - - [13/Jan/2017 19:19:09] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [13/Jan/2017 19:19:10] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+74.240.146.3 - - [13/Jan/2017 19:19:11] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+Exception in thread Thread-682:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 251, in handle_one_request
+    return self.run_wsgi()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 193, in run_wsgi
+    execute(self.server.app)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 184, in execute
+    write(data)
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 165, in write
+    self.wfile.write(data)
+IOError: [Errno 32] Broken pipe
+
+73.32.169.54 - - [13/Jan/2017 23:47:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 23:47:49] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 23:47:50] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [13/Jan/2017 23:48:11] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+Exception in thread Thread-688:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+    self.run()
+  File "/usr/lib/python2.7/threading.py", line 754, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 599, in process_request_thread
+    self.handle_error(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 596, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 331, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 652, in __init__
+    self.handle()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 216, in handle
+    rv = BaseHTTPRequestHandler.handle(self)
+  File "/usr/lib/python2.7/BaseHTTPServer.py", line 340, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/just_energy/flask/local/lib/python2.7/site-packages/werkzeug/serving.py", line 247, in handle_one_request
+    self.raw_requestline = self.rfile.readline()
+IOError: [Errno 104] Connection reset by peer
+
+73.32.169.54 - - [14/Jan/2017 14:37:48] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [14/Jan/2017 14:37:49] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [14/Jan/2017 14:37:50] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [14/Jan/2017 14:38:12] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [14/Jan/2017 14:38:12] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [14/Jan/2017 14:38:14] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [14/Jan/2017 14:38:21] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [14/Jan/2017 14:38:22] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [14/Jan/2017 14:38:23] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+212.129.31.92 - - [15/Jan/2017 12:32:13] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00*%\xe0\x00\x00\x00\x00\x00Cookie:')
+212.129.31.92 - - [15/Jan/2017 12:32:13] "  *%à     Cookie: mstshash=Test" 400 -
+73.32.169.54 - - [15/Jan/2017 22:37:31] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:37:31] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:37:32] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:37:40] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:37:40] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:37:41] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:39:50] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:39:50] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:39:52] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:39:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:39:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+73.32.169.54 - - [15/Jan/2017 22:39:59] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 14:49:16] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 14:49:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 14:49:17] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:25:06] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:25:06] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:25:08] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:25:17] "GET /correlation/2015/pjm-rto/ppl/1875133002 HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/icap/correlation/correlation.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+ * Detected change in '/home/ubuntu/just_energy/icap/correlation/correlation.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+ * Detected change in '/home/ubuntu/just_energy/icap/correlation/correlation.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [16/Jan/2017 17:29:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:29:20] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:29:21] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/icap/correlation/correlation.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [16/Jan/2017 17:30:18] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:30:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:30:20] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/icap/correlation/correlation.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [16/Jan/2017 17:31:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:31:20] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:31:21] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:33:33] "GET /correlation/2015/pjm-rto/ppl/1875133002 HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:33:59] "GET /correlation/2015/pjm-rto/ppl/1875133002 HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:34:45] "GET /correlation/2015/pjm-rto/ppl/1875133002 HTTP/1.1" 200 -
+8.40.128.88 - - [16/Jan/2017 17:35:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:42:41] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:42:42] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:42:43] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:44:53] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:44:53] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:44:55] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:45:50] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:45:51] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:45:52] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:46:09] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:46:09] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:46:11] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:47:58] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:47:59] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:48:00] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:50:51] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:50:52] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:51:12] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:56:08] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:56:08] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:56:14] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:58:17] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:58:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 16:58:19] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:00:06] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:00:07] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:00:08] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:01:04] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:01:04] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:01:05] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:01:18] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:01:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:01:20] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:44:39] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:44:40] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 17:44:41] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 19:47:26] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 19:47:26] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 19:47:27] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 20:58:45] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 20:58:45] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 20:58:47] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 21:07:15] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 21:07:15] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 21:07:16] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 21:10:36] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 21:10:36] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 21:10:37] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 21:14:55] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 21:14:56] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 21:14:57] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+98.201.153.19 - - [17/Jan/2017 22:09:31] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 22:20:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 22:20:38] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [17/Jan/2017 22:20:40] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+73.77.81.115 - - [18/Jan/2017 03:27:23] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+144.217.68.47 - - [18/Jan/2017 06:55:20] "GET / HTTP/1.1" 404 -
+8.40.128.88 - - [18/Jan/2017 15:47:47] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 15:47:47] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 15:47:56] "GET /correlation/2015/pjm-rto/ppl/1875133002 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 15:47:56] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:52:15] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:52:16] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:52:18] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:52:54] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:52:54] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:52:56] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:52:59] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:53:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:53:01] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:53:22] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:53:23] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:53:24] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:53:50] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:53:52] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:55:29] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:55:29] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:55:31] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:56:01] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:56:03] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:56:10] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:56:12] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:56:33] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:56:34] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:56:45] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:56:47] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:56:59] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:57:00] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:57:14] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:57:16] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:57:34] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:57:36] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:57:54] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:57:54] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 15:57:56] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:01:25] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:01:25] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:01:27] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:03:44] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:03:44] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:03:46] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:04:02] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:04:02] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:04:04] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:04:06] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:04:06] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:04:08] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:05:24] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:05:25] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:05:26] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:12:18] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:12:18] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:12:20] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:13:19] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:13:19] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:13:21] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:13:42] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:13:45] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:13:52] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:13:52] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:13:55] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:15:10] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:15:10] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:15:12] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/icap/database/icapdatabase.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [18/Jan/2017 16:15:41] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 16:15:41] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 16:15:43] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:16:41] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:16:41] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:16:43] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:17:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:17:21] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:17:22] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:17:45] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:17:45] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:17:47] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:17:52] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:17:53] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:17:54] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:18:02] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:18:02] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+38.142.29.4 - - [18/Jan/2017 16:18:04] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/icap/database/icapdatabase.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [18/Jan/2017 17:02:01] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:02:02] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:02:03] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:18:14] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:18:14] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:18:59] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:19:00] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:19:01] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:22:09] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:22:09] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:22:11] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:23:03] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:23:04] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:23:05] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:23:54] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:23:54] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:23:56] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:25:01] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:25:02] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:25:03] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:30:45] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:30:45] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:31:10] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:31:11] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:31:12] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:33:20] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:33:20] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:33:21] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:33:57] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:33:58] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:33:59] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:37:38] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:37:39] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:37:40] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -
+ * Detected change in '/home/ubuntu/just_energy/icap/correlation/correlation.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger pin code: 198-771-260
+8.40.128.88 - - [18/Jan/2017 17:41:51] "GET /populate/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:41:51] "POST /compute/pjm/ppl/interval HTTP/1.1" 200 -
+8.40.128.88 - - [18/Jan/2017 17:41:53] "GET /correlation/2015/pjm-rto/ppl/1029015004 HTTP/1.1" 200 -

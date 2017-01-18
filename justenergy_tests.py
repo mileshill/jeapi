@@ -7,7 +7,7 @@ import json
 
 # Coverage loading and initialization 
 from coverage import coverage
-cov = coverage(branch=True, omit=['flask/*', 'justenergy_tests.py'])
+cov = coverage(branch=True, omit=['flask/*', 'justenergy_tests.py', 'icap/*'])
 cov.start()
 
 # App
@@ -108,6 +108,18 @@ class JustEnergyTestCase(unittest.TestCase):
 	def test_error_404(self):
 		result = self.app.get('/populate/null') 
 		self.assertEqual(result.status_code, 404)
+
+class PSEGTestCase(unittest.TestCase):
+
+	def setUp(self):
+		from icap.database.icapdatabase import ICapDatabase
+		self.conn = ICapDatabase().connect()
+
+	def test_connection(self):
+		self.assertIsInstance(conn, pymssql.Connection)
+
+
+
 # Evaluation
 if __name__ == '__main__':
 	try:
