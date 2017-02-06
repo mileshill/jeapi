@@ -258,25 +258,22 @@ class Correlation():
 
         # BEGIN STATISTICAL DESCRIPTION
         # obtain Pearsonr value
-        def round(x):
-            return np.round(x, decimals=3)
-
-        results.pearson_prem_util = round(pearsonr(
-            prem_util.PremNormalizedUsage, prem_util.ZoneNormalizedUsage)[0])
-        results.pearson_prem_iso = round(pearsonr(
-            prem_iso.PremNormalizedUsage, prem_iso.ZoneNormalizedUsage)[0])
-        results.pearson_util_iso = round(pearsonr(
-            util_iso.ZoneNormalizedUsage_x, util_iso.ZoneNormalizedUsage_y)[0])
+        results.pearson_prem_util = pearsonr(
+            prem_util.PremNormalizedUsage, prem_util.ZoneNormalizedUsage)[0]
+        results.pearson_prem_iso = pearsonr(
+            prem_iso.PremNormalizedUsage, prem_iso.ZoneNormalizedUsage)[0]
+        results.pearson_util_iso = pearsonr(
+            util_iso.ZoneNormalizedUsage_x, util_iso.ZoneNormalizedUsage_y)[0]
 
         # r^2 value
         # slop, intercept, r-value, p-value, stderr = linregress(x,y)
         # rsqr = r-value ** 2
-        results.rsqr_prem_util = round(linregress(
-            prem_util.PremNormalizedUsage, prem_util.ZoneNormalizedUsage)[2]**2)
-        results.rsqr_prem_iso = round(linregress(
-            prem_iso.PremNormalizedUsage, prem_iso.ZoneNormalizedUsage)[2]**2)
-        results.rsqr_util_iso = round(linregress(
-            util_iso.ZoneNormalizedUsage_x, util_iso.ZoneNormalizedUsage_y)[2]**2)
+        results.rsqr_prem_util = linregress(
+            prem_util.PremNormalizedUsage, prem_util.ZoneNormalizedUsage)[2]**2
+        results.rsqr_prem_iso = linregress(
+            prem_iso.PremNormalizedUsage, prem_util.ZoneNormalizedUsage)[2]**2
+        results.rsqr_util_iso = linregress(
+            util_iso.ZoneNormalizedUsage_x, util_iso.ZoneNormalizedUsage_y)[2]**2
         # END STATISTICAL DESCRIPTION
 
         # BEGIN RESULT LOG

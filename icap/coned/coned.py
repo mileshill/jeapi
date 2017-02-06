@@ -246,14 +246,15 @@ class CONED:
 class CONEDInterval(CONED):
     def __init__(self, conn=None):
         CONED.__init__(self, conn)
-        self.hourly = pd.merge(self.get_hourly().reset_index(), self.get_hourly_cp(),
+        self.hourly = pd.merge(self.get_hourly().reset_index(),
+                               self.get_hourly_cp(),
                                how='left',
                                on=['PremiseId', 'Year']
                                ).set_index(['PremiseId', 'Year'])
 
         # split interval meters into VarinaceTrue; VarianceFalse
-        self.varTrue = self.hourly[self.hourly['VarTest'] == 1]
-        self.varFalse = self.hourly[self.hourly['VarTest'] == 0]
+        # self.varTrue = self.hourly[self.hourly['VarTest'] == 1]
+        # self.varFalse = self.hourly[self.hourly['VarTest'] == 0]
 
     def get_hourly_cp(self):
         hourly_cp_query = """
@@ -289,36 +290,42 @@ class CONEDInterval(CONED):
         hourly_query = """
             select
                 h.PremiseId,
-                p.RateClass, ce.[Service Classification],
+                p.RateClass,
+                ce.[Service Classification],
                 ce.[Zone Code] as ZoneCode,
                 ce.[Stratum Variable] as Stratum,
                 ce.[Time of Day Code] as TOD,
                 Year(m.EndDate) as Year,
-                DateAdd(day, 0,  m.StartDate) as StartDate,
+                m.StartDate,
                 m.EndDate,
                 m.Usage as BilledUsage,
                 m.Demand as BilledDemand,
                 Round(Sum(h.Usage), 0) as CPHourUsage,
                 'INT' as MeterType,
-                iif(Abs((m.Usage-Sum(h.Usage))/m.Usage)<=0.04, 1, 0) as VarTest
-            from [HourlyUsage]  h
-            inner join [MonthlyUsage]  m
+                iif( Abs((m.Usage - (Sum(h.Usage))) / m.Usage) <= 0.04, 1, 0) as VarTest
+            from
+                [HourlyUsage] h
+            inner join
+                [MonthlyUsage] m
                 on m.PremiseId = h.PremiseID
                 and m.UtilityID = h.UtilityId
-            inner join CoincidentPeak as cp
+            inner join
+                [CoincidentPeak] cp
                 on cp.UtilityId = h.UtilityId
                 and Year(cp.CPDate) = Year(m.EndDate)
                 and (cp.CPDate between m.StartDate and m.EndDate)
                 and (h.UsageDate between m.StartDate and m.EndDate)
-            inner join Premise as p
+            inner join
+                [Premise] p
                 on p.PremiseId = h.PremiseId
-            inner join ConED as ce
+            inner join [ConED] ce
                 on CAST(ce.[Account Number] as varchar) = h.PremiseId
             where
-                h.UtilityId = 'CONED'
-                and h.HourEnding between 1 and 24
+                (h.UtilityId = 'CONED') and
+                (h.HourEnding between 1 and 24) and
+                (cp.CPDate between p.EffectiveStartDate and p.EffectiveStopDate)
             group by
-                h.PremiseId, MeterType,
+                h.PremiseId,
                 p.RateClass, ce.[Service Classification],
                 ce.[Zone Code], ce.[Stratum Variable], ce.[Time of Day Code],
                 Year(m.EndDate),
@@ -326,8 +333,8 @@ class CONEDInterval(CONED):
                 m.Usage,
                 m.Demand
             having
-                Count(h.Usage) = (DateDiff(hour, m.StartDate, m.EndDate) + 24)
-                """
+                Count(h.Usage) = (DateDiff(hour, m.StartDate, m.EndDate) + 24)"""
+
         # obtain data; set defaults; converions
         df = pd.read_sql(hourly_query, self.conn)
         df['MCD'] = np.NaN
@@ -497,7 +504,8 @@ class CONEDMonthly(CONED):
                 inner join [ConED] ce
                     on CAST(ce.[Account Number] as varchar) = m.PremiseId
                 where
-                    m.UtilityId = 'CONED' and
+                    (m.UtilityId = 'CONED') and
+                    (cp.CPDate between p.EffectiveStartDate and p.EffectiveStopDate) and
                     m.PremiseId not in (
                             select distinct PremiseId
                             from HourlyUsage

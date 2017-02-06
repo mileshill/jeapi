@@ -9,7 +9,13 @@ class Results():
         self.df = df
         self.utilities = utility_transform(
             df['Utility'].drop_duplicates().values)
-        self.compare_ = self.compare_historical()
+        self.compare_ = self.compare_historical().sort_values(
+            by=['PremiseId', 'Year']).drop_duplicates()
+
+        self.compare_.rename(
+            columns={'Utility': 'UtilityId', 'ICap': 'RecipeICap',
+                     'CapacityTagValue': 'HistoricalICap',
+                     'HistVar': 'RecipeVariance'}, inplace=True)
 
     def compare_historical(self):
         """Compare historical computes the absolute variance between the
@@ -26,10 +32,10 @@ class Results():
 
         hist = pd.read_sql(historical_query, self.conn)
         compare = pd.merge(self.df, hist, on=['PremiseId', 'Year'], how='left')
-        compare.replace(to_replace=[0], value=[np.nan], inplace=True)
+        # compare.replace(to_replace=[0], value=[np.nan], inplace=True)
         actual = compare['CapacityTagValue']
         computed = compare['ICap']
-        compare['HistVar'] = abs((actual - computed) / actual) * 100.0
+        compare['RecipeVariance'] = abs((actual - computed) / actual) * 100.0
 
         return compare
 
@@ -38,7 +44,7 @@ class Results():
         against all historical icap values.
         """
         if fp is None:
-            util = self.compare_['Utility'].drop_duplicates().values[0]
+            util = self.compare_['UtilityId'].drop_duplicates().values[0]
             fp = str(util).lower() + '_rec.csv'
 
         self.compare_.to_csv(fp,
@@ -61,27 +67,45 @@ class Results():
         # indicies of possible outcomes
         results = self.compare_.copy()
 
-        null_idx = results[pd.isnull(results['HistVar'])].index
-        valid_idx = results[results['HistVar'] <= 2.0].index
-        invalid_idx = results[results['HistVar'] > 2.0].index
+        # null_idx = results[pd.isnull(results['RecipeVariance'])].index
+        # valid_idx = results[results['RecipeVariance'] <= 2.0].index
+        # invalid_idx = results[results['RecipeVariance'] > 2.0].index
 
-        # assign values to outcomes on their index
-        results['Valid'] = ''
-        results.set_value(null_idx, 'Valid', 'NULL')
-        results.set_value(invalid_idx, 'Valid', 0)
-        results.set_value(valid_idx, 'Valid', 1)
+        # # assign values to outcomes on their index
+        # results['Valid'] = ''
+        # results.set_value(null_idx, 'Valid', 'NULL')
+        # results.set_value(invalid_idx, 'Valid', 0)
+        # results.set_value(valid_idx, 'Valid', 1)
 
-        # aggregate and count
-        details = results.groupby(['MeterType', 'Year', 'RateClass',
-                                   'Strata', 'Valid']
-                                  )[['ICap', 'CapacityTagValue']].count()
+        # # aggregate and count
+        # details = results.groupby(['MeterType', 'Year', 'RateClass',
+        #                            'Strata', 'Valid']
+        #                      )[['RecipeICap', 'CapacityTagValue']].count()
+
+        # utilizing pd.crosstab to provide better results
+        def passing_value(series):
+            variance = series['RecipeVariance']
+            if variance <= 2.0:
+                return True
+            elif variance > 2.0:
+                return False
+            else:
+                return 'NULL'
+
+        results['Passing'] = results.apply(passing_value, axis=1)
+
+        details = pd.crosstab([results['MeterType'],
+                               results['RateClass'],
+                               results['Strata'],
+                               results['Year']],
+                              results['Passing'], margins=True)
 
         # return the Dataframe
         if not write_to_excel:
             return pd.DataFrame(details)
 
         # write the dataframe and return results
-        utility_name = results['Utility'].ix[0]
+        utility_name = results['UtilityId'].ix[0]
         file_name = utility_name + '_analysis.xlsx'
         try:
             writer = pd.ExcelWriter(file_name, engine='xlsxwriter')

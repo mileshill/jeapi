@@ -132,9 +132,10 @@ class CENTHUDDemand(CENTHUD):
 
     def get_load_profile(self):
         load_profile_query = """
-            select
+            select distinct
                 RTrim(lp.Stratum) as Strata,
-                lp.AVGHourlyLoad_kW as AVGHourlyLoad
+                lp.AVGHourlyLoad_kW as AVGHourlyLoad,
+                Year(cp.CPDate) as Year
             from [CENTHUD_LOAD_PROFILE] lp
             inner join [CoincidentPeak] cp
                 on cp.UtilityID = 'CENTHUD'
@@ -185,7 +186,7 @@ class CENTHUDDemand(CENTHUD):
 
         tmp = pd.merge(tmp, self.load_profile,
                        how='left',
-                       on='Strata')
+                       on=['Strata', 'Year'])
 
         tmp['ICap'] = tmp['AVGDemand'] * tmp['UtilFactor'] * \
             tmp['AVGHourlyLoad']

@@ -2,14 +2,16 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
+
 class PPL:
     '''PPL has ONLY interval meters.
     '''
+
     def __init__(self, conn, meter_type='INT', premise=None):
-        self.params = {'ISO':'PJM',
-                'RunDate':datetime.now(),#.__format__('%Y-%m-%d %H:%M'),
-                'Utility':'PPL',
-                'MeterType':meter_type}
+        self.params = {'ISO': 'PJM',
+                       'RunDate': datetime.now(),  # .__format__('%Y-%m-%d %H:%M'),
+                       'Utility': 'PPL',
+                       'MeterType': meter_type}
 
         # dynamic
         self.conn = conn
@@ -53,11 +55,12 @@ class PPL:
 
         return pd.read_sql(sys_query, self.conn)
 
+
 class PPLInterval(PPL):
     def __init__(self, conn, premise=None, meter_type='INT'):
         PPL.__init__(self, conn, meter_type)
 
-        self.premise=premise
+        self.premise = premise
         self.meter_type = meter_type
         self.records_ = self.get_records()
 
@@ -94,49 +97,61 @@ class PPLInterval(PPL):
         rec = self.records_.copy()
         sys = self.sys_df_.copy()
 
+
         # loss factor
         util = util[util['ParameterId'] == 'Loss Factor'].copy()
 
+
         # extract date-part (string) from parameterid
         sys['ParameterId'] = sys['ParameterId'].apply(lambda x: x.split()[0])
-        sys.rename(columns={'ParameterId':'CPDate'}, inplace=True)
+        sys.rename(columns={'ParameterId': 'CPDate'}, inplace=True)
+
+        # handle missing data with np.NaN values
+        grp = rec.groupby(['PremiseId', 'Year', 'RateClass'])['Usage'].agg(
+            {'Count':len}).reset_index()
+
+        bad_idx = grp[grp['Count'] != 5].index
+        rec.set_value(bad_idx, 'Usage', np.nan)
+
 
         # merge( merge(records, sys), util)
         tmp = pd.merge(
-                pd.merge(rec, sys,
-                    left_on=['Year', 'UsageDate'],
-                    right_on=['Year', 'CPDate'],
-                    how='left'),
-                        util, on=['Year', 'RateClass'], how='left')
+            pd.merge(rec, sys,
+                     left_on=['Year', 'UsageDate'],
+                     right_on=['Year', 'CPDate'],
+                     how='left'),
+            util, on=['Year', 'RateClass'], how='left')
 
         # rename convienience
-        tmp.rename(columns={'ParameterValue_x':'ReconFactor',
-                            'ParameterValue_y':'RateClassLossFactor'},
-                  inplace=True)
+        tmp.rename(columns={'ParameterValue_x': 'ReconFactor',
+                            'ParameterValue_y': 'RateClassLossFactor'},
+                   inplace=True)
 
         # define the `apply` function
         def ppl_icap(g):
             return (g['Usage'] * g['ReconFactor'] * g['RateClassLossFactor']).mean()
 
         icap = tmp.groupby(['PremiseId', 'Year', 'RateClass', 'Strata']
-                ).apply(ppl_icap).reset_index()
-        icap.rename(columns={0:'ICap'}, inplace=True)
+                           ).apply(ppl_icap).reset_index()
+        icap.rename(columns={0: 'ICap'}, inplace=True)
+
+        icap['Strata'] = 'NULL'
 
         return meta_organize(self, icap)
+
 
 class PPLRecipe:
 
     def __init__(self, conn=None, results=None):
         if (conn is None) or (results is None):
-            raise Exception('conn=%s, results=%s)' %(conn, results,))
-        self.conn= conn
+            raise Exception('conn=%s, results=%s)' % (conn, results,))
+        self.conn = conn
         self.Results = results
 
     def run_all(self):
         intv = PPLInterval(self.conn).compute_icap()
         res = self.Results(self.conn, intv)
         return res
-
 
 
 def meta_organize(obj_ref, df):

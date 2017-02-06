@@ -2,20 +2,21 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
+
 class PECO():
     '''SuperClass for meter types. Loads the system and
     utility parameters from DB
     '''
+
     def __init__(self, conn, meter_type=None):
-        self.params = {'ISO':'PJM',
-                'RunDate':datetime.now(),#.__format__('%Y-%m-%d %H:%M'),
-                'Utility':'PECO',
-                'MeterType':meter_type}
+        self.params = {'ISO': 'PJM',
+                       'RunDate': datetime.now(),
+                       'Utility': 'PECO',
+                       'MeterType': meter_type}
 
         # dynamic
         self.conn = conn
         self.meter_type = meter_type
-
 
         # computed vars
         self.util_df_ = self.get_util_params()
@@ -41,11 +42,11 @@ class PECO():
                 order by RateClass, Strata, ParameterId"""
 
         # logic for correct utility factor selection
-        if self.meter_type =='CON':
+        if self.meter_type == 'CON':
             util_query = util_query.format(
-                    **{'notinterval':",'CapProfPeakRatio'"})
+                **{'notinterval': ",'CapProfPeakRatio'"})
         else:
-            util_query = util_query.format(**{'notinterval':''})
+            util_query = util_query.format(**{'notinterval': ''})
 
         # return dataframe
         return pd.read_sql(util_query, self.conn)
@@ -113,20 +114,21 @@ class PECOInterval(PECO):
                         and p.PremiseId = h.PremiseId
                 -- only return PECO information
                 where
-                        h.UtilityId = 'PECO'
+                        h.UtilityId = 'PECO' and
+                        cp.CPDate between p.EffectiveStartDate and p.EffectiveStopDate
                         {prem}
                 order by h.PremiseId, Year"""
 
         # if single premise, update query for that premise
         if self.premise:
-            record_query = record_query.format(prem="and h.PremiseId = '%s'" % self.premise)
+            record_query = record_query.format(
+                prem="and h.PremiseId = '%s'" % self.premise)
         # get batch records
         else:
             record_query = record_query.format(prem="")
 
         # return dataframe
         return pd.read_sql(record_query, self.conn)
-
 
     def compute_icap(self):
         """PECO Interval ICAP:
@@ -148,9 +150,9 @@ class PECOInterval(PECO):
         # 2. MERGE
         # (record usage * ncratio) is unique to RateClass, Statra, Year, Date
         rec = pd.merge(rec, util.ix[nc_idx], how='left',
-                left_on=['Year', 'UsageDate', 'RateClass', 'Strata'],
-                right_on=['Year', 'CPDate', 'RateClass', 'Strata'])
-        rec.rename(columns={'ParameterValue':'NCRatio'}, inplace=True)
+                       left_on=['Year', 'UsageDate', 'RateClass', 'Strata'],
+                       right_on=['Year', 'CPDate', 'RateClass', 'Strata'])
+        rec.rename(columns={'ParameterValue': 'NCRatio'}, inplace=True)
         # END PREPROCESSING
 
         # BEGIN WEATHER CORRECTION FACTOR
@@ -158,7 +160,7 @@ class PECOInterval(PECO):
         # wcf = mean(wcf_i)
         rec['WCF'] = rec['Usage'] * rec['NCRatio']
         grp = rec.groupby(['PremiseId', 'Year', 'RateClass', 'Strata']
-                )['WCF'].agg({'Count':len, 'WCF':np.mean}).reset_index()
+                          )['WCF'].agg({'Count': len, 'WCF': np.mean}).reset_index()
 
         # Convert to np.nan where insufficent/bad records
         # Condition 1: if count != 5 then wcf -> np.nan
@@ -175,15 +177,15 @@ class PECOInterval(PECO):
 
         # Merge rate_class with grouped records
         tmp = pd.merge(grp, rate_class,
-                on=['Year', 'RateClass', 'Strata'], how='left')
+                       on=['Year', 'RateClass', 'Strata'], how='left')
         # END RATECLASSLOSS
-
 
         # ICAP
         # icap = wcf * rate_class_loss_factor ; (ParameterValue)
         tmp['ICap'] = tmp['WCF'] * tmp['ParameterValue']
 
         return meta_organize(self, tmp)
+
 
 class PECOConsumption(PECO):
     def __init__(self, conn, premise=None, meter_type='CON'):
@@ -213,16 +215,17 @@ class PECOConsumption(PECO):
                     m.PremiseId not in (
                         select distinct PremiseId
                         from HourlyUsage
-                        where UtilityId = 'PECO')
+                        where UtilityId = 'PECO') and
+                    (m.StartDate between p.EffectiveStartDate and p.EffectiveStopDate)
                    {prem}"""
 
         if self.premise:
-            record_query = record_query.format(prem="and m.PremiseId = '%s'" % self.premise)
+            record_query = record_query.format(
+                prem="and m.PremiseId = '%s'" % self.premise)
         else:
             record_query = record_query.format(prem="")
 
         return pd.read_sql(record_query, self.conn)
-
 
     def compute_icap(self):
         """PECO Consumption ICAP:
@@ -238,26 +241,26 @@ class PECOConsumption(PECO):
         # 1. Compute utility factor
         # 2. Compute PLC factor
 
-        ## 1. Compute utility factor
+        # 1. Compute utility factor
         # Extract the required parameters
         cleaned_utl = util[(util['ParameterId'] == 'RateClassLoss') |
                            (util['ParameterId'] == 'StrataSummerScale')
-                        ].drop_duplicates()
+                           ].drop_duplicates()
         # Group by [Year, RateClass, Strata]; compute the count and product of
         # ParameterValue for each group
         utl_grp = cleaned_utl.groupby(['Year', 'RateClass', 'Strata']
-                                )['ParameterValue'].agg(
-                                        {'Count':len, 'UtilFactor':np.prod}).reset_index()
+                                      )['ParameterValue'].agg(
+            {'Count': len, 'UtilFactor': np.prod}).reset_index()
 
         # if count != 2 then UtilFactor -> np.nan
         bad_idx = utl_grp[utl_grp['Count'] != 2].index
         utl_grp.set_value(bad_idx, 'UtilFactor', np.nan)
 
-        ## 2. Compute PLC factor
+        # 2. Compute PLC factor
         # collect plc index; extract values; rename ParameterValue -> PLC
         plc_idx = sys[sys['ParameterId'] == 'PLCScaleFactor'].index
         sys = sys.ix[plc_idx]
-        sys.rename(columns={'ParameterValue':'PLC'}, inplace=True)
+        sys.rename(columns={'ParameterValue': 'PLC'}, inplace=True)
         # END PREPROCESSING
 
         # BEGIN MERGE
@@ -265,7 +268,7 @@ class PECOConsumption(PECO):
         # 2. tmp_2 = records & util & system
         # 3. temp_3 = records & util & system & loadshape
         tmp = pd.merge(rec, utl_grp,
-                on=['Year', 'RateClass', 'Strata'], how='left')
+                       on=['Year', 'RateClass', 'Strata'], how='left')
 
         tmp_2 = pd.merge(tmp, sys, on=['Year'], how='left')
         tmp_3 = pd.merge(tmp_2, load, on=['RateClass', 'Strata'], how='left')
@@ -274,6 +277,7 @@ class PECOConsumption(PECO):
         # ICAP
         tmp_3['ICap'] = tmp_3['UtilFactor'] * tmp_3['PLC'] * tmp_3['LoadShape']
         return meta_organize(self, tmp_3)
+
 
 class PECODemand(PECO):
     def __init__(self, conn, premise=None, meter_type='DMD'):
@@ -305,15 +309,17 @@ class PECODemand(PECO):
                         m.PremiseId not in (
                             select distinct PremiseId
                             from HourlyUsage
-                            where UtilityId = 'PECO')
+                            where UtilityId = 'PECO') and
+                        (m.StartDate between p.EffectiveStartDate and p.EffectiveStopDate)
                                {prem}"""
 
         if self.premise:
-                record_query = record_query.format(prem="and m.PremiseId = '%s'"  % self.premise)
+            record_query = record_query.format(
+                prem="and m.PremiseId = '%s'" % self.premise)
         else:
-                record_query = record_query.format(prem='')
+            record_query = record_query.format(prem='')
 
-        return  pd.read_sql(record_query, self.conn)
+        return pd.read_sql(record_query, self.conn)
 
     def compute_icap(self):
         """PECO Demand ICAP"""
@@ -327,44 +333,43 @@ class PECODemand(PECO):
         # 3. Compute avg naratio per year, rateclass, strata
         # 4. Prep the plc and rclf factors
 
-        ##  1.
+        # 1.
         # need indices for RateClassLoss and NARatio
         rc_idx = util[util['ParameterId'] == 'RateClassLoss'].index
         na_idx = util[util['ParameterId'] == 'NARatio'].index
 
-        ## 2.
+        # 2.
         redrec = rec.groupby(['PremiseId', 'Year', 'RateClass', 'Strata']
-                   )['Demand'].agg({'Count':len, 'DmdAvg':np.mean}).reset_index()
+                             )['Demand'].agg({'Count': len, 'DmdAvg': np.mean}).reset_index()
 
         # set insufficent records to NaN
         # if count != 4 or dmdavg == 0 then dmdavg -> np.nan
         bad_rec_idx = redrec[(redrec['Count'] != 4) |
-                            (redrec['DmdAvg'] == 0.0)].index
+                             (redrec['DmdAvg'] == 0.0)].index
         redrec.set_value(bad_rec_idx, 'DmdAvg', np.nan)
 
-
-        ## 3.
+        # 3.
         nared = util.ix[na_idx].groupby(['Year', 'RateClass', 'Strata']
-                                       )['ParameterValue'].agg(
-                                                {'Count':len, 'NAAvg':np.mean}
-                                                        ).reset_index()
+                                        )['ParameterValue'].agg(
+            {'Count': len, 'NAAvg': np.mean}
+        ).reset_index()
         # set insufficent records to NaN
         # if count != 5 or naavg == 0 then naavg -> np.nan
         bad_na_idx = nared[(nared['Count'] != 5.0) |
-                          (nared['NAAvg'] == 0.0)].index
-        nared.set_value(bad_na_idx, 'NAAvg', np.nan);
+                           (nared['NAAvg'] == 0.0)].index
+        nared.set_value(bad_na_idx, 'NAAvg', np.nan)
 
-        ## 4.
+        # 4.
         # plc factor
         # ['Year', 'PLC']
         plc_idx = sys[sys['ParameterId'] == 'PLCScaleFactor'].index
         plc = sys.ix[plc_idx][['Year', 'ParameterValue']]
-        plc.rename(columns={'ParameterValue':'PLC'}, inplace=True)
+        plc.rename(columns={'ParameterValue': 'PLC'}, inplace=True)
 
         # rclf factor
         # ['Year', 'RateClass', 'Strata', 'RCLF']
         rclf = util.ix[rc_idx].drop(axis=1, labels=['CPDate', 'ParameterId']
-                            ).rename(columns={'ParameterValue':'RCLF'});
+                                    ).rename(columns={'ParameterValue': 'RCLF'})
         # END PREPROCESSING
 
         # BEGIN MERGE
@@ -372,18 +377,21 @@ class PECODemand(PECO):
                        on=['Year', 'RateClass', 'Strata'], how='left')
 
         tmp_2 = pd.merge(tmp, rclf,
-                        on=['Year', 'RateClass', 'Strata'], how='left')
+                         on=['Year', 'RateClass', 'Strata'], how='left')
 
         tmp_3 = pd.merge(tmp_2, plc, on='Year', how='left')
         # END MERGE
 
         # ICAP
-        tmp_3['ICap'] = tmp_3['DmdAvg'] * tmp_3['NAAvg'] * tmp_3['RCLF'] * tmp_3['PLC']
+        tmp_3['ICap'] = tmp_3['DmdAvg'] * \
+            tmp_3['NAAvg'] * tmp_3['RCLF'] * tmp_3['PLC']
 
         return meta_organize(self, tmp_3)
 
+
 class PECORecipe:
     """Runs all meters types"""
+
     def __init__(self, conn=None, results=None):
         if (conn is None):
             raise Exception('conn=%s, results=%s' % (conn, results,))
