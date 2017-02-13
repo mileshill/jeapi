@@ -19,7 +19,7 @@ class Premise():
     '''Load a premise and normalize data over given year'''
 
     def __init__(self, conn=None, year=None, utility=None, premise=None):
-        if not all((premise, conn, utility, year)):
+        if not all((premise, conn, utility)):
             raise CorrelationException(
                 (conn, year, utility, premise), 'None value(s)')
 
@@ -46,24 +46,27 @@ class Premise():
         '''
         usage_query = """
             select
+                Year(UsageDate) as Year,
                 Cast(UsageDate as datetime) as UsageDate,
                 HourEnding,
                 Usage as PremUsage
             from HourlyUsage
             where
-                Year(UsageDate) = {year} and
                 UtilityId = '{utility}' and
                 PremiseId = '{id}'
             order by UsageDate, HourEnding
         """
 
         # load query results into pd.Dataframe
-        params = {'year': self.year, 'utility': self.utility, 'id': self.id}
+        # params = {'year': self.year, 'utility': self.utility, 'id': self.id}
+        params = {'utility': self.utility, 'id': self.id}
         df = pd.read_sql(usage_query.format(**params), self.conn)
 
         # normalize the usage to range [0.0, 1.0]
         df['PremNormalizedUsage'] = MinMaxScaler().fit_transform(
             df.PremUsage.values.reshape(-1, 1))
+
+        #self.history_ = df
 
         df = flag_peak_days(df)
         df = flag_cp_days(self.conn, self.utility, df)
@@ -87,13 +90,13 @@ class ZonalLoad():
     CURRENTLY SELECTS ONLY FROM PJMHOURLYLOADS TABLE
     '''
 
-    def __init__(self, conn, year=None, zone=None):
-        if not all((year, zone)):
+    def __init__(self, conn, zone=None):
+        if not all((zone)):
             raise CorrelationException((year, zone), 'None value(s)')
 
         # instantiation vars
         self.conn = conn
-        self.year = year
+        #self.year = year
         self.zone = zone
 
         # computational vars
@@ -102,17 +105,17 @@ class ZonalLoad():
     def initialize(self):
         usage_query = """
             select
+                Year(UsageDate) as Year,
                 UsageDate,
                 Cast(Right(HourEnding, 2) as float) as HourEnding,
                 Usage as ZoneUsage
             from PJMHourlyLoads
             where
-                LoadArea = '{zone}' and
-                Year(UsageDate) = {year}
+                LoadArea = '{zone}'
             order by UsageDate, HourEnding
         """
         # load data for year and load area
-        params = {'year': self.year, 'zone': self.zone}
+        params = {'zone': self.zone}
         df = pd.read_sql(usage_query.format(**params), self.conn)
 
         # normalize usage to given range [0.0, 1.0]
@@ -144,12 +147,12 @@ class CorrelationResult():
     object and tracking results.
     '''
 
-    def __init__(self, year=None, iso=None, utility=None, premise=None):
-        if not all((year, iso, utility, premise)):
+    def __init__(self, iso=None, utility=None, premise=None):
+        if not all((iso, utility, premise)):
             raise CorrelationException(
-                (year, iso, utility, premise), 'None value(s)')
+                (iso, utility, premise), 'None value(s)')
 
-        self.year = year
+        #self.year = year
         self.iso = iso
         self.utility = utility
         self.premise = premise
@@ -167,15 +170,15 @@ class Correlation():
         how closely a PREMISE's behaviour corresponds to the various providers.
     '''
 
-    def __init__(self, conn, year=None, iso=None, utility=None, premise=None):
+    def __init__(self, conn, iso=None, utility=None, premise=None):
 
-        if not all((year, iso, utility, premise)):
+        if not all((iso, utility, premise)):
             raise CorrelationException(
-                (year, iso, utility, premise), 'None value(s)')
+                (iso, utility, premise), 'None value(s)')
 
         # instantiation vars
         self.conn = conn
-        self.year = year
+        #self.year = year
         self.iso = iso
         self.utility = utility
         self.premise = premise
@@ -205,15 +208,15 @@ class Correlation():
 
         '''
         conn = self.conn
-        year, iso, util, premise = self.year, self.iso, self.utility, self.premise
+        iso, util, premise = self.iso, self.utility, self.premise
         results = CorrelationResult(
-            year=year, iso=iso, utility=util, premise=premise)
+            iso=iso, utility=util, premise=premise)
 
         # BEGIN INITIALIZATION
         # initialize three levels
-        iso = ZonalLoad(conn, year=year, zone=iso)  # iso.initialize()
-        utility = ZonalLoad(conn, year=year, zone=util)  # utility.initialize()
-        prem = Premise(conn, year=year, utility=util,
+        iso = ZonalLoad(conn, zone=iso)  # iso.initialize()
+        utility = ZonalLoad(conn, zone=util)  # utility.initialize()
+        prem = Premise(conn, utility=util,
                        premise=premise)  # prem.initialize()
         zones = [iso, utility, prem]
         for zone in zones:
@@ -287,7 +290,7 @@ class Correlation():
         return results
 
 
-def flag_peak_days(df, top=20):
+def flag_peak_days(df, top=50):
     '''Sets `PeakDay` = True if `NormalizedUsage` is in top 20 values.
     Values are considered on a per day basis.
     '''
@@ -300,20 +303,32 @@ def flag_peak_days(df, top=20):
     col = [c for c in df.columns if 'NormalizedUsage' in c][0]
 
     # index values of top (n) NormalizedUsage values
-    idx = df.groupby('UsageDate')[col].transform(max) == df[col]
+    # idx = df.groupby(['Year', 'UsageDate'])[col].transform(max) == df[col]
 
     # select top values
-    peak_values = df[idx].sort_values(by=col, ascending=False)[:top].index
+    # peak_values = df[idx].sort_values(by=col, ascending=False)[:top].index
+
+    # Determine maximum value per day
+    mask_day_maxes = df.groupby(
+        ['Year', 'UsageDate'])[col].transform(max) == df[col]
+
+    # Determine top 50 daily peaks for each year
+    idx_year_maxes = df[mask_day_maxes].groupby(
+        'Year')[col].nlargest(top).reset_index(level=0).index
+
+    df['PeakDay'] = False
+    df.set_value(idx_year_maxes, 'PeakDay', True)
 
     # add `PeakDay` column to df and assign values
-    PEAK_DAY = 'PeakDay'
-    df[PEAK_DAY] = False
-    for index in peak_values:
-        df.set_value(index, PEAK_DAY, True)
+    # PEAK_DAY = 'PeakDay'
+    # df[PEAK_DAY] = False
+    # for index in peak_values:
+    #     df.set_value(index, PEAK_DAY, True)
 
     # update the history to shop `top` peak days
     # self.history_ = df
     return df
+
 
 def flag_cp_days(conn, utility, df):
     cp_query = """
@@ -329,9 +344,9 @@ def flag_cp_days(conn, utility, df):
     cp_df['CPDate'] = pd.to_datetime(cp_df['CPDate'])
 
     cp_idx = df.reset_index().merge(cp_df,
-        how='inner',
-        left_on=['UsageDate', 'HourEnding'],
-        right_on=['CPDate', 'HourEnding']).set_index('index').index
+                                    how='inner',
+                                    left_on=['UsageDate', 'HourEnding'],
+                                    right_on=['CPDate', 'HourEnding']).set_index('index').index
 
     df['CoincidentPeak'] = 0
     df.set_value(cp_idx, 'CoincidentPeak', 1)
