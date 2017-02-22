@@ -6,8 +6,9 @@ import json
 
 # Path is relative to current directory
 # Import all CSV files
-path = '/home/miles/Dropbox/iCAP_Project/Results/Analysis'
-file_names = glob.glob(path + '/[0-9]*.csv')
+# path = '/home/miles/Dropbox/iCAP_Project/Results/Analysis'
+#file_names = glob.glob(path + '/[0-9]*.csv')
+file_names = glob.glob('*rec*csv')
 
 # Load all CSV files into memory
 # Concatenate into single DataFrame

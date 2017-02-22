@@ -6,6 +6,7 @@ class Results():
     def __init__(self, conn, df):
         assert isinstance(df, pd.DataFrame)
         self.conn = conn
+        # replace infinite values with np.NaN
         self.df = df
         self.utilities = utility_transform(
             df['Utility'].drop_duplicates().values)
@@ -16,6 +17,12 @@ class Results():
             columns={'Utility': 'UtilityId', 'ICap': 'RecipeICap',
                      'CapacityTagValue': 'HistoricalICap',
                      'HistVar': 'RecipeVariance'}, inplace=True)
+
+        # replace the infinite values with np.nan
+        self.compare_.replace(
+            to_replace=np.inf,
+            value=np.nan,
+            inplace=True)
 
     def compare_historical(self):
         """Compare historical computes the absolute variance between the
@@ -48,7 +55,7 @@ class Results():
             fp = str(util).lower() + '_rec.csv'
 
         self.compare_.to_csv(fp,
-                             na_rep='NULL',
+                             na_rep='',
                              float_format='%.4f',
                              index=False,
                              date_format='%Y-%m-%d_%H:%M'

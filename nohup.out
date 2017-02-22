@@ -68,3 +68,46 @@ Traceback (most recent call last):
   File "pandas/src/hashtable_class_helper.pxi", line 732, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13733)
   File "pandas/src/hashtable_class_helper.pxi", line 740, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13687)
 KeyError: ('HistVar', 'occurred at index 9119')
+Traceback (most recent call last):
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/indexes/base.py", line 2134, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas/index.pyx", line 139, in pandas.index.IndexEngine.get_loc (pandas/index.c:4443)
+  File "pandas/index.pyx", line 161, in pandas.index.IndexEngine.get_loc (pandas/index.c:4289)
+  File "pandas/src/hashtable_class_helper.pxi", line 732, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13733)
+  File "pandas/src/hashtable_class_helper.pxi", line 740, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13687)
+KeyError: 'AVGDemand'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "main.py", line 55, in <module>
+    main()
+  File "main.py", line 24, in main
+    centhud = CENTHUDRecipe(conn, Results).run_all()
+  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/centhud/centhud.py", line 269, in run_all
+    dmd = CENTHUDDemand(self.conn).compute_icap()
+  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/centhud/centhud.py", line 255, in compute_icap
+    tmp['ICap'] = tmp['AVGDemand'] * tmp['UtilityFactor'] * \
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/frame.py", line 2059, in __getitem__
+    return self._getitem_column(key)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/frame.py", line 2066, in _getitem_column
+    return self._get_item_cache(key)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/generic.py", line 1386, in _get_item_cache
+    values = self._data.get(item)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/internals.py", line 3541, in get
+    loc = self.items.get_loc(item)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/indexes/base.py", line 2136, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas/index.pyx", line 139, in pandas.index.IndexEngine.get_loc (pandas/index.c:4443)
+  File "pandas/index.pyx", line 161, in pandas.index.IndexEngine.get_loc (pandas/index.c:4289)
+  File "pandas/src/hashtable_class_helper.pxi", line 732, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13733)
+  File "pandas/src/hashtable_class_helper.pxi", line 740, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13687)
+KeyError: 'AVGDemand'
+Traceback (most recent call last):
+  File "result_csv_to_json.py", line 20, in <module>
+    temp = pd.concat(list_)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/tools/merge.py", line 1334, in concat
+    copy=copy)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/tools/merge.py", line 1367, in __init__
+    raise ValueError('No objects to concatenate')
+ValueError: No objects to concatenate

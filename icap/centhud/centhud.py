@@ -9,7 +9,7 @@ class CENTHUD():
     '''
 
     def __init__(self, conn, meter_type=None):
-        self.params = {'ISO': 'PJM',
+        self.params = {'ISO': 'NYISO',
                        'RunDate': datetime.now(),
                        'Utility': 'CENTHUD',
                        'MeterType': meter_type}
@@ -20,7 +20,7 @@ class CENTHUD():
 
         # computed vars
         self.util_df_ = self.get_util_params()
-        # self.sys_df_ = self.get_sys_params()
+        self.sys_df_ = self.get_sys_params()
 
     def get_util_params(self):
         """Get CENTHUD Utility parameters"""
@@ -30,18 +30,35 @@ class CENTHUD():
                 Cast(cp.CPYearID-1 as int) as Year,
                 RTrim(upv.RateClass) as RateClass,
                 RTrim(upv.Strata) as Strata,
-                Exp(Sum(Log(upv.ParameterValue))) as UtilityFactor
+                upv.ParameterValue as UtilityFactor
+                --Exp(Sum(Log(upv.ParameterValue))) as UtilityFactor
             from [UtilityParameterValue] upv
             inner join [CoincidentPeak] cp
                 on cp.CPID = upv.CPID
             where
-                upv.UtilityId = 'CENTHUD'
-            group by
-                cp.CPYearID-1,
-                RTrim(upv.RateClass),
-                RTrim(upv.Strata)"""
+                upv.UtilityId = 'CENTHUD' and
+                upv.ParameterId = 'WeatherNormalFactor'
+            """
+
+        """group by
+            cp.CPYearID-1,
+            RTrim(upv.RateClass),
+            RTrim(upv.Strata)"""
 
         return pd.read_sql(util_query, self.conn)
+
+    def get_sys_params(self):
+        """Get CENTHUD system parameters"""
+
+        system_query = """
+            select 
+                Cast((CPYearId - 1) as int) as Year,
+                (1.0 + ParameterValue) as VoltageLoss
+            from [SystemLoad]
+            where
+                ParameterId = 'LossLossFACTOR'"""
+
+        return pd.read_sql(system_query, self.conn)
 
 
 class CENTHUDConsumption(CENTHUD):
@@ -56,26 +73,32 @@ class CENTHUDConsumption(CENTHUD):
 
     def get_records(self):
         record_query = """
-                select
+               select distinct
                     m.PremiseId,
                     Year(m.EndDate) as Year,
                     RTrim(p.RateClass) as RateClass,
                     RTrim(p.Strata) as Strata,
-                    lp.AvgHourlyLoad_kw as LoadProfile
+                    lp.AvgHourlyLoad_kw as LoadProfile,
+                    p.UsageFactor,
+                    p.EffectiveStartDate, p.EffectiveStopDate,
+                    cp.CPDate, cp.CPYearId
                 from [MonthlyUsage] m
+                inner join [CoincidentPeak] cp
+                    on cp.UtilityId = m.UtilityId
                 inner join [Premise] p
                     on p.UtilityId = m.UtilityId
                     and p.PremiseId = m.PremiseId
-                inner join [CoincidentPeak] cp
-                    on cp.UtilityId = m.UtilityId
+                    and Year(p.EffectiveStartDate) = cp.CPYearId 
                 inner join [CENTHUD_Load_Profile] lp
                     on p.Strata = lp.Stratum
                     and Month(cp.CPDate) = Cast(lp.Month as int)
-                    and cp.HourEnding = Cast(lp.Hour as int)
+                    and (cp.HourEnding + 1) = Cast(lp.Hour as int)
+                    and Year(p.EffectiveStartDate) = cp.CPYearId
                 where
                     m.UtilityID = 'CENTHUD'
+                    --and m.PremiseId = '1222106000'
                     and (m.Demand is NULL or m.Demand = 0)
-                    and cp.CPDate between m.StartDate and m.EndDate
+                    and (cp.CPDate between m.StartDate and m.EndDate)
                     and lp.DayType = 'WKDAY'
                     {prem}"""
 
@@ -90,13 +113,26 @@ class CENTHUDConsumption(CENTHUD):
     def compute_icap(self):
         """CENTHUD Consumption ICAP:
         """
+
+        # Join records and utility factor
         tmp = pd.merge(self.records_, self.util_df_,
                        how='left',
-                       on=['Year', 'RateClass', 'Strata'])
+                       on=['Year', 'Strata'])
 
-        tmp['ICap'] = tmp['LoadProfile'] * tmp['UtilityFactor']
+        # Join on the system parameter
+        tmp_2 = pd.merge(tmp, self.sys_df_,
+                         how='left', on=['Year'])
 
-        return meta_organize(self, tmp)
+        # Drop/Rename RateClass redundency; result of the joins
+        tmp_2.drop('RateClass_y', axis=1, inplace=True)
+        tmp_2.rename(columns={'RateClass_x':'RateClass'}, inplace=True)
+
+        # Compute the ICap
+        tmp_2['ICap'] = tmp_2['LoadProfile'] * \
+            tmp_2['UtilityFactor'] * tmp_2['UsageFactor']
+        tmp_2.drop_duplicates(inplace=True)
+
+        return meta_organize(self, tmp_2)
 
 
 class CENTHUDDemand(CENTHUD):
@@ -117,16 +153,14 @@ class CENTHUDDemand(CENTHUD):
                 Cast(cp.CPYearID-1 as int) as Year,
                 RTrim(upv.RateClass) as RateClass,
                 RTrim(upv.Strata) as Strata,
-                Exp(Sum(Log(upv.ParameterValue))) as UtilFactor
+                --Exp(Sum(Log(upv.ParameterValue))) as UtilityFactor
+                upv.ParameterValue as UtilityFactor
             from [UtilityParameterValue] upv
             inner join [CoincidentPeak] cp
                 on cp.CPID = upv.CPID
             where
-                upv.UtilityId = 'CENTHUD'
-            group by
-                Cast(cp.CPYearID-1 as int),
-                RTrim(upv.RateClass),
-                RTrim(upv.Strata)"""
+                upv.UtilityId = 'CENTHUD' and
+                upv.ParameterId = 'WeatherNormalFactor'''"""
 
         return pd.read_sql(util_query, self.conn)
 
@@ -170,6 +204,36 @@ class CENTHUDDemand(CENTHUD):
                 Count(m.EndDate) = 3
                     {prem}"""
 
+        record_query =  """
+            select distinct
+                m.PremiseId,
+                Year(m.EndDate) as Year,
+                RTrim(p.RateClass) as RateClass,
+                RTrim(p.Strata) as Strata,
+                lp.AvgHourlyLoad_kw as LoadProfile,
+                p.UsageFactor,
+                p.EffectiveStartDate, p.EffectiveStopDate,
+                cp.CPDate, cp.CPYearId
+            from [MonthlyUsage] m
+            inner join [CoincidentPeak] cp
+                on cp.UtilityId = m.UtilityId
+            inner join [Premise] p
+                on p.UtilityId = m.UtilityId
+                and p.PremiseId = m.PremiseId
+                and Year(p.EffectiveStartDate) = cp.CPYearId 
+            inner join [CENTHUD_Load_Profile] lp
+                on p.Strata = lp.Stratum
+                and Month(cp.CPDate) = Cast(lp.Month as int)
+                and (cp.HourEnding + 1) = Cast(lp.Hour as int)
+                and Year(p.EffectiveStartDate) = cp.CPYearId
+            where
+                m.UtilityID = 'CENTHUD'
+                --and m.PremiseId = '1222106000'
+                and (m.Demand is NULL or m.Demand = 0)
+                and (cp.CPDate between m.StartDate and m.EndDate)
+                and lp.DayType = 'WKDAY'
+                {prem}"""
+
         if self.premise:
             record_query = record_query.format(
                 prem="and m.PremiseId = '%s'" % self.premise)
@@ -188,7 +252,7 @@ class CENTHUDDemand(CENTHUD):
                        how='left',
                        on=['Strata', 'Year'])
 
-        tmp['ICap'] = tmp['AVGDemand'] * tmp['UtilFactor'] * \
+        tmp['ICap'] = tmp['AVGDemand'] * tmp['UtilityFactor'] * \
             tmp['AVGHourlyLoad']
 
         return meta_organize(self, tmp)

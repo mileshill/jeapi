@@ -12,7 +12,7 @@ class CONED:
     '''
 
     def __init__(self, conn):
-        self.params = {'ISO': 'PJM',
+        self.params = {'ISO': 'NYISO',
                        'RunDate': datetime.now(),
                        'Utility': 'CONED'}
 

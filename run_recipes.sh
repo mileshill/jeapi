@@ -10,6 +10,10 @@
 # Launch the recipe calculations
 python main.py
 
+# Run the JSON builder script.
+# The JSON will be consumed by the dashboard
+# python result_csv_to_json.py
+
 # Locate and rename
 TIMESTAMP=$(date +'%Y%m%d')
 for fname in $(find . -maxdepth 1 -name "*.csv" -o -name "*.xlsx") 
@@ -19,6 +23,3 @@ do
     mv $FILENAME ~/Dropbox/iCAP_Project/Results/Analysis/$NEW
 done
 
-# Run the JSON builder script.
-# The JSON will be consumed by the dashboard
-python result_csv_to_json.py

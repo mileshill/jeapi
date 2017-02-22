@@ -21,7 +21,7 @@ def main():
     # Returned value is a `Results` object
 
     peco = PECORecipe(conn, Results).run_all()
-    centhud = CENTHUDRecipe(conn, Results).run_all()
+    #centhud = CENTHUDRecipe(conn, Results).run_all()
     pseg = PSEGRecipe(conn, Results).run_all()
     ppl = PPLRecipe(conn, Results).run_all()
     coned = CONEDRecipe(conn, Results).run_all()
@@ -38,8 +38,8 @@ def main():
     peco.write_comparison_to_csv()
     peco.analyze_comparison(write_to_excel=True)
 
-    centhud.write_comparison_to_csv()
-    centhud.analyze_comparison(write_to_excel=True)
+    #centhud.write_comparison_to_csv()
+    #centhud.analyze_comparison(write_to_excel=True)
 
     pseg.write_comparison_to_csv()
     pseg.analyze_comparison(write_to_excel=True)
@@ -49,9 +49,6 @@ def main():
 
     coned.write_comparison_to_csv()
     coned.analyze_comparison(write_to_excel=True)
-
-    centhud.write_comparison_to_csv()
-    centhud.analyze_comparison(write_to_excel=True)
 
 
 if __name__ == '__main__':
