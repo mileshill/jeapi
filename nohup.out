@@ -1,113 +1,26 @@
 Traceback (most recent call last):
-  File "main.py", line 51, in <module>
-    main()
-  File "main.py", line 43, in main
-    coned.write_to_csv()
-AttributeError: 'Results' object has no attribute 'write_to_csv'
-Traceback (most recent call last):
-  File "main.py", line 51, in <module>
-    main()
-  File "main.py", line 20, in main
-    peco = PECORecipe(conn, Results).run_all()
-  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/peco/peco.py", line 394, in run_all
-    intv = PECOInterval(self.conn).compute_icap()
-  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/peco/peco.py", line 161, in compute_icap
-    )['WCF'].agg({'Count':len, 'WCF':np.mean}).reset_index()
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/groupby.py", line 2646, in aggregate
-    (_level or 0) + 1)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/groupby.py", line 2708, in _aggregate_multiple_funcs
-    results[name] = obj.aggregate(func)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/groupby.py", line 2650, in aggregate
-    return getattr(self, cyfunc)()
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/groupby.py", line 1009, in mean
-    return self._cython_agg_general('mean')
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/groupby.py", line 808, in _cython_agg_general
-    raise DataError('No numeric types to aggregate')
-pandas.core.base.DataError: No numeric types to aggregate
-PSEG_analysis.xlsx
-pseg_rec.csv
-CONED_analysis.xlsx
-centhud_rec.csv
-PPL_analysis.xlsx
-ppl_rec.csv
-peco_rec.csv
-coned_rec.csv
-PECO_analysis.xlsx
-CENTHUD_analysis.xlsx
-Traceback (most recent call last):
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/indexes/base.py", line 2175, in get_value
-    return tslib.get_value_box(s, key)
-  File "pandas/tslib.pyx", line 881, in pandas.tslib.get_value_box (pandas/tslib.c:18246)
-  File "pandas/tslib.pyx", line 890, in pandas.tslib.get_value_box (pandas/tslib.c:17880)
-TypeError: 'str' object cannot be interpreted as an integer
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "main.py", line 58, in <module>
-    main()
-  File "main.py", line 39, in main
-    peco.analyze_comparison(write_to_excel=True)
-  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/results/results.py", line 95, in analyze_comparison
-    results['Passing'] = results.apply(passing_value, axis=1)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/frame.py", line 4163, in apply
-    return self._apply_standard(f, axis, reduce=reduce)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/frame.py", line 4259, in _apply_standard
-    results[i] = func(v)
-  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/results/results.py", line 87, in passing_value
-    variance = series['HistVar']
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/series.py", line 601, in __getitem__
-    result = self.index.get_value(self, key)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/indexes/base.py", line 2183, in get_value
-    raise e1
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/indexes/base.py", line 2169, in get_value
-    tz=getattr(series.dtype, 'tz', None))
-  File "pandas/index.pyx", line 105, in pandas.index.IndexEngine.get_value (pandas/index.c:3567)
-  File "pandas/index.pyx", line 113, in pandas.index.IndexEngine.get_value (pandas/index.c:3250)
-  File "pandas/index.pyx", line 161, in pandas.index.IndexEngine.get_loc (pandas/index.c:4289)
-  File "pandas/src/hashtable_class_helper.pxi", line 732, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13733)
-  File "pandas/src/hashtable_class_helper.pxi", line 740, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13687)
-KeyError: ('HistVar', 'occurred at index 9119')
-Traceback (most recent call last):
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/indexes/base.py", line 2134, in get_loc
-    return self._engine.get_loc(key)
-  File "pandas/index.pyx", line 139, in pandas.index.IndexEngine.get_loc (pandas/index.c:4443)
-  File "pandas/index.pyx", line 161, in pandas.index.IndexEngine.get_loc (pandas/index.c:4289)
-  File "pandas/src/hashtable_class_helper.pxi", line 732, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13733)
-  File "pandas/src/hashtable_class_helper.pxi", line 740, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13687)
-KeyError: 'AVGDemand'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File "main.py", line 55, in <module>
     main()
-  File "main.py", line 24, in main
-    centhud = CENTHUDRecipe(conn, Results).run_all()
-  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/centhud/centhud.py", line 269, in run_all
-    dmd = CENTHUDDemand(self.conn).compute_icap()
-  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/centhud/centhud.py", line 255, in compute_icap
-    tmp['ICap'] = tmp['AVGDemand'] * tmp['UtilityFactor'] * \
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/frame.py", line 2059, in __getitem__
-    return self._getitem_column(key)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/frame.py", line 2066, in _getitem_column
-    return self._get_item_cache(key)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/generic.py", line 1386, in _get_item_cache
-    values = self._data.get(item)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/internals.py", line 3541, in get
-    loc = self.items.get_loc(item)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/indexes/base.py", line 2136, in get_loc
-    return self._engine.get_loc(self._maybe_cast_indexer(key))
-  File "pandas/index.pyx", line 139, in pandas.index.IndexEngine.get_loc (pandas/index.c:4443)
-  File "pandas/index.pyx", line 161, in pandas.index.IndexEngine.get_loc (pandas/index.c:4289)
-  File "pandas/src/hashtable_class_helper.pxi", line 732, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13733)
-  File "pandas/src/hashtable_class_helper.pxi", line 740, in pandas.hashtable.PyObjectHashTable.get_item (pandas/hashtable.c:13687)
-KeyError: 'AVGDemand'
-Traceback (most recent call last):
-  File "result_csv_to_json.py", line 20, in <module>
-    temp = pd.concat(list_)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/tools/merge.py", line 1334, in concat
-    copy=copy)
-  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/tools/merge.py", line 1367, in __init__
-    raise ValueError('No objects to concatenate')
-ValueError: No objects to concatenate
+  File "main.py", line 27, in main
+    coned = CONEDRecipe(conn, Results).run_all()
+  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/coned/coned.py", line 669, in run_all
+    intv = CONEDInterval(self.conn).compute_icap()
+  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/coned/coned.py", line 248, in __init__
+    CONED.__init__(self, conn)
+  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/coned/coned.py", line 35, in __init__
+    self.temp_var = self.build_temperature_variant()
+  File "/home/miles/Projects/BusinessLab/JustEnergy/icap/coned/coned.py", line 146, in build_temperature_variant
+    ).pivot(columns='StationCode', values='RowSum'
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/frame.py", line 3946, in pivot
+    return pivot(self, index=index, columns=columns, values=values)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/reshape.py", line 336, in pivot
+    return indexed.unstack(columns)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/series.py", line 2088, in unstack
+    return unstack(self, level, fill_value)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/reshape.py", line 411, in unstack
+    fill_value=fill_value)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/reshape.py", line 103, in __init__
+    self._make_selectors()
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/reshape.py", line 141, in _make_selectors
+    raise ValueError('Index contains duplicate entries, '
+ValueError: Index contains duplicate entries, cannot reshape

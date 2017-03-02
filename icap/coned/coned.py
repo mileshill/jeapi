@@ -114,15 +114,9 @@ class CONED:
 
         Assigns the resulting table to:     self.temp_var
         """
-        # QUERY
-        # query and SQL execution
-        temp_station_query = """select
-                RTrim(StationCode) as StationCode,
-                ObservedDate, Hour,
-                Temperature, WetBulbTemperature
-            from CONED_NYWeatherData"""
-
-        ts = pd.read_sql(temp_station_query, self.conn)
+        """
+        THIS CODE IS DEPRECIATED AFTER CONED_NYWeatherData change on
+        Feb 23, 2016
 
         # CONVERSIONS
         # convert hour into timedelta
@@ -164,11 +158,67 @@ class CONED:
         # required weights and rolling avg
         wts = np.array([.1, .2, .7])
         tv = ravg.rolling(window=3).apply(f(wts))
+        """
+
+        # QUERY
+        # query and SQL execution
+        temp_station_query = """select
+                RTrim(StationCode) as StationCode,
+                ObservedDate,
+                Temperature, WetBulbTemperature
+            from [CONED_NYWeatherData]
+            order by
+                ObservedDate"""
+
+        ts = pd.read_sql(temp_station_query, self.conn)
+
+        """
+        Hourly Average:
+            WetBulbTemperature = WBT; Temperature = T;
+
+            for hour in ObservedDate:
+                hourly_avg[i] = 0.25 * (KNYC_WBT + KNYC_T + KLGA_WBT + KLGA_T)
+
+        """
+        hourly_avg = pd.pivot_table(ts, index='ObservedDate',
+                                    columns='StationCode',
+                                    values=['Temperature',
+                                            'WetBulbTemperature'],
+                                    ).mean(1)
+
+        """
+        Rolling Average:
+            1. Group hourly average into days
+            2. Rolling mean over 3 hour window
+            3. Take maximum average per day
+        """
+        daily_max_avg = hourly_avg.groupby(pd.TimeGrouper('D')
+                                           ).rolling(window=3).mean().max(level=0)
+
+        """
+        Rolling Weighted Sum:
+            The weighted sum is applyed to 3 day rolling window.
+            The current day weight is 70%, day-1 is 20%, day-2 is 10%.
+
+            weights = [0.1, 0.2, 0.7]
+            day[i-2], day[i-1], day[i] = weights
+        """
+        # helper function to compute weighted sum
+        def f(w):
+            def g(x):
+                return (w * x).sum()
+            return g
+
+        # Weights
+        wts = np.array([.1, .2, .7])
+
+        # Apply rolling weighted summation
+        daily_max_avg.rolling(window=3).apply(f(wts))
 
         # CONVERSION
         # convert to DataFrame
         # reset the index
-        temp_var = pd.DataFrame(tv)
+        temp_var = pd.DataFrame(daily_max_avg)
         temp_var.reset_index(inplace=True)
         temp_var.rename(columns={0: 'Max'}, inplace=True)
 
@@ -613,6 +663,7 @@ class CONEDMonthly(CONED):
         if self.monthly['MCD'].unique().shape[0] == 1:
             self.compute_mcd()
 
+        print('self.monthly: ', self.monthly.columns)
         # Merge montly records with utility records
         # This merge makes the icap calculation simple using groupby
         tmp = pd.merge(self.monthly.reset_index(), self.util,
@@ -620,6 +671,7 @@ class CONEDMonthly(CONED):
                        left_on=['Year', 'ZoneCode'],
                        right_on=['Year', 'Zone'])
 
+        print('tmp: ', tmp.columns)
         # All factors require adjustment by +1
         tmp['Factor'] = tmp['Factor'].apply(lambda x: x + 1.0)
 
@@ -653,8 +705,9 @@ class CONEDMonthly(CONED):
                     inplace=True)
 
         # requires a Strata Column
-        icap['Strata'] = icap['RateClass']
-
+        # icap['Strata'] = icap['RateClass']
+        # icap['Strata'] = self.monthly['Strata']
+        icap = pd.merge(icap, tmp, on=['PremiseId', 'Year', 'RateClass'])
         return meta_organize(self, icap)
 
 

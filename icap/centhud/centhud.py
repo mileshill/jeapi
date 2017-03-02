@@ -204,36 +204,6 @@ class CENTHUDDemand(CENTHUD):
                 Count(m.EndDate) = 3
                     {prem}"""
 
-        record_query =  """
-            select distinct
-                m.PremiseId,
-                Year(m.EndDate) as Year,
-                RTrim(p.RateClass) as RateClass,
-                RTrim(p.Strata) as Strata,
-                lp.AvgHourlyLoad_kw as LoadProfile,
-                p.UsageFactor,
-                p.EffectiveStartDate, p.EffectiveStopDate,
-                cp.CPDate, cp.CPYearId
-            from [MonthlyUsage] m
-            inner join [CoincidentPeak] cp
-                on cp.UtilityId = m.UtilityId
-            inner join [Premise] p
-                on p.UtilityId = m.UtilityId
-                and p.PremiseId = m.PremiseId
-                and Year(p.EffectiveStartDate) = cp.CPYearId 
-            inner join [CENTHUD_Load_Profile] lp
-                on p.Strata = lp.Stratum
-                and Month(cp.CPDate) = Cast(lp.Month as int)
-                and (cp.HourEnding + 1) = Cast(lp.Hour as int)
-                and Year(p.EffectiveStartDate) = cp.CPYearId
-            where
-                m.UtilityID = 'CENTHUD'
-                --and m.PremiseId = '1222106000'
-                and (m.Demand is NULL or m.Demand = 0)
-                and (cp.CPDate between m.StartDate and m.EndDate)
-                and lp.DayType = 'WKDAY'
-                {prem}"""
-
         if self.premise:
             record_query = record_query.format(
                 prem="and m.PremiseId = '%s'" % self.premise)
