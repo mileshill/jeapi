@@ -24,3 +24,39 @@ Traceback (most recent call last):
   File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/reshape.py", line 141, in _make_selectors
     raise ValueError('Index contains duplicate entries, '
 ValueError: Index contains duplicate entries, cannot reshape
+self.monthly:  Index(['RateClass', 'Strata', 'ZoneCode', 'Stratum', 'TOD', 'StartDate',
+       'EndDate', 'BilledUsage', 'BilledDemand', 'MeterType', 'MCD',
+       'NormUsage', 'MeterLogic', 'MeterRegex'],
+      dtype='object')
+tmp:  Index(['PremiseId', 'Year', 'RateClass', 'Strata', 'ZoneCode', 'Stratum',
+       'TOD', 'StartDate', 'EndDate', 'BilledUsage', 'BilledDemand',
+       'MeterType_x', 'MCD', 'NormUsage', 'MeterLogic', 'MeterRegex',
+       'ParameterId', 'Zone', 'Factor', 'MeterType_y'],
+      dtype='object')
+self.monthly:  Index(['RateClass', 'Strata', 'ZoneCode', 'Stratum', 'TOD', 'StartDate',
+       'EndDate', 'BilledUsage', 'BilledDemand', 'MeterType', 'MCD',
+       'NormUsage', 'MeterLogic', 'MeterRegex'],
+      dtype='object')
+tmp:  Index(['PremiseId', 'Year', 'RateClass', 'Strata', 'ZoneCode', 'Stratum',
+       'TOD', 'StartDate', 'EndDate', 'BilledUsage', 'BilledDemand',
+       'MeterType_x', 'MCD', 'NormUsage', 'MeterLogic', 'MeterRegex',
+       'ParameterId', 'Zone', 'Factor', 'MeterType_y'],
+      dtype='object')
+/home/miles/anaconda3/lib/python3.5/site-packages/pandas/core/generic.py:5374: RuntimeWarning: invalid value encountered in absolute
+  return np.abs(demeaned).mean(axis=axis, skipna=skipna)
+result_csv_to_json.py:38: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  temp['Year'] = pd.to_numeric(temp['Year'].copy(), downcast='float', errors='coerce')
+*** Error in `python': corrupted double-linked list: 0x000000000248f6f0 ***
+./run_recipes.sh: line 11: 12847 Aborted                 (core dumped) python main.py
+Traceback (most recent call last):
+  File "result_csv_to_json.py", line 20, in <module>
+    temp = pd.concat(list_)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/tools/merge.py", line 1334, in concat
+    copy=copy)
+  File "/home/miles/anaconda3/lib/python3.5/site-packages/pandas/tools/merge.py", line 1367, in __init__
+    raise ValueError('No objects to concatenate')
+ValueError: No objects to concatenate

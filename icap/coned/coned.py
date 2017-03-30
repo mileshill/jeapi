@@ -620,9 +620,9 @@ class CONEDMonthly(CONED):
                                  on=['Max', 'DayOfWeek'])
 
             # Filter for Straum condition
-            stratum = float(stratum)
+            stratum = float(stratum) - 1.0
             stratum_lower_mask = local_lst['STRAT L BOUND'] <= stratum
-            stratum_upper_mask = local_lst['STRAT U BOUND'] >= stratum
+            stratum_upper_mask = local_lst['STRAT U BOUND'] > stratum
             stratum_mask = (stratum_lower_mask == 1) & (
                 stratum_upper_mask == 1)
             local_lst = local_lst.ix[stratum_mask]
@@ -636,6 +636,8 @@ class CONEDMonthly(CONED):
             # Check for filtering condition:
             # local load shape table rows == billcycle rows
             if local_lst.shape[0] != billcycle.shape[0]:
+                self.monthly.loc[(prem, year), ['NormUsage', 'MCD']
+                    ] = [False, False]
                 continue
 
             # Extract the kiloWatt hour columns
@@ -650,7 +652,7 @@ class CONEDMonthly(CONED):
             csf = usage / local_lst.values.sum()
             load_profile = local_lst.ix[cp_day]['KW' + str(hr)]
             normalized_usage = load_profile * csf
-            mcd = normalized_usage
+            mcd = np.min([normalized_usage, demand])
 
             # Update the monthly usage values
             self.monthly.loc[(prem, year), ['NormUsage', 'MCD']

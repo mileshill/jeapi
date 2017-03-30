@@ -12,7 +12,7 @@ python main.py
 
 # Run the JSON builder script.
 # The JSON will be consumed by the dashboard
-# python result_csv_to_json.py
+python result_csv_to_json.py
 
 # Locate and rename
 TIMESTAMP=$(date +'%Y%m%d')
