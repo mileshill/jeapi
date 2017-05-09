@@ -6,6 +6,8 @@
 # OLD -> FILENAME
 # NEW -> YYYYMMDD_FILENAME
 
+# Activate the environment
+source activate justenergy
 
 # Launch the recipe calculations
 python main.py
@@ -23,3 +25,5 @@ do
     mv $FILENAME ~/Dropbox/iCAP_Project/Results/Analysis/$NEW
 done
 
+# Deactivate environment
+source deactivate

@@ -61,6 +61,7 @@ class CONED:
                select distinct
                     RTrim(sm.PremiseSrvClass) as RateClass,
                     RTrim(sm.LoadShapeTblSrvClass) as Map,
+                    RTrim(sm.StrataIndicator) as StrataIndicator,
                     iif(t.TODQ is NULL, 0, iif(t.TODQ = 'Yes', 1, 0)) as TODQ
                from Premise as p
                full outer join CONED_TOD as t
@@ -167,6 +168,8 @@ class CONED:
                 ObservedDate,
                 Temperature, WetBulbTemperature
             from [CONED_NYWeatherData]
+            where
+                DatePart(hour, ObservedDate) between 09 and 21
             order by
                 ObservedDate"""
 
@@ -275,7 +278,8 @@ class CONED:
         This distinction is utilized in the Scaling Trueup Factor
         selection.
         """
-        tod_code, meter_type = row[['TOD', 'MeterType']]
+        tod_code, meter_type, rate_class = row[['TOD', 'MeterType', 'RateClass']]
+
 
         # Extract the tod mapping if it exists
         is_tod = 0  # assume False
@@ -288,14 +292,15 @@ class CONED:
 
     def is_tod(self, meter_logic):
         """Returns proper REGEX based on MeterLogic columns"""
-        if meter_logic == 'VTOU':
+        if meter_logic == 'VTOU' and self.rc_map.ix[int(rate_class)]['StrataIndicator'] == 1:
             return 'T'
         return '[^T]'
 
 
 class CONEDInterval(CONED):
-    def __init__(self, conn=None):
+    def __init__(self, conn=None, premise=None):
         CONED.__init__(self, conn)
+        self.premise = premise
         self.hourly = pd.merge(self.get_hourly().reset_index(),
                                self.get_hourly_cp(),
                                how='left',
@@ -318,6 +323,7 @@ class CONEDInterval(CONED):
                 and cp.CPDate = h.UsageDate
                 and cp.HourEnding = h.HourEnding
             where h.UtilityId = 'CONED'"""
+
 
         return pd.read_sql(hourly_cp_query, self.conn)
 
@@ -373,7 +379,8 @@ class CONEDInterval(CONED):
             where
                 (h.UtilityId = 'CONED') and
                 (h.HourEnding between 1 and 24) and
-                (cp.CPDate between p.EffectiveStartDate and p.EffectiveStopDate)
+                ((cp.CPDate >= p.EffectiveStartDate) and (cp.CPDate < p.EffectiveStopDate))
+                {prem}
             group by
                 h.PremiseId,
                 p.RateClass, ce.[Service Classification],
@@ -384,6 +391,13 @@ class CONEDInterval(CONED):
                 m.Demand
             having
                 Count(h.Usage) = (DateDiff(hour, m.StartDate, m.EndDate) + 24)"""
+
+        # Format query to handle single premise
+        if self.premise is not None:
+            hourly_query = hourly_query.format(
+                prem="and h.PremiseId = '%s'" % self.premise)
+        else:
+            hourly_query = hourly_query.format(prem="")
 
         # obtain data; set defaults; converions
         df = pd.read_sql(hourly_query, self.conn)
@@ -461,7 +475,7 @@ class CONEDInterval(CONED):
             csf = usage / local_lst.values.sum()
             load_profile = local_lst.ix[cp_day]['KW' + str(hr)]
             normalized_usage = load_profile * csf
-            mcd = normalized_usage
+            mcd = np.min([normalized_usage, demand])
 
             # Update the monthly usage values
             self.hourly.loc[(prem, year), ['NormUsage', 'MCD']
@@ -521,11 +535,14 @@ class CONEDMonthly(CONED):
     Demand and Consumption Meters.
     """
 
-    def __init__(self, conn=None):
+    def __init__(self, conn=None, premise=None, show_lst=False):
         CONED.__init__(self, conn)
 
         # loads all monthly records
+        self.premise = premise
+        self.show_lst = show_lst
         self.monthly = self.get_monthly()
+        #print('show lst var: ', self.show_lst)
 
     def get_monthly(self):
         """get_monthly returns Consumption and Demand meters. Value returned
@@ -542,8 +559,8 @@ class CONEDMonthly(CONED):
                     Year(m.EndDate) as Year,
                     m.StartDate, m.EndDate,
                     m.Usage as BilledUsage,
-                    m.Demand as BilledDemand,
-                    iif(m.Demand is null, 'CON','DMD') as MeterType
+                    iif(m.Demand is Null, 0, m.Demand) as BilledDemand,
+                    iif(m.Demand is null or m.Demand = 0.0, 'CON','DMD') as MeterType
                 from [MonthlyUsage] m
                 inner join [CoincidentPeak] cp
                     on cp.UtilityId = m.UtilityId
@@ -555,12 +572,20 @@ class CONEDMonthly(CONED):
                     on CAST(ce.[Account Number] as varchar) = m.PremiseId
                 where
                     (m.UtilityId = 'CONED') and
-                    (cp.CPDate between p.EffectiveStartDate and p.EffectiveStopDate) and
+                    ((cp.CPDate >= p.EffectiveStartDate) and (cp.CPDate < p.EffectiveStopDate)) and
                     m.PremiseId not in (
                             select distinct PremiseId
                             from HourlyUsage
                             where UtilityId = 'CONED'
-                    )"""
+                    )
+                    {prem}"""
+
+        # Format query to handle single premise
+        if self.premise is not None:
+            monthly_query = monthly_query.format(
+                prem="and m.PremiseId = '%s'" % self.premise)
+        else:
+            monthly_query = monthly_query.format(prem="")
 
         # Execute query to obtain records
         # Initialize 'Metered Coincident Demand' (MCD) to NaN
@@ -589,7 +614,7 @@ class CONEDMonthly(CONED):
         df['MeterRegex'] = df['MeterLogic'].apply(tod_regex)
         return df
 
-    def compute_mcd(self):
+    def compute_mcd(self, ret_var=False):
         """compute_mcd is a mutator method. The 'Metered Coincident Demand'
         is calculated for each premise/year combination in the dataset.
         The resulting value is then stored in the original record set
@@ -609,6 +634,7 @@ class CONEDMonthly(CONED):
             # Convert rate_class to integer for proper Index value
             # Service class mapping
             rate_class = int(rate_class)
+            stratum = float(stratum)
             # service_class = self.rc_map.ix[rate_class]['Map']
 
             # Slice billcycle from temperature variants
@@ -620,21 +646,40 @@ class CONEDMonthly(CONED):
                                  on=['Max', 'DayOfWeek'])
 
             # Filter for Straum condition
-            stratum = float(stratum) - 1.0
+            stratum = stratum if stratum == 0.0 else stratum - 1.0
             stratum_lower_mask = local_lst['STRAT L BOUND'] <= stratum
             stratum_upper_mask = local_lst['STRAT U BOUND'] > stratum
             stratum_mask = (stratum_lower_mask == 1) & (
                 stratum_upper_mask == 1)
-            local_lst = local_lst.ix[stratum_mask]
+            
+
+            strat_mask = (local_lst['STRAT L BOUND'] <= stratum) & (local_lst['STRAT U BOUND'] > stratum)
+            stratum_lst = local_lst[strat_mask]
+            local_lst = stratum_lst
+
 
             # Filter for TimeOfDay meter type and Service Class Mapping
-            tod_mask = local_lst['STRATA'].str.contains(meter_regex)
             sc_mask = (local_lst['SC'] == self.rc_map.ix[rate_class]['Map'])
+            tod_mask = local_lst['STRATA'].str.contains(meter_regex)
             mask = (tod_mask == 1) & (sc_mask == 1)
             local_lst = local_lst.ix[mask]
 
+            # Some stratum do not have 'T' strata; default to F
+            if local_lst.shape[0] == 0:
+                #print('zero logic encountred;')
+                #tod_mask = stratum_lst['STRATA'].str.contains('F')
+                sc_mask = stratum_lst['SC'] == self.rc_map.ix[rate_class]['Map']
+                #mask = (tod_mask == 1) & (sc_mask == 1)
+                local_lst = stratum_lst[sc_mask]
+
+
             # Check for filtering condition:
             # local load shape table rows == billcycle rows
+            self.tmp = {}
+            self.tmp[(prem, 'lst')] = local_lst
+            self.tmp[(prem, 'bill_cycle')] = billcycle
+
+
             if local_lst.shape[0] != billcycle.shape[0]:
                 self.monthly.loc[(prem, year), ['NormUsage', 'MCD']
                     ] = [False, False]
@@ -642,6 +687,8 @@ class CONEDMonthly(CONED):
 
             # Extract the kiloWatt hour columns
             kw_cols = [col for col in local_lst.columns if 'KW' in col]
+            self.tmp = {}
+            self.tmp[prem] = local_lst
             local_lst = local_lst[kw_cols]
 
             # Convert coincident peak information into usable keys
@@ -658,6 +705,18 @@ class CONEDMonthly(CONED):
             self.monthly.loc[(prem, year), ['NormUsage', 'MCD']
                              ] = [normalized_usage, mcd]
 
+            
+            #print("Sum LST Values: %.3f\nCSF: %.3f\nLoad Profile: %.3f\n" %(local_lst.values.sum(), csf, load_profile))
+
+            
+
+        if self.show_lst:
+            #print('show_lst fired')
+            return {'billcycle': billcycle, 
+                'stratum_mask': stratum_lst,
+                'sc_tod_mask': local_lst,
+                'shapes':{'bill': billcycle.shape, 'lst': local_lst.shape}}
+
     def compute_icap(self):
 
         # Mutatate monthly records
@@ -665,7 +724,7 @@ class CONEDMonthly(CONED):
         if self.monthly['MCD'].unique().shape[0] == 1:
             self.compute_mcd()
 
-        print('self.monthly: ', self.monthly.columns)
+        #print('self.monthly: ', self.monthly.columns)
         # Merge montly records with utility records
         # This merge makes the icap calculation simple using groupby
         tmp = pd.merge(self.monthly.reset_index(), self.util,
@@ -673,7 +732,7 @@ class CONEDMonthly(CONED):
                        left_on=['Year', 'ZoneCode'],
                        right_on=['Year', 'Zone'])
 
-        print('tmp: ', tmp.columns)
+        #print('tmp: ', tmp.columns)
         # All factors require adjustment by +1
         tmp['Factor'] = tmp['Factor'].apply(lambda x: x + 1.0)
 

@@ -22,7 +22,7 @@ class COMED():
         # self.util_df_ = self.get_util_params()
         # self.sys_df_ = self.get_sys_params()
 
-        self.records_ = self.get_peak_load_averages()
+        #self.records_ = self.get_peak_load_averages()
 
     def get_peak_load_averages(self):
         peak_load_query = """
@@ -143,12 +143,12 @@ class COMEDInterval(COMED):
     def get_records(self):
         """Query database for interval records"""
         record_query = """
-                select
+                select distinct
                         h.PremiseId,
                         Cast(Year(h.UsageDate) as varchar) as Year,
                         RTrim(p.RateClass) as RateClass,
                         RTrim(p.Strata) as Strata,
-                        iif(h.Usage < 0, 0, h.Usage) as Usage
+                        h.Usage
                 from HourlyUsage as h
                 inner join CoincidentPeak as c
                         on c.UtilityId = h.UtilityId
