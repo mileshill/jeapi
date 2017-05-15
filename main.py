@@ -8,7 +8,7 @@ from icap.peco.peco import PECORecipe
 from icap.ppl.ppl import PPLRecipe
 from icap.coned.coned import CONEDRecipe
 from icap.centhud.centhud import CENTHUDRecipe
-
+from icap.comed.comed import COMEDRecipe
 # Libraries
 # import pandas as pd
 from datetime import datetime
@@ -25,7 +25,7 @@ def main():
     pseg = PSEGRecipe(conn, Results).run_all()
     ppl = PPLRecipe(conn, Results).run_all()
     coned = CONEDRecipe(conn, Results).run_all()
-
+    comed = COMEDRecipe(conn, Results).run_all()
     # *.write_to_csv() writes the records
     # *.analyze_comparison() groups into multiindex and outputs
     #   values grouped on [metertype, year, rateclass, strata] with
@@ -51,5 +51,7 @@ def main():
     coned.analyze_comparison(write_to_excel=True)
 
 
+    comed.write_comparison_to_csv()
+    comed.analyze_comparison(write_to_excel=True)
 if __name__ == '__main__':
     main()
