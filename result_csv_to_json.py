@@ -3,7 +3,7 @@
 import pandas as pd
 import glob
 import json
-
+import numpy as np
 # Path is relative to current directory
 # Import all CSV files
 # path = '/home/miles/Dropbox/iCAP_Project/Results/Analysis'
@@ -24,8 +24,13 @@ grp = temp.groupby('PremiseId')
 mad = grp['RecipeICap'].transform(lambda x: x.mad())
 pct = grp['RecipeICap'].transform(lambda x: x.pct_change() * 100)
 
+
 temp['TagVariability'] = mad
-temp['PercentChange'] = pct
+temp['PercentChange'] = pct.replace(to_replace=[np.nan, np.infty, -np.infty], value='null')
+
+
+
+
 
 # Fill all NA values with something friendly to JavaScript
 # temp.dropna(subset=['HistoricalICap'])
