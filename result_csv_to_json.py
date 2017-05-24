@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+from premise_explorer_structure_modifier import Reconstruct
 import pandas as pd
 import glob
 import json
@@ -109,3 +109,6 @@ for iso_util_prem_year, record in temp.groupby(
 
 with open('premise_explorer.json', 'w') as f:
     json.dump(container, f, indent=4, separators=(',', ': '))
+
+r = Reconstruct(file_name='premise_explorer.json')
+r.execute_file_parse()
