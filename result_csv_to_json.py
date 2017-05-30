@@ -7,7 +7,7 @@ import numpy as np
 # Path is relative to current directory
 # Import all CSV files
 # path = '/home/miles/Dropbox/iCAP_Project/Results/Analysis'
-#file_names = glob.glob(path + '/[0-9]*.csv')
+# file_names = glob.glob(path + '/[0-9]*.csv')
 file_names = glob.glob('*rec*csv')
 
 # Load all CSV files into memory
@@ -110,5 +110,6 @@ for iso_util_prem_year, record in temp.groupby(
 with open('premise_explorer.json', 'w') as f:
     json.dump(container, f, indent=4, separators=(',', ': '))
 
+# Ugly patch
 r = Reconstruct(file_name='premise_explorer.json')
 r.execute_file_parse()

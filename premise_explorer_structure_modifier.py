@@ -53,8 +53,11 @@ class Reconstruct:
             os.makedirs(iso_dir)
         return
 
-    def write_utilities_to_directory(self):
-        structure = self.load_iso_and_utility_names()
+    def write_utilities_to_directory(self) -> None:
+        """Deconstructs original JSON into utility specific files.
+        Files are written into respective ISO directory.
+        ./data/{iso}/pe-{utility}.json
+        """
         for iso in self.data.keys():
             for utility in self.data[iso].keys():
                 local_dir = '/'.join([self.root_dir, 'data', iso.lower(), 'pe-' + utility.lower()]) + '.json'
@@ -64,9 +67,11 @@ class Reconstruct:
 
         return
 
-    def execute_file_parse(self):
+    def execute_file_parse(self) -> None:
+        """Primary method. Handle directory creation and JSON decomposition"""
         self.check_or_create_directory()
         self.write_utilities_to_directory()
+        return
 
 if __name__ == '__main__':
     r = Reconstruct(file_name='premise_explorer.json')
