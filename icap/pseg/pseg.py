@@ -252,7 +252,7 @@ class PSEGDemand(PSEG):
                 and p.PremiseId = m.PremiseId
              where
                     m.UtilityId = 'PSEG' and
-                    Year(m.StartDate) = 2015 and
+                    --Year(m.StartDate) = 2015 and
                     (m.Demand >= 0 or m.Demand is not Null) and
                     (Month(m.StartDate) between 5 and 9) and
                     (Month(m.EndDate) between 6 and 10) and
@@ -277,6 +277,7 @@ class PSEGDemand(PSEG):
         # compute summer demand; SummerCycle * Demand
         rec['SummerDemand'] = rec['SummerCycle'] * rec['Demand']
 
+        rec.to_csv('pseg_records.csv')
         # compute Generation Capacity Load; sum(SummerDemand) /
         # sum(SummerCycle)
         gen_cap_load = lambda grp: grp[
@@ -308,9 +309,10 @@ class PSEGRecipe:
     def run_all(self):
         intv = PSEGInterval(self.conn).compute_icap()
         dmd = PSEGDemand(self.conn).compute_icap()
-        con = PSEGConsumption(self.conn).compute_icap()
+        #con = PSEGConsumption(self.conn).compute_icap()
 
-        all_results = pd.concat([intv, dmd, con])
+        #all_results = pd.concat([intv, dmd, con])
+        all_results = pd.concat([intv, dmd])
         res = self.Results(self.conn, all_results)
         return res
 
@@ -333,3 +335,4 @@ def meta_organize(obj_ref, df):
     add_one = lambda yr: str(int(yr) + 1)
     df['Year'] = df['Year'].apply(add_one)
     return df[keep]
+    #return df

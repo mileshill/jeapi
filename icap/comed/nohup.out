@@ -1,0 +1,48 @@
+cd /home/ubuntu/JustEnergy
+Tue 03 Oct 2017 12:31:51 PM CDT Recipe calculations started.
+Tue 03 Oct 2017 12:31:54 PM CDT Launching <result_csv_to_json.py>
+Traceback (most recent call last):
+  File "result_csv_to_json.py", line 117, in <module>
+    r.execute_file_parse()
+  File "/home/ubuntu/JustEnergy/premise_explorer_structure_modifier.py", line 72, in execute_file_parse
+    self.check_or_create_directory()
+  File "/home/ubuntu/JustEnergy/premise_explorer_structure_modifier.py", line 46, in check_or_create_directory
+    shutil.rmtree(data_directory)
+  File "/home/ubuntu/miniconda3/envs/predictions/lib/python3.5/shutil.py", line 480, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/ubuntu/miniconda3/envs/predictions/lib/python3.5/shutil.py", line 418, in _rmtree_safe_fd
+    _rmtree_safe_fd(dirfd, fullname, onerror)
+  File "/home/ubuntu/miniconda3/envs/predictions/lib/python3.5/shutil.py", line 438, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/ubuntu/miniconda3/envs/predictions/lib/python3.5/shutil.py", line 436, in _rmtree_safe_fd
+    os.unlink(name, dir_fd=topfd)
+PermissionError: [Errno 13] Permission denied: 'pe-peco.json'
+c Update ./data directory for Dashbaord
+Tue 03 Oct 2017 12:32:07 PM CDT Moving CSV/JSON into /home/ubuntu/archives/2017_10_03
+Tue 03 Oct 2017 12:32:07 PM CDT Copying files into S3
+Completed 256.0 KiB/432.5 KiB (4.6 MiB/s) with 1 file(s) remainingCompleted 432.5 KiB/432.5 KiB (3.6 MiB/s) with 1 file(s) remainingupload: ./2017_10_03_recipe.csv to s3://just-energy-capacity/results/2017_10_03_recipe.csv
+Completed 256.0 KiB/7.6 MiB (2.4 MiB/s) with 1 file(s) remainingCompleted 512.0 KiB/7.6 MiB (4.4 MiB/s) with 1 file(s) remainingCompleted 768.0 KiB/7.6 MiB (6.1 MiB/s) with 1 file(s) remainingCompleted 1.0 MiB/7.6 MiB (7.1 MiB/s) with 1 file(s) remaining  Completed 1.2 MiB/7.6 MiB (8.5 MiB/s) with 1 file(s) remaining  Completed 1.5 MiB/7.6 MiB (10.0 MiB/s) with 1 file(s) remaining Completed 1.8 MiB/7.6 MiB (11.3 MiB/s) with 1 file(s) remaining Completed 2.0 MiB/7.6 MiB (12.6 MiB/s) with 1 file(s) remaining Completed 2.2 MiB/7.6 MiB (13.9 MiB/s) with 1 file(s) remaining Completed 2.5 MiB/7.6 MiB (15.1 MiB/s) with 1 file(s) remaining Completed 2.8 MiB/7.6 MiB (16.4 MiB/s) with 1 file(s) remaining Completed 3.0 MiB/7.6 MiB (17.6 MiB/s) with 1 file(s) remaining Completed 3.2 MiB/7.6 MiB (18.8 MiB/s) with 1 file(s) remaining Completed 3.5 MiB/7.6 MiB (19.9 MiB/s) with 1 file(s) remaining Completed 3.8 MiB/7.6 MiB (21.0 MiB/s) with 1 file(s) remaining Completed 4.0 MiB/7.6 MiB (22.2 MiB/s) with 1 file(s) remaining Completed 4.2 MiB/7.6 MiB (23.3 MiB/s) with 1 file(s) remaining Completed 4.5 MiB/7.6 MiB (24.4 MiB/s) with 1 file(s) remaining Completed 4.8 MiB/7.6 MiB (25.5 MiB/s) with 1 file(s) remaining Completed 5.0 MiB/7.6 MiB (26.6 MiB/s) with 1 file(s) remaining Completed 5.2 MiB/7.6 MiB (27.7 MiB/s) with 1 file(s) remaining Completed 5.5 MiB/7.6 MiB (28.8 MiB/s) with 1 file(s) remaining Completed 5.8 MiB/7.6 MiB (29.7 MiB/s) with 1 file(s) remaining Completed 6.0 MiB/7.6 MiB (30.2 MiB/s) with 1 file(s) remaining Completed 6.2 MiB/7.6 MiB (31.2 MiB/s) with 1 file(s) remaining Completed 6.5 MiB/7.6 MiB (32.2 MiB/s) with 1 file(s) remaining Completed 6.8 MiB/7.6 MiB (33.1 MiB/s) with 1 file(s) remaining Completed 7.0 MiB/7.6 MiB (34.0 MiB/s) with 1 file(s) remaining Completed 7.2 MiB/7.6 MiB (34.8 MiB/s) with 1 file(s) remaining Completed 7.5 MiB/7.6 MiB (35.6 MiB/s) with 1 file(s) remaining Completed 7.6 MiB/7.6 MiB (19.2 MiB/s) with 1 file(s) remaining upload: ./2017_10_03_premise_explorer.json to s3://just-energy-capacity/results/2017_10_03_premise_explorer.json
+cd /home/ubuntu/JustEnergy
+Tue 03 Oct 2017 12:34:54 PM CDT Recipe calculations started.
+Tue 03 Oct 2017 12:34:56 PM CDT Launching <result_csv_to_json.py>
+Traceback (most recent call last):
+  File "result_csv_to_json.py", line 117, in <module>
+    r.execute_file_parse()
+  File "/home/ubuntu/JustEnergy/premise_explorer_structure_modifier.py", line 72, in execute_file_parse
+    self.check_or_create_directory()
+  File "/home/ubuntu/JustEnergy/premise_explorer_structure_modifier.py", line 46, in check_or_create_directory
+    shutil.rmtree(data_directory)
+  File "/home/ubuntu/miniconda3/envs/predictions/lib/python3.5/shutil.py", line 480, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/ubuntu/miniconda3/envs/predictions/lib/python3.5/shutil.py", line 418, in _rmtree_safe_fd
+    _rmtree_safe_fd(dirfd, fullname, onerror)
+  File "/home/ubuntu/miniconda3/envs/predictions/lib/python3.5/shutil.py", line 438, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/ubuntu/miniconda3/envs/predictions/lib/python3.5/shutil.py", line 436, in _rmtree_safe_fd
+    os.unlink(name, dir_fd=topfd)
+PermissionError: [Errno 13] Permission denied: 'pe-peco.json'
+c Update ./data directory for Dashbaord
+Tue 03 Oct 2017 12:35:09 PM CDT Moving CSV/JSON into /home/ubuntu/archives/2017_10_03
+Tue 03 Oct 2017 12:35:09 PM CDT Copying files into S3
+Completed 210.0 KiB/210.0 KiB (482.5 KiB/s) with 1 file(s) remainingupload: ./2017_10_03_recipe.csv to s3://just-energy-capacity/results/2017_10_03_recipe.csv
+Completed 256.0 KiB/4.8 MiB (3.9 MiB/s) with 1 file(s) remainingCompleted 512.0 KiB/4.8 MiB (6.7 MiB/s) with 1 file(s) remainingCompleted 768.0 KiB/4.8 MiB (9.2 MiB/s) with 1 file(s) remainingCompleted 1.0 MiB/4.8 MiB (11.4 MiB/s) with 1 file(s) remaining Completed 1.2 MiB/4.8 MiB (13.3 MiB/s) with 1 file(s) remaining Completed 1.5 MiB/4.8 MiB (15.4 MiB/s) with 1 file(s) remaining Completed 1.8 MiB/4.8 MiB (17.1 MiB/s) with 1 file(s) remaining Completed 2.0 MiB/4.8 MiB (18.8 MiB/s) with 1 file(s) remaining Completed 2.2 MiB/4.8 MiB (20.5 MiB/s) with 1 file(s) remaining Completed 2.5 MiB/4.8 MiB (22.2 MiB/s) with 1 file(s) remaining Completed 2.8 MiB/4.8 MiB (23.8 MiB/s) with 1 file(s) remaining Completed 3.0 MiB/4.8 MiB (25.5 MiB/s) with 1 file(s) remaining Completed 3.2 MiB/4.8 MiB (26.9 MiB/s) with 1 file(s) remaining Completed 3.5 MiB/4.8 MiB (28.5 MiB/s) with 1 file(s) remaining Completed 3.8 MiB/4.8 MiB (29.8 MiB/s) with 1 file(s) remaining Completed 4.0 MiB/4.8 MiB (31.4 MiB/s) with 1 file(s) remaining Completed 4.2 MiB/4.8 MiB (32.8 MiB/s) with 1 file(s) remaining Completed 4.5 MiB/4.8 MiB (34.2 MiB/s) with 1 file(s) remaining Completed 4.8 MiB/4.8 MiB (35.5 MiB/s) with 1 file(s) remaining Completed 4.8 MiB/4.8 MiB (10.5 MiB/s) with 1 file(s) remaining upload: ./2017_10_03_premise_explorer.json to s3://just-energy-capacity/results/2017_10_03_premise_explorer.json

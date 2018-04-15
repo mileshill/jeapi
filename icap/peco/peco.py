@@ -159,6 +159,7 @@ class PECOInterval(PECO):
         # wcf_i = usage_i * ncratio_i
         # wcf = mean(wcf_i)
         rec['WCF'] = rec['Usage'] * rec['NCRatio']
+        rec.to_csv('/tmp/pecointerval.csv', index=False)
         grp = rec.groupby(['PremiseId', 'Year', 'RateClass', 'Strata']
                           )['WCF'].agg({'Count': len, 'WCF': np.mean}).reset_index()
 
@@ -339,25 +340,36 @@ class PECODemand(PECO):
         na_idx = util[util['ParameterId'] == 'NARatio'].index
 
         # 2.
-        redrec = rec.groupby(['PremiseId', 'Year', 'RateClass', 'Strata']
-                             )['Demand'].agg({'Count': len, 'DmdAvg': np.mean}).reset_index()
+        rec['DmdAvg'] = rec.groupby(['PremiseId', 'Year'])['Demand'].transform('mean')
+        rec['DMDCount'] = rec.groupby(['PremiseId', 'Year'])['Demand'].transform('count')
+
+	
+        redrec = rec.copy()
+        #redrec = rec.groupby(['PremiseId', 'Year']
+        #                     )['Demand'].agg({'Count': len, 'DmdAvg': np.mean}).reset_index()
 
         # set insufficent records to NaN
         # if count != 4 or dmdavg == 0 then dmdavg -> np.nan
-        bad_rec_idx = redrec[(redrec['Count'] != 4) |
-                             (redrec['DmdAvg'] == 0.0)].index
-        redrec.set_value(bad_rec_idx, 'DmdAvg', np.nan)
+
+        #bad_rec_idx = redrec[(redrec['Count'] > 0) |
+        #                     (redrec['DmdAvg'] == 0.0)].index
+        #redrec.set_value(bad_rec_idx, 'DmdAvg', np.nan)
 
         # 3.
-        nared = util.ix[na_idx].groupby(['Year', 'RateClass', 'Strata']
-                                        )['ParameterValue'].agg(
-            {'Count': len, 'NAAvg': np.mean}
-        ).reset_index()
+        #nared = util.ix[na_idx].groupby(['Year', 'RateClass', 'Strata']
+        #                                )['ParameterValue'].agg(
+        #    {'Count': len, 'NAAvg': np.mean}
+        #).reset_index()
+	
+        nared = util[util['ParameterId'] == 'NARatio'].copy()
+        nared['NAAvg'] = nared.groupby(['Year', 'RateClass', 'Strata'])['ParameterValue'].transform('mean')
+        nared['NACount'] = nared.groupby(['Year', 'RateClass', 'Strata'])['ParameterValue'].transform('count')
+        nared.reset_index(inplace=True)
         # set insufficent records to NaN
         # if count != 5 or naavg == 0 then naavg -> np.nan
-        bad_na_idx = nared[(nared['Count'] != 5.0) |
-                           (nared['NAAvg'] == 0.0)].index
-        nared.set_value(bad_na_idx, 'NAAvg', np.nan)
+        #bad_na_idx = nared[(nared['Count'] > 0) |
+        #                   (nared['NAAvg'] == 0.0)].index
+        #nared.set_value(bad_na_idx, 'NAAvg', np.nan)
 
         # 4.
         # plc factor
@@ -365,6 +377,7 @@ class PECODemand(PECO):
         plc_idx = sys[sys['ParameterId'] == 'PLCScaleFactor'].index
         plc = sys.ix[plc_idx][['Year', 'ParameterValue']]
         plc.rename(columns={'ParameterValue': 'PLC'}, inplace=True)
+
 
         # rclf factor
         # ['Year', 'RateClass', 'Strata', 'RCLF']
@@ -385,8 +398,9 @@ class PECODemand(PECO):
         # ICAP
         tmp_3['ICap'] = tmp_3['DmdAvg'] * \
             tmp_3['NAAvg'] * tmp_3['RCLF'] * tmp_3['PLC']
-
-        return meta_organize(self, tmp_3)
+        
+        #return nared
+        return meta_organize(self, tmp_3.drop_duplicates())
 
 
 class PECORecipe:
@@ -427,3 +441,5 @@ def meta_organize(obj_ref, df):
     add_one = lambda yr: str(int(yr) + 1)
     df['Year'] = df['Year'].apply(add_one)
     return df[keep]
+
+	

@@ -46,12 +46,24 @@ class Premise():
         '''
         usage_query = """
             select
+                PremiseId, UtilityId,
                 Year(UsageDate) as Year,
                 Cast(UsageDate as datetime) as UsageDate,
                 HourEnding,
                 Usage as PremUsage
-            from HourlyUsage
+            from [HourlyUsage]
             where
+                UtilityId = '{utility}' and
+                PremiseId = '{id}'
+            UNION
+            select
+                PremiseId, UtilityId,
+                Year(EndDate) Year,
+                Cast(EndDate as datetime) UsageDate,
+                1 HourEnding,
+                iif((Usage is not null) or (Usage > -1), Usage, Demand) PremUsage
+            from [MonthlyUsage]
+             where
                 UtilityId = '{utility}' and
                 PremiseId = '{id}'
             order by UsageDate, HourEnding
@@ -59,8 +71,11 @@ class Premise():
 
         # load query results into pd.Dataframe
         # params = {'year': self.year, 'utility': self.utility, 'id': self.id}
-        params = {'utility': self.utility, 'id': self.id}
+        params = {'utility': self.utility.upper(), 'id': self.id}
         df = pd.read_sql(usage_query.format(**params), self.conn)
+
+        if df.shape[0] == 0:
+            raise CorrelationException(df, message='No Values for Premise: {0}'.format(params.get('id')))
 
         # normalize the usage to range [0.0, 1.0]
         df['PremNormalizedUsage'] = MinMaxScaler().fit_transform(
@@ -92,7 +107,7 @@ class ZonalLoad():
 
     def __init__(self, conn, zone=None):
         if not all((zone)):
-            raise CorrelationException((year, zone), 'None value(s)')
+            raise CorrelationException((zone), message='None value(s)')
 
         # instantiation vars
         self.conn = conn
@@ -117,6 +132,9 @@ class ZonalLoad():
         # load data for year and load area
         params = {'zone': self.zone}
         df = pd.read_sql(usage_query.format(**params), self.conn)
+
+        if df.shape[0] == 0:
+            raise CorrelationException(df, 'No Values for Zone')
 
         # normalize usage to given range [0.0, 1.0]
         df['ZoneNormalizedUsage'] = MinMaxScaler().fit_transform(
@@ -225,7 +243,7 @@ class Correlation():
         # if no records, halt evaluation
         if prem.history_.empty:
             results.failed = True
-            return resultsi
+            return results
         # END INITIALIZATION
 
         # BEGIN PREPROCESSING

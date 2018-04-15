@@ -110,6 +110,8 @@ class PPLInterval(PPL):
         grp = rec.groupby(['PremiseId', 'Year', 'RateClass'])['Usage'].agg(
             {'Count':len}).reset_index()
 
+        print('\nDimensions of missing values: ', grp.shape)
+
         bad_idx = grp[grp['Count'] != 5].index
         rec.set_value(bad_idx, 'Usage', np.nan)
 
@@ -122,6 +124,8 @@ class PPLInterval(PPL):
                      how='left'),
             util, on=['Year', 'RateClass'], how='left')
 
+        print('\nDimensions of `tmp`: ', tmp.shape)
+
         # rename convienience
         tmp.rename(columns={'ParameterValue_x': 'ReconFactor',
                             'ParameterValue_y': 'RateClassLossFactor'},
@@ -131,12 +135,17 @@ class PPLInterval(PPL):
         def ppl_icap(g):
             return (g['Usage'] * g['ReconFactor'] * g['RateClassLossFactor']).mean()
 
-        icap = tmp.groupby(['PremiseId', 'Year', 'RateClass', 'Strata']
+        self.tmp = tmp
+        icap = tmp.groupby(['PremiseId', 'Year', 'RateClass']
                            ).apply(ppl_icap).reset_index()
+
+        print('\nDimensions of `icap` :', icap.shape)
+
         icap.rename(columns={0: 'ICap'}, inplace=True)
 
         icap['Strata'] = 'NULL'
 
+        self.icap_df = icap
         return meta_organize(self, icap)
 
 

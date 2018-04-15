@@ -349,8 +349,8 @@ class CONEDInterval(CONED):
                 m.StartDate, m.EndDate,
                 m.Usage,
                 m.Demand
-            having
-                Count(h.Usage) = (DateDiff(hour, m.StartDate, m.EndDate) + 24)"""
+            --having
+                --Count(h.Usage) = (DateDiff(hour, m.StartDate, m.EndDate) + 24)"""
 
         # Format query to handle single premise
         if self.premise is not None:

@@ -19,6 +19,8 @@ for file_ in file_names:
     list_.append(df)
 temp = pd.concat(list_)
 
+
+
 # Calculate the group statistics; based on PremiseId
 grp = temp.groupby('PremiseId')
 mad = grp['RecipeICap'].transform(lambda x: x.mad())
@@ -37,7 +39,7 @@ temp['PercentChange'] = pct.replace(to_replace=[np.nan, np.infty, -np.infty], va
 temp.fillna(value='null', inplace=True)
 
 # Take only those Premises with 2 or more years history
-temp = temp.groupby('PremiseId').filter(lambda x: len(x) > 1)
+#temp = temp.groupby('PremiseId').filter(lambda x: len(x) > 1)
 
 # Convert year to numeric
 temp['Year'] = pd.to_numeric(temp['Year'].copy(), downcast='float', errors='coerce')

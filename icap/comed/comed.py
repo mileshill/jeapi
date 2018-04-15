@@ -20,9 +20,33 @@ class COMED():
         self.meter_type = meter_type
 
         # static 
-        self.normalized_peak_load = 20900000
-        self.cust_delta = 1121264
+        # self.normalized_peak_load = 20900000
+        # self.cust_delta = 1121264
 
+        self.normalized_peak_loads = self.get_normalized_peak_loads()
+        self.cust_delta = self.get_cust_delta()
+
+    def get_normalized_peak_loads(self) -> pd.DataFrame:
+        query = '''
+            select 
+                Cast((CPYearId - 1) as int) as Year,
+                ParameterValue as NormalizedPeakLoad
+            from [SystemLoad]
+            where
+                ParameterId = 'WeatherNormPeakLoad'
+        '''
+        return pd.read_sql(query, self.conn).set_index('Year')
+
+    def get_cust_delta(self) -> pd.DataFrame:
+        query = '''
+                    select 
+                        Cast((CPYearId - 1) as int) as Year,
+                        ParameterValue as CustDelta
+                    from [SystemLoad]
+                    where
+                        ParameterId = 'DeltaAvgComEdPJM'
+                '''
+        return pd.read_sql(query, self.conn).set_index('Year')
 
 class COMEDInterval(COMED):
     """Computes the Interval Meter ICap value"""
@@ -45,24 +69,22 @@ class COMEDInterval(COMED):
         self.acustcpl = self.compute_acustcpl(self.conn)
         self.acustpl = self.compute_acustpl(self.conn)
 
-
-
-
-
-
-    
     def get_comed_cp_avg_peak_load(self, conn: pymssql.Connection) -> pd.DataFrame:
         query = """
             select
                 Cast(CPYearId-1 as int) Year,
-                Avg(PJMZonalLoad) * 1000 as AvgCPZonalLoad
+                --Avg(PJMZonalLoad) * 1000 as AvgCPZonalLoad
+                Avg(COMEDZonalLoad) * 1000 as AvgCPZonalLoad
             from [CoincidentPeak]
             where UtilityId = 'COMED'
             group by
                 Cast(CpYearId-1 as int)
             """
         df = pd.read_sql(query, conn).set_index('Year')
-        df['Step4Diff'] = self.normalized_peak_load - df['AvgCPZonalLoad']
+        df = pd.merge(df, self.normalized_peak_loads, left_index=True, right_index=True)
+        # df['Step4Diff'] = self.normalized_peak_loads - df['AvgCPZonalLoad']
+        df['Step4Diff'] = df['NormalizedPeakLoad'] - df['AvgCPZonalLoad']
+
         return df
 
     @staticmethod
@@ -83,7 +105,7 @@ class COMEDInterval(COMED):
                 cp.HourEnding as CPHourEnding,
                 --cp.HourEnding-1 as ADJCPHourEndingPJM, 
                 h.Usage as UsagePJM
-            from [COMED_Premise] p
+            from [Premise] p
             inner join [HourlyUsage] h on
                 p.PremiseId = h.PremiseId
             inner join [CoincidentPeak] cp on
@@ -96,6 +118,39 @@ class COMEDInterval(COMED):
             order by
                 h.PremiseId, RateClass, DSC, cp.CPDate
             """
+
+        # Updated query from Barsha 7/17/2017
+        query = """
+        select distinct
+               h.PremiseId,
+                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)) as RateClass,
+                RTrim(p.DSC) as DSC,
+                CAST(cp.CPYearId -1 as INT) as Year,
+                cp.CPDate as CPDatePJM,
+                cp.HourEnding as CPHourEnding,
+                --cp.HourEnding-1 as ADJCPHourEndingPJM,
+                SUM(h.Usage) as UsagePJM  -- Changed by Barsha
+            from [Premise] p
+            inner join [HourlyUsage] h on
+                p.PremiseId = h.PremiseId
+            inner join [CoincidentPeak] cp on
+                cp.UtilityId = h.UtilityId and
+                cp.CPDate = h.UsageDate and
+                cp.HourEnding = h.HourEnding
+            where
+                h.UtilityId = 'COMED'
+                {prem}
+            group by  -- Changed by Barsha
+                h.PremiseId,
+                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)),
+                RTrim(p.DSC),
+                CAST(cp.CPYearId -1 as INT),
+                cp.CPDate,
+                cp.HourEnding
+                     order by
+                h.PremiseId, RateClass, DSC, cp.CPDate
+        """
+
         if premise is not None:
             pjm_cp_query = query.format(
                 prem="and h.PremiseId = '%s'" % premise)
@@ -112,7 +167,8 @@ class COMEDInterval(COMED):
         grp.reset_index(inplace=True)
 
         # set `Mean` = np.NaN if `Count` != 5
-        missing_data_index = grp[grp['CountPJM'] != 5.0].index
+        #missing_data_index = grp[grp['CountPJM'] != 5.0].index
+        missing_data_index = grp[grp['CountPJM'] == 0].index
         grp = grp.set_value(missing_data_index, 'MeanPJM', np.nan)
 
         return pd.merge(df, grp, how='left',
@@ -173,7 +229,7 @@ class COMEDInterval(COMED):
                 cp.UtilityId = h.UtilityId and
                 cp.CPDate = h.UsageDate and
                 cp.HourEnding = h.HourEnding
-            inner join [COMED_Premise] p on
+            inner join [Premise] p on
                 p.PremiseId = h.PremiseId
             where
                 h.UtilityId = 'COMED'
@@ -181,6 +237,41 @@ class COMEDInterval(COMED):
             order by
                 h.PremiseId, RateClass, DSC, cp.CPDate
             """
+
+        query = """
+        select distinct
+                h.PremiseId,
+                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)) as RateClass,
+                RTrim(p.DSC) as DSC,
+                CAST(cp.CPYearId -1 as INT) as Year,
+                cp.CPDate as CPDateCOMED,
+                cp.HourEnding as CPHourEndingCOMED,
+                ZonalLoad,
+                SUM(h.Usage) as UsageCOMED -- Changed by Barsha
+               
+            from [HourlyUsage] h
+            inner join [COMED_CoincidentPeak] cp on
+                cp.UtilityId = h.UtilityId and
+                cp.CPDate = h.UsageDate and
+                cp.HourEnding = h.HourEnding
+            inner join [Premise] p on
+                p.PremiseId = h.PremiseId
+            where
+                h.UtilityId = 'COMED'
+                {prem}
+                     --/*
+            group by   -- Changed by Barsha
+                h.PremiseId,
+                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)),
+                RTrim(p.DSC),
+                CAST(cp.CPYearId -1 as INT),
+                cp.CPDate,
+                cp.HourEnding,
+                ZonalLoad --*/
+              
+            order by
+                h.PremiseId, RateClass, DSC, cp.CPDate
+        """
         # format query for single premise
         if premise is not None:
             pjm_cp_query = query.format(
@@ -200,7 +291,7 @@ class COMEDInterval(COMED):
         grp.reset_index(inplace=True)
 
         # set `Mean` = np.NaN if `Count` != 5
-        missing_data_index = grp[grp['CountCOMED'] != 5.0].index
+        missing_data_index = grp[grp['CountCOMED'] == 0].index
         grp = grp.set_value(missing_data_index, 'MeanCOMED', np.nan)
 
         return pd.merge(df, grp, how='left',
@@ -318,7 +409,7 @@ class COMEDInterval(COMED):
             return r.AcustCPL
 
         # *Step4Diff  #+ r.AcustCPL
-        return ((r.AcustPL - r.AcustCPL) / self.cust_delta)
+        return ((r.AcustPL - r.AcustCPL) / r.CustDelta)
 
     @staticmethod
     def icap(r: pd.Series) -> np.float32:
@@ -334,7 +425,11 @@ class COMEDInterval(COMED):
 
         df = pd.merge(peak_loads, self.cp_avg_peak_load,
             left_index=True, right_index=True)
-        
+
+        df = pd.merge(df, self.cust_delta, left_index=True, right_index=True)
+
+
+
         df['Step6'] = df.apply(self.step6, axis=1)
         df['Step7'] = df['Step6'] * df['Step4Diff']
     
@@ -381,3 +476,4 @@ def meta_organize(obj_ref, df):
     add_one = lambda yr: str(int(yr) + 1)
     df['Year'] = df['Year'].apply(add_one)
     return df[keep]
+    #return df
