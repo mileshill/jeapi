@@ -52,3 +52,4 @@ cd /home/ubuntu/archives/${TIMESTAMP}
 
 # Copy NITS
 /home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp peco_interval_nits.csv s3://just-energy-capacity/results/
+/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp peco_demand_nits.csv s3://just-energy-capacity/results/
