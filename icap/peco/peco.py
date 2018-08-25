@@ -501,7 +501,7 @@ def meta_organize(obj_ref, df):
 def write_nits_to_csv(df, meter_type):
 
     run_date = datetime.now()
-    fileout = '/tmp/{}_peco_interval_nits.csv'.format(run_date.strftime('%Y_%m_%d_%H_%M'))
+    fileout = '/tmp/peco_interval_nits.csv'
     with open(fileout, 'w') as fout:
         # Header
         fout.write('PremiseId, RateClass, Strata, Year, RunDate,\
