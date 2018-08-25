@@ -211,6 +211,12 @@ class PECOInterval(PECO):
         #self.icap_df_ = tmp
         self.icap_df_ = wicap
 
+
+        # Write to nits;
+        # Results object returned from self.compute_icap() causes
+        # error in main.py
+        self.write_nits()
+
         return meta_organize(self, tmp)
 
     def write_nits(self):

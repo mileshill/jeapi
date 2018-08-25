@@ -41,7 +41,6 @@ def main():
     #       False -> 0
     #       NaN   -> NULL
 
-    peco.write_nits()
     peco.write_comparison_to_csv()
     # peco.analyze_comparison(write_to_excel=True)
 
