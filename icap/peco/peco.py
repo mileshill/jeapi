@@ -130,6 +130,8 @@ class PECOInterval(PECO):
         # return dataframe
         return pd.read_sql(record_query, self.conn)
 
+    
+
     def compute_icap(self):
         """PECO Interval ICAP:
         icap = avg(cp_usage) * util[rateclass, year] * sys[year]
@@ -137,6 +139,7 @@ class PECOInterval(PECO):
         # copy records and utility values
         rec = self.records_.copy()
         util = self.util_df_.copy()
+        sys = self.sys_df_.copy()
 
         # BEGIN PREPROCESSING
         # 1. Obtain index values for required utility params
@@ -146,6 +149,9 @@ class PECOInterval(PECO):
         # index values for RateClassLoss and NCRatio
         rc_idx = util[util['ParameterId'] == 'RateClassLoss'].index
         nc_idx = util[util['ParameterId'] == 'NCRatio'].index
+        nspl = sys[sys['ParameterId'] == 'TransLoadScaleFactor']
+        nspl = nspl.rename(columns={'ParameterValue': 'NSPLScale'}).drop(labels=['ParameterId'], axis=1)
+        
 
         # 2. MERGE
         # (record usage * ncratio) is unique to RateClass, Statra, Year, Date
@@ -159,10 +165,15 @@ class PECOInterval(PECO):
         # wcf_i = usage_i * ncratio_i
         # wcf = mean(wcf_i)
         rec['WCF'] = rec['Usage'] * rec['NCRatio']
-        rec.to_csv('/tmp/pecointerval.csv', index=False)
+        #rec.to_csv('/tmp/pecointerval.csv', index=False)
         grp = rec.groupby(['PremiseId', 'Year', 'RateClass', 'Strata']
                           )['WCF'].agg({'Count': len, 'WCF': np.mean}).reset_index()
 
+        rec['WCFMean'] = rec.groupby(['PremiseId', 'Year', 'RateClass', 'Strata'])['WCF'].transform(np.mean)
+        rec['Count'] = rec.groupby(['PremiseId', 'Year', 'RateClass', 'Strata'])['WCF'].transform(len)
+        grp = rec.copy()
+
+        self.factors_ = rec 
         # Convert to np.nan where insufficent/bad records
         # Condition 1: if count != 5 then wcf -> np.nan
         # Condition 2: if wcf == 0 then wcf -> np.nan
@@ -177,15 +188,58 @@ class PECOInterval(PECO):
         rate_class = util.ix[rc_idx][keep].drop_duplicates()
 
         # Merge rate_class with grouped records
-        tmp = pd.merge(grp, rate_class,
+        _tmp = pd.merge(grp, rate_class,
                        on=['Year', 'RateClass', 'Strata'], how='left')
+        tmp = pd.merge(_tmp, nspl, on='Year')
         # END RATECLASSLOSS
 
         # ICAP
         # icap = wcf * rate_class_loss_factor ; (ParameterValue)
+        def icap_calc(group):
+            return group['WCFMean'].mean() * group['ParameterValue'].mean()
+        
+        icap = tmp.groupby(['PremiseId', 'Year', 'RateClass', 'Strata']).apply(icap_calc).reset_index()
+        icap = icap.rename(columns={0:'ICap'})
+
+        wicap = pd.merge(tmp, icap, on=['PremiseId', 'Year', 'RateClass', 'Strata'])
+        wicap['NITS'] = wicap['ICap'] * wicap['NSPLScale']
+        wicap = wicap.rename(columns={'ParameterValue': 'RCLF'})
+        
         tmp['ICap'] = tmp['WCF'] * tmp['ParameterValue']
+        #tmp['NITS'] = tmp['ICap'] * tmp['NSPLScale']
+        
+        #self.icap_df_ = tmp
+        self.icap_df_ = wicap
 
         return meta_organize(self, tmp)
+
+    def write_nits(self):
+
+        nspl_scale = self.sys_df_[self.sys_df_['ParameterId'] == 'TransLoadScaleFactor']
+        nspl_scale = nspl_scale.rename(columns={'ParameterValue': 'NSPLScale'}).drop(labels=['ParameterId'], axis=1)
+
+        # Extract parameter values
+        nc_ratio = self.util_df_[self.util_df_['ParameterId'] == 'NCRatio'].copy()
+        rclf = self.util_df_[self.util_df_['ParameterId'] == 'RateClassLoss']
+        util_min = pd.merge(nc_ratio, rclf, on=['Year', 'CPDate', 'RateClass', 'Strata'], how='left').fillna(
+            method='ffill')
+
+        # Join hourly records and parameter values
+        _plc = (pd.merge(self.records_, util_min,
+                         left_on=['UsageDate', 'RateClass', 'Strata', 'Year'],
+                         right_on=['CPDate', 'RateClass', 'Strata', 'Year'],
+                         how='left')
+                .rename(columns={'ParameterValue_x': 'NCRatio', 'ParameterValue_y': 'RCLF'})
+                .drop(labels=['ParameterId_x', 'ParameterId_y'], axis=1))
+        plc = pd.merge(_plc, nspl_scale, on=['Year'])
+
+        # Compute
+        plc['PLC_factor'] = plc.Usage * plc.NCRatio * plc.RCLF
+        plc['PLC'] = plc.groupby(['PremiseId', 'Year'])['PLC_factor'].transform(np.mean)
+        plc['NITS'] = plc.PLC * plc.NSPLScale
+
+        write_nits_to_csv(plc, 'INT')
+        return
 
 
 class PECOConsumption(PECO):
@@ -430,16 +484,70 @@ def meta_organize(obj_ref, df):
     are iterated over and assigned. Only the desired columns are
     returned.
     """
+    
     keep = ['RunDate', 'ISO', 'Utility', 'PremiseId', 'Year',
-            'RateClass', 'Strata', 'MeterType', 'ICap']
+             'RateClass', 'Strata', 'MeterType', 'ICap']
 
-    # loop over params and update dataframe
+     # loop over params and update dataframe
     for k, v in obj_ref.params.items():
-        df[k] = v
+         df[k] = v
 
     # year must be adjusted to CPYear
     add_one = lambda yr: str(int(yr) + 1)
     df['Year'] = df['Year'].apply(add_one)
     return df[keep]
 
-	
+
+def write_nits_to_csv(df, meter_type):
+
+    run_date = datetime.now()
+    fileout = '/tmp/peco_interval_nits.csv'
+    with open(fileout, 'w') as fout:
+        # Header
+        fout.write('PremiseId, RateClass, Strata, Year, RunDate,\
+        Usage Date 1 (CP 1), Hour Ending 1 (CP 1), CP 1 Usage, NCRatio,\
+        Usage Date 2 (CP 2), Hour Ending 2 (CP 2), CP 2 Usage, NCRatio,\
+        Usage Date 3 (CP 3), Hour Ending 3 (CP 3), CP 3 Usage, NCRatio,\
+        Usage Date 4 (CP 4), Hour Ending 4 (CP 4), CP 4 Usage, NCRatio,\
+        Usage Date 5 (CP 5), Hour Ending 5 (CP 5), CP 5 Usage, NCRatio,\
+        Rate Class Loss, Meter Type, Capacity Planning Year, PLC/ICAP, NSPL Scale, NITS\n')
+
+
+        # Loop the groups
+        df['Year'] = df['Year'].apply(lambda x: str(int(x) + 1))
+        for name, group in df.groupby(['PremiseId']):
+
+            # If group is missing rows, force empty rows for valid print lengths
+            if group.shape[0] != 5:
+                num_empties = 5 - group.shape[0]
+                empty_row = pd.Series([np.nan for col in group.columns], index=group.columns)
+
+                for _ in range(num_empties):
+                    group = group.append(empty_row, ignore_index=True)
+
+            # Updated group shape (should be 5)
+            last_row = group.shape[0] - 1
+            row_number = 0
+            current_row = ''
+            # Build string output for each group
+            for row in group.sort_values(by=['CPDate']).itertuples():
+                # Unpack the row
+                index, premise_id, usage_date, hour_ending, usage, year, rate_class, strata, _, nc_ratio, rclf, nspl_scale, _, plc, nits = row
+                # index, premise_id, rate_class, strata, year, usage_date, hour_ending, usage, nc_ratio, wcf, wcf_mean, rec_count, rclf, icap, run_date, meter_type = row
+
+                # Write initial fields
+                if row_number == 0:
+                    current_row = '{},{},{},{},{},'.format(
+                        premise_id, rate_class, strata, year, run_date)
+
+                # Build repeated fields
+                current_row += '{},{},{},{},'.format(usage_date, hour_ending, usage, nc_ratio)
+
+                # Final fields
+                if row_number == last_row:
+                    current_row += '{},{},{},{},{},{}\n'.format(rclf, meter_type, year, plc, nspl_scale, nits)
+
+                row_number += 1
+
+            # Write current group
+            fout.write(current_row)
