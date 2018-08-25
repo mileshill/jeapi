@@ -51,5 +51,4 @@ cd /home/ubuntu/archives/${TIMESTAMP}
 /home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp premise_explorer.json s3://just-energy-capacity/results/ 
 
 # Copy NITS
-/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp
-peco_interval_nits.csv s3://just-energy-capacity/results/
+/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp peco_interval_nits.csv s3://just-energy-capacity/results/
