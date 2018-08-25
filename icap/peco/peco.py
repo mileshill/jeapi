@@ -500,8 +500,6 @@ class PECODemand(PECO):
         util_min = pd.merge(util_min, nspl_scale, on='Year', how='left')
         util_min = pd.merge(util_min, plcf, on='Year', how='left')
 
-        print(util_min.shape)
-        print(util_min.head())
 
         # Average demand per premise per year
         records['AvgDmd'] = records.groupby(['PremiseId', 'Year', 'RateClass', 'Strata'])['Demand'].transform('mean')
@@ -520,7 +518,6 @@ class PECODemand(PECO):
             objs.append(r)
 
         for r in objs:
-            print(r)
             # Filter params by record object
             c1 = util_min['Year'] == r.year
             c2 = util_min['Strata'] == r.strata

@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b913ab16-37d6-4dd9-ab07-cb8c8f60ccd6" name="Default" comment="move nits inside icap">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NITS.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/NITS.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PECODemandNITS.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/PECODemandNITS.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icap/peco/peco.py" beforeDir="false" afterPath="$PROJECT_DIR$/icap/peco/peco.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,14 +37,14 @@
         <counts>
           <entry key="Python Console" value="8" />
           <entry key="gitignore" value="7" />
-          <entry key="py" value="471" />
+          <entry key="py" value="824" />
           <entry key="txt" value="209" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="216" />
-          <entry key="Python" value="479" />
+          <entry key="Python" value="832" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -117,22 +116,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/icap/peco/peco.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1149">
-              <caret line="220" lean-forward="true" selection-start-line="220" selection-end-line="220" />
+            <state relative-caret-position="486">
+              <caret line="658" selection-start-line="658" selection-end-line="658" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1535209478745" expanded="true" signature="19087:19088" ph="..." />
+                <marker date="1535223857036" expanded="true" signature="22343:22344" ph="..." />
               </folding>
             </state>
           </provider>
@@ -175,8 +165,8 @@
         <option value="$PROJECT_DIR$/icap/comed/comed.py" />
         <option value="$PROJECT_DIR$/NITS.ipynb" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/icap/peco/peco.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/icap/peco/peco.py" />
       </list>
     </option>
   </component>
@@ -401,6 +391,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1985" y="-4" width="1855" height="1084" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15312327" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -506,19 +497,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/icap/peco/peco.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1149">
-          <caret line="220" lean-forward="true" selection-start-line="220" selection-end-line="220" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <marker date="1535209478745" expanded="true" signature="19087:19088" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/concat.py">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -527,10 +514,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/icap/peco/peco.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        <state relative-caret-position="486">
+          <caret line="658" selection-start-line="658" selection-end-line="658" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1535223857036" expanded="true" signature="22343:22344" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
