@@ -213,6 +213,34 @@ class PECOInterval(PECO):
 
         return meta_organize(self, tmp)
 
+    def write_nits(self):
+
+        nspl_scale = self.sys_df_[self.sys_df_['ParameterId'] == 'TransLoadScaleFactor']
+        nspl_scale = nspl_scale.rename(columns={'ParameterValue': 'NSPLScale'}).drop(labels=['ParameterId'], axis=1)
+
+        # Extract parameter values
+        nc_ratio = self.util_df_[self.util_df_['ParameterId'] == 'NCRatio'].copy()
+        rclf = self.util_df_[self.util_df_['ParameterId'] == 'RateClassLoss']
+        util_min = pd.merge(nc_ratio, rclf, on=['Year', 'CPDate', 'RateClass', 'Strata'], how='left').fillna(
+            method='ffill')
+
+        # Join hourly records and parameter values
+        _plc = (pd.merge(self.records_, util_min,
+                         left_on=['UsageDate', 'RateClass', 'Strata', 'Year'],
+                         right_on=['CPDate', 'RateClass', 'Strata', 'Year'],
+                         how='left')
+                .rename(columns={'ParameterValue_x': 'NCRatio', 'ParameterValue_y': 'RCLF'})
+                .drop(labels=['ParameterId_x', 'ParameterId_y'], axis=1))
+        plc = pd.merge(_plc, nspl_scale, on=['Year'])
+
+        # Compute
+        plc['PLC_factor'] = plc.Usage * plc.NCRatio * plc.RCLF
+        plc['PLC'] = plc.groupby(['PremiseId', 'Year'])['PLC_factor'].transform(np.mean)
+        plc['NITS'] = plc.PLC * plc.NSPLScale
+
+        write_nits_to_csv(plc, 'INT')
+        return
+
 
 class PECOConsumption(PECO):
     def __init__(self, conn, premise=None, meter_type='CON'):
@@ -468,3 +496,58 @@ def meta_organize(obj_ref, df):
     add_one = lambda yr: str(int(yr) + 1)
     df['Year'] = df['Year'].apply(add_one)
     return df[keep]
+
+
+def write_nits_to_csv(df, meter_type):
+
+    run_date = datetime.now()
+    fileout = '/tmp/{}_peco_interval_nits.csv'.format(run_date.strftime('%Y_%m_%d_%H_%M'))
+    with open(fileout, 'w') as fout:
+        # Header
+        fout.write('PremiseId, RateClass, Strata, Year, RunDate,\
+        Usage Date 1 (CP 1), Hour Ending 1 (CP 1), CP 1 Usage, NCRatio,\
+        Usage Date 2 (CP 2), Hour Ending 2 (CP 2), CP 2 Usage, NCRatio,\
+        Usage Date 3 (CP 3), Hour Ending 3 (CP 3), CP 3 Usage, NCRatio,\
+        Usage Date 4 (CP 4), Hour Ending 4 (CP 4), CP 4 Usage, NCRatio,\
+        Usage Date 5 (CP 5), Hour Ending 5 (CP 5), CP 5 Usage, NCRatio,\
+        Rate Class Loss, Meter Type, Capacity Planning Year, PLC/ICAP, NSPL Scale, NITS\n')
+
+
+        # Loop the groups
+        df['Year'] = df['Year'].apply(lambda x: str(int(x) + 1))
+        for name, group in df.groupby(['PremiseId']):
+
+            # If group is missing rows, force empty rows for valid print lengths
+            if group.shape[0] != 5:
+                num_empties = 5 - group.shape[0]
+                empty_row = pd.Series([np.nan for col in group.columns], index=group.columns)
+
+                for _ in range(num_empties):
+                    group = group.append(empty_row, ignore_index=True)
+
+            # Updated group shape (should be 5)
+            last_row = group.shape[0] - 1
+            row_number = 0
+            current_row = ''
+            # Build string output for each group
+            for row in group.sort_values(by=['CPDate']).itertuples():
+                # Unpack the row
+                index, premise_id, usage_date, hour_ending, usage, year, rate_class, strata, _, nc_ratio, rclf, nspl_scale, _, plc, nits = row
+                # index, premise_id, rate_class, strata, year, usage_date, hour_ending, usage, nc_ratio, wcf, wcf_mean, rec_count, rclf, icap, run_date, meter_type = row
+
+                # Write initial fields
+                if row_number == 0:
+                    current_row = '{},{},{},{},{},'.format(
+                        premise_id, rate_class, strata, year, run_date)
+
+                # Build repeated fields
+                current_row += '{},{},{},{},'.format(usage_date, hour_ending, usage, nc_ratio)
+
+                # Final fields
+                if row_number == last_row:
+                    current_row += '{},{},{},{},{},{}\n'.format(rclf, meter_type, year, plc, nspl_scale, nits)
+
+                row_number += 1
+
+            # Write current group
+            fout.write(current_row)
