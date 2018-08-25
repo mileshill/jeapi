@@ -1,5 +1,5 @@
 __pychache__/*
-*.pyc
+*pyc
 *.csv
 *.xml
 .ipynb_checkpoints/*
