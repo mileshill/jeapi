@@ -3,6 +3,9 @@ import numpy as np
 from datetime import datetime
 
 
+import os
+import tempfile
+
 class PECO():
     '''SuperClass for meter types. Loads the system and
     utility parameters from DB
@@ -458,10 +461,87 @@ class PECODemand(PECO):
         # ICAP
         tmp_3['ICap'] = tmp_3['DmdAvg'] * \
             tmp_3['NAAvg'] * tmp_3['RCLF'] * tmp_3['PLC']
-        
+
+        #
+        self.compute_nits()
+
         #return nared
         return meta_organize(self, tmp_3.drop_duplicates())
 
+    def compute_nits(self):
+        # Values for the PLC/ICAP
+        records = self.records_.copy()
+        util = self.util_df_.copy()
+        sys = self.sys_df_.copy()
+
+        # Transmission scaling factor for NITS
+        nspl_scale = sys[sys['ParameterId'] == 'TransLoadScaleFactor'].copy()
+        nspl_scale = nspl_scale.rename(columns={'ParameterValue': 'NSPLScale'}).drop(labels='ParameterId', axis=1)
+
+        # NA Ratio
+        # Average the NA ratio by [Year, RateClass, Strata]
+        na_ratio = util[util['ParameterId'] == 'NARatio'].copy()
+        na_ratio = na_ratio.rename(columns={'ParameterValue': 'NARatio'}).drop(labels='ParameterId', axis=1)
+        na_ratio['NAAvg'] = na_ratio.groupby(['Year', 'RateClass', 'Strata']).transform('mean')
+
+        # Rate Class Loss Factor
+        rclf = util[util['ParameterId'] == 'RateClassLoss'].copy()
+        rclf = rclf.rename(columns={'ParameterValue': 'RCLF'}).drop(labels='ParameterId', axis=1)
+
+        # PLCScale
+        plcf = sys[sys['ParameterId'] == 'PLCScaleFactor'].copy()
+        plcf = plcf.rename(columns={'ParameterValue': 'PLCScaleFactor'}).drop(labels='ParameterId', axis=1)
+
+        # Merge the utility values; fill missing with NaN
+        # Forward fill fills by year and rateclass
+        util_min = pd.merge(na_ratio, rclf, on=['Year', 'CPDate', 'RateClass', 'Strata'], how='left'
+                            ).fillna(method='ffill')
+
+        util_min = pd.merge(util_min, nspl_scale, on='Year', how='left')
+        util_min = pd.merge(util_min, plcf, on='Year', how='left')
+
+        print(util_min.shape)
+        print(util_min.head())
+
+        # Average demand per premise per year
+        records['AvgDmd'] = records.groupby(['PremiseId', 'Year', 'RateClass', 'Strata'])['Demand'].transform('mean')
+        records['RecCount'] = records.groupby(['PremiseId', 'Year', 'RateClass', 'Strata'])['Demand'].transform('count')
+
+        # Group records
+        objs = list()
+        for k, v in records.groupby(['PremiseId', 'Year', 'RateClass', 'Strata']):
+            r = Record(*k)
+
+            # Pad to ensure demand is always 4
+            demand = v['Demand'].values
+            demand = np.pad(demand, (0, 4 - len(demand)), 'constant', constant_values=np.NaN)
+            r.demand = ','.join(str(x) for x in demand)
+            r.avg_demand = v['AvgDmd'].values[0]
+            objs.append(r)
+
+        for r in objs:
+            print(r)
+            # Filter params by record object
+            c1 = util_min['Year'] == r.year
+            c2 = util_min['Strata'] == r.strata
+            c3 = util_min['RateClass'] == r.rateclass
+            _df = util_min[c1 & c2 & c3]
+
+
+
+            # Pad to enusre ratios always have 5 values
+            na_ratios = _df['NARatio'].values
+            na_ratios = np.pad(na_ratios, (0, 5 - len(na_ratios)), 'constant', constant_values=np.NaN)
+            r.na_ratio = ','.join(str(x) for x in na_ratios)
+            r.na_avg = _df['NAAvg'].values[0]
+            r.rclf = _df['RCLF'].values[0]
+            r.nspl_scale = _df['NSPLScale'].values[0]
+            r.plcf = _df['PLCScaleFactor'].values[0]
+
+            r.compute()
+
+        rw = RecordWriter(objs)
+        rw.write()
 
 class PECORecipe:
     """Runs all meters types"""
@@ -557,3 +637,73 @@ def write_nits_to_csv(df, meter_type):
 
             # Write current group
             fout.write(current_row)
+
+
+class RecordWriter:
+    def __init__(self, records=None):
+        assert (records is not None)
+        self.records = records
+
+    def write(self, fp=None):
+        if os.path.exists('/home/ubuntu/JustEnergy'):
+            fp = 'peco_demand_nits.csv'
+
+        elif fp is None:
+            fp = os.path.join(tempfile.gettempdir(), 'peco_demand_nits.csv')
+
+        else:
+            fp = 'peco_demand_nits.csv'
+
+
+        header = 'PREMISE,RATECLASS,STRATA,YEAR,RUNDATE,NA1,NA2,NA3,NA4,NA5,NAAVG,'\
+                 'DMD1,DMD2,DMD3,DMD4,DMDAVG,RCLF,PLCF,PLC,NSPLSCALE,NITS'
+
+        with open(fp, 'w') as fout:
+            fout.write(header + os.linesep)
+            for record in self.records:
+                fout.write(record.string_record + os.linesep)
+
+
+# Record object to aggregate the information iteratively
+class Record:
+    def __init__(self, premise_id, year, rateclass, strata):
+        self.premise_id = premise_id
+        self.year = year
+        self.plcyear = str(int(year) + 1)
+        self.rateclass = rateclass
+        self.strata = strata
+
+        self.demand = None
+        self.avg_demand = None
+
+        self.na_ratio = None
+        self.na_avg = None
+        self.rclf = None
+        self.nspl_scale = None
+        self.plcf = None
+        self.rundate = datetime.now()
+
+        self.plc = None
+        self.nits = None
+        self.computed = False
+        self.string_record = None
+
+    def __repr__(self):
+        return 'Record<id={premise_id}, year={year}, rc={rateclass}, strata={strata}>'.format(**self.__dict__)
+
+    def string_builder(self):
+        assert (self.computed)
+        return '{premise_id},{rateclass},{strata},{plcyear},{rundate},{na_ratio},{na_avg},' \
+               '{demand},{avg_demand},{rclf},{plcf},{plc},{nspl_scale},{nits}'.format(**self.__dict__)
+
+    def compute(self):
+        assert (self.avg_demand is not None)
+        assert (self.na_avg is not None)
+        assert (self.rclf is not None)
+        assert (self.nspl_scale is not None)
+        assert (self.plcf is not None)
+        self.plc = self.avg_demand * self.na_avg * self.rclf * self.plcf
+        self.nits = self.plc * self.nspl_scale
+
+        self.computed = True
+        self.string_record = self.string_builder()
