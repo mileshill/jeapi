@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 from datetime import datetime
-
+import os
+import tempfile
 
 class PPL:
     '''PPL has ONLY interval meters.
@@ -71,6 +72,7 @@ class PPLInterval(PPL):
                 Cast(Year(h.UsageDate) as varchar) as Year,
                 h.UsageDate,
                 h.Usage,
+                h.HourEnding,
                 RTrim(p.RateClass) as RateClass,
                 RTrim(p.Strata) as Strata
             from [HourlyUsage] h
@@ -110,8 +112,6 @@ class PPLInterval(PPL):
         grp = rec.groupby(['PremiseId', 'Year', 'RateClass'])['Usage'].agg(
             {'Count':len}).reset_index()
 
-        print('\nDimensions of missing values: ', grp.shape)
-
         bad_idx = grp[grp['Count'] != 5].index
         rec.set_value(bad_idx, 'Usage', np.nan)
 
@@ -123,8 +123,6 @@ class PPLInterval(PPL):
                      right_on=['Year', 'CPDate'],
                      how='left'),
             util, on=['Year', 'RateClass'], how='left')
-
-        print('\nDimensions of `tmp`: ', tmp.shape)
 
         # rename convienience
         tmp.rename(columns={'ParameterValue_x': 'ReconFactor',
@@ -139,14 +137,49 @@ class PPLInterval(PPL):
         icap = tmp.groupby(['PremiseId', 'Year', 'RateClass']
                            ).apply(ppl_icap).reset_index()
 
-        print('\nDimensions of `icap` :', icap.shape)
-
         icap.rename(columns={0: 'ICap'}, inplace=True)
 
         icap['Strata'] = 'NULL'
 
         self.icap_df = icap
+
+        # Run the nits calc
+        self.compute_nits()
         return meta_organize(self, icap)
+
+    def compute_nits(self):
+        # Records, Utility and System
+        records = self.records_.copy()
+        records = records.rename(columns={'UsageDate': 'CPDate'})
+        util = self.util_df_.copy()
+        sys = self.sys_df_.copy()
+
+        # Extract reconcillation factors
+        sys['CPDate'] = sys['ParameterId'].apply(lambda s: s.split()[0])
+        sys = sys.rename(columns={'ParameterValue': 'ReconFactor'}).drop(labels='ParameterId', axis=1)
+
+        # Loss factor
+        loss = util[util['ParameterId'] == 'Loss Factor'].copy()
+        loss = loss.rename(columns={'ParameterValue': 'LossFactor'}).drop(labels='ParameterId', axis=1)
+
+        # Initialize all records
+        objs = list()
+        for k, g in records.groupby(['PremiseId', 'Year', 'RateClass']):
+            r = Record(*k)
+            r.cp_df = g[['Year', 'CPDate', 'HourEnding', 'Usage', 'RateClass']].sort_values(by='CPDate')
+            objs.append(r)
+
+        # Join on system params for each object
+        for obj in objs:
+            obj.cp_df = pd.merge(obj.cp_df, sys, on=['Year', 'CPDate'], how='left')
+            obj.cp_df = pd.merge(obj.cp_df, loss, on=['Year', 'RateClass', 'CPDate'], how='left')
+            obj.cp_df['LossFactor'] = obj.cp_df['LossFactor'].mean()
+
+            obj.compute_plc()
+            obj.string_builder()
+
+        rw = RecordWriter(objs)
+        rw.write()
 
 
 class PPLRecipe:
@@ -182,3 +215,108 @@ def meta_organize(obj_ref, df):
     add_one = lambda yr: str(int(yr) + 1)
     df['Year'] = df['Year'].apply(add_one)
     return df[keep]
+
+
+class RecordWriter:
+    def __init__(self, records=None):
+        assert (records is not None)
+        self.records = records
+
+    def write(self, fp=None):
+        if os.path.exists('/home/ubuntu/JustEnergy'):
+            fp = '/home/ubuntu/JustEnergy/ppl_interval_nits.csv'
+        elif fp is None:
+            fp = os.path.join(tempfile.gettempdir(), 'ppl_interval_nits.csv')
+        else:
+            fp = os.path.join(os.path.abspath(__file__), 'ppl_interval_nits.csv')
+
+        header = 'PREMISEID,RATECLASS,RUNDATE,' \
+                 'USAGE DATE 1, HOUR ENDING 1, CP 1 USAGE,' \
+                 'USAGE DATE 2, HOUR ENDING 2, CP 2 USAGE,' \
+                 'USAGE DATE 3, HOUR ENDING 3, CP 3 USAGE,' \
+                 'USAGE DATE 4, HOUR ENDING 4, CP 4 USAGE,' \
+                 'USAGE DATE 5, HOUR ENDING 5, CP 5 USAGE,' \
+                 'LOSS FACTOR 1,LOSS FACTOR 2,LOSS FACTOR 3,LOSS FACTOR 4,LOSS FACTOR 5,' \
+                 'RECON FACTOR 1,RECON FACTOR 2,RECON FACTOR 3,RECON FACTOR 4,RECON FACTOR 5,' \
+                 'METER TYPE,' \
+                 'CAPACITY PLANNNG YEAR,' \
+                 'PLC,' \
+                 'NITS'
+
+        with open(fp, 'w') as fout:
+            fout.write(header + os.linesep)
+            for rec in self.records:
+                fout.write(rec.string_record + os.linesep)
+
+class Record:
+    def __init__(self, premise_id=None, year=None, rateclass=None, strata=None):
+        assert (premise_id is not None)
+        assert (year is not None)
+        assert (rateclass is not None)
+
+        self.premise_id = premise_id
+        self.year = year
+        self.plcyear = str(int(year) + 1)
+        self.rateclass = rateclass
+        self.strata = strata
+        self.rundate = datetime.now()
+
+        self.cp_df = None
+        self.plc = None
+        self.nits = None
+
+        self.string_record = None
+
+    def compute_plc(self):
+        assert (self.cp_df is not None)
+
+        # Add empty rows where missing
+        # Set plc to NaN; required 5 values
+        if self.cp_df.shape[0] < 5:
+            self.plc = np.NaN
+
+            # Get number of rows to add
+            num_new_rows = 5 - self.cp_df.shape[0]
+
+            # Empty series to append dataframe
+            empty = pd.Series([np.NaN for _ in range(self.cp_df.shape[1])], index=self.cp_df.columns, name='empty')
+            for r in range(num_new_rows):
+                self.cp_df = self.cp_df.append(empty)
+            return
+
+        # Compute PLC
+        self.plc = (self.cp_df['Usage'] * self.cp_df['ReconFactor'] * self.cp_df['LossFactor']).mean()
+
+    def compute_nits(self):
+        raise NotImplementedError
+
+    def __repr__(self):
+        return 'Record<premise={premise_id}, rateclass={rateclass}, strata={strata}, year={year}>'.format(
+            **self.__dict__)
+
+    def string_builder(self):
+
+        # Id, rateclass, rundate
+        rec = '{premise_id},{rateclass},{rundate},'.format(**self.__dict__)
+
+        # coincident peak date, hourending, usage
+        for row in self.cp_df[['CPDate', 'HourEnding', 'Usage']].itertuples():
+            _, cp, hour, usage = row
+            rec += '{},{},{},'.format(cp, hour, usage)
+
+        # Loss
+        rec += ','.join(str(x) for x in self.cp_df['LossFactor'].values.tolist())
+        rec += ','
+
+        # Recon
+        rec += ','.join(str(x) for x in self.cp_df['ReconFactor'].values.tolist())
+
+        # Meter
+        rec += ',INT'
+
+        # Year
+        rec += ',{}'.format(self.plcyear)
+
+        # PLC and NITS
+        rec += ',{plc},{nits}'.format(**self.__dict__)
+        self.string_record = rec
