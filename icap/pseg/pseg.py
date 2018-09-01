@@ -1,5 +1,9 @@
 import pandas as pd
 import numpy as np
+
+import os
+import tempfile
+from functools import reduce
 from datetime import datetime
 
 
@@ -52,6 +56,22 @@ class PSEG():
 
         return pd.read_sql(util_query, self.conn)
 
+    def get_util_nits(self):
+        util_query = """
+                select distinct
+                        CAST((c.CPYearID - 1) as varchar) as Year,
+                        RTrim(u.RateClass) as RateClass, u.Strata,
+                        u.ParameterId, u.ParameterValue
+                        --Exp(Sum(Log(u.ParameterValue))) as PFactor
+                from UtilityParameterValue as u
+                inner join CoincidentPeak as c
+                        on c.CPID = u.CPID
+                where
+                        u.UtilityId = 'PSEG'
+                        and u.ParameterValue > 0
+                        """
+        return pd.read_sql(util_query, self.conn)
+
     def get_sys_params(self):
         """Get PSEG System parameters"""
 
@@ -65,6 +85,20 @@ class PSEG():
                 group by Cast(CPYearId-1 as varchar)"""
 
         return pd.read_sql(sys_query, self.conn)
+
+    def get_sys_params_nits(self):
+        """Get PSEG System parameters"""
+
+        sys_query = """
+                select
+                        CAST(CPYearId-1 as varchar) as Year,
+                        ParameterId, ParameterValue
+                from SystemLoad
+                where UtilityId = 'PSEG'"""
+
+        return pd.read_sql(sys_query, self.conn)
+
+
 
 
 class PSEGInterval(PSEG):
@@ -85,6 +119,8 @@ class PSEGInterval(PSEG):
         record_query = """
                 select
                         h.PremiseId,
+                        h.UsageDate as CPDate,
+                        h.HourEnding as HourEnding,
                         Cast(Year(h.UsageDate) as varchar) as Year,
                         RTrim(p.RateClass) as RateClass,
                         RTrim(p.Strata) as Strata,
@@ -133,7 +169,54 @@ class PSEGInterval(PSEG):
         tmp_2['ICap'] = tmp_2['UsageAvg'] * \
             tmp_2['PFactor_x'] * tmp_2['PFactor_y']
 
+        self.compute_nits()
+
         return meta_organize(self, tmp_2)
+
+    def compute_nits(self):
+        # Get values required
+        records = self.records_.copy()
+        util = self.get_util_nits()
+        sys = self.get_sys_params_nits().copy()
+
+        # Utility params
+        gen_cap_scale = filter_rename_drop(util, 'GenCapScale')
+        cap_pro_peak_ratio = filter_rename_drop(util, 'CapProfPeakRatio')
+        loss_exp = filter_rename_drop(util, 'LossExpanFactor')
+
+        util_params = pd.merge(
+            pd.merge(gen_cap_scale, cap_pro_peak_ratio, on=['Year', 'RateClass', 'Strata'], how='left'),
+            loss_exp, on=['Year', 'RateClass', 'Strata'], how='left')
+
+        # System Load
+        plcsf = filter_rename_drop(sys, 'PLCScaleFactor')
+        cap_oblig = filter_rename_drop(sys, 'CapObligScale')
+        fpr = filter_rename_drop(sys, 'ForecastPoolResv')
+        final_rpm = filter_rename_drop(sys, 'FinalRPMzonal')
+        sys_load = [plcsf, cap_oblig, fpr, final_rpm]
+
+        # Merge system load
+        sys_params = reduce(lambda left, right: pd.merge(left, right, on=['Year']), sys_load)
+
+        # Initialize all records
+        objs = list()
+        for k, g in records.groupby(['PremiseId', 'Year', 'RateClass']):
+            r = Record(*k)
+            r.cp_df = g.sort_values(by='CPDate')[['Year', 'CPDate', 'HourEnding', 'Usage', 'RateClass']]
+            r.cp_df['UsageAvg'] = r.cp_df['Usage'].mean()
+        objs.append(r)
+
+        # Join on system params for each object
+        for obj in objs:
+            obj.cp_df = pd.merge(obj.cp_df, util_params, on=['Year', 'RateClass'], how='left')
+            obj.cp_df = pd.merge(obj.cp_df, sys_params, on=['Year'], how='left')
+            
+            obj.compute_plc()
+            obj.string_builder()
+
+        rw = RecordWriter(objs)
+        rw.write()
+
 
 
 class PSEGConsumption(PSEG):
@@ -336,3 +419,125 @@ def meta_organize(obj_ref, df):
     df['Year'] = df['Year'].apply(add_one)
     return df[keep]
     #return df
+
+class RecordWriter:
+    def __init__(self, records=None):
+        assert(records is not None)
+        self.records = records
+        
+    def write(self, fp=None):
+        if os.path.exists('/home/ubuntu/JustEnergy'):
+            fp = '/home/ubuntu/JustEnergy/ppl_interval_nits.csv'
+        elif fp is None:
+            fp = os.path.join(tempfile.gettempdir(), 'pseg_interval_nits.csv')
+        else:
+            fp = os.path.join(os.path.abspath(__file__), 'pseg_interval_nits.csv')
+            
+        header = 'PREMISEID,RATECLASS,RUNDATE,'\
+        'USAGE DATE 1, HOUR ENDING 1, CP 1 USAGE,'\
+        'USAGE DATE 2, HOUR ENDING 2, CP 2 USAGE,'\
+        'USAGE DATE 3, HOUR ENDING 3, CP 3 USAGE,'\
+        'USAGE DATE 4, HOUR ENDING 4, CP 4 USAGE,'\
+        'USAGE DATE 5, HOUR ENDING 5, CP 5 USAGE,'\
+        'CAPOBLIGSCALE, FINALRPMZONAL, FORECASTPOOLRESV, GENCAPSCALE, LOSSEXPANFACTOR,'\
+        'METER TYPE,'\
+        'CAPACITY PLANNNG YEAR,'\
+        'PLC,'\
+        'NITS'
+        
+        with open(fp, 'w') as fout:
+            fout.write(header + os.linesep)
+            
+            for rec in self.records:
+                fout.write(rec.string_record + os.linesep)
+
+class Record:
+    def __init__(self, premise_id=None, year=None, rateclass=None, strata=None):
+        assert(premise_id is not None)
+        assert(year is not None)
+        assert(rateclass is not None)
+        
+        self.premise_id = premise_id
+        self.year = year
+        self.plcyear = str(int(year) + 1)
+        self.rateclass = rateclass
+        self.strata = strata
+        self.rundate = datetime.now()
+        
+        self.cp_df = None
+        self.plc = None
+        self.nits = None
+        
+        self.string_record = None
+        
+    def compute_plc(self):
+        assert(self.cp_df is not None)
+        
+        # Add empty rows where missing
+        # Set plc to NaN; required 5 values
+        if self.cp_df.shape[0] < 5:
+            self.plc = np.NaN
+            
+            # Get number of rows to add
+            num_new_rows = 5 - self.cp_df.shape[0]
+            
+            # Empty series to append dataframe
+            empty = pd.Series([np.NaN for _ in range(self.cp_df.shape[1])], index=self.cp_df.columns, name='empty')
+            for r in range(num_new_rows):
+                self.cp_df = self.cp_df.append(empty)
+            return
+            
+        # Compute PLC
+        factors = ['UsageAvg', 'CapObligScale', 'ForecastPoolResv', 'FinalRPMzonal', 'GenCapScale', 'LossExpanFactor']
+        self.plc = self.cp_df[factors].product(axis=1).iloc[0]
+        
+    def compute_nits(self):
+        
+        factors = ['UsageAvg', 'LossExpanFactor', 'TransLoadScale']
+        try:
+            self.nits = self.cp_df[factors].product(axis=1)
+        except KeyError as e:
+            raise NotImplementedError
+        
+    def __repr__(self):
+        return 'Record<premise={premise_id}, rateclass={rateclass}, strata={strata}, year={year}>'.format(**self.__dict__)
+    
+    def string_builder(self):
+           
+        # Id, rateclass, rundate
+        rec = '{premise_id},{rateclass},{rundate},'.format(**self.__dict__)
+        
+        # coincident peak date, hourending, usage
+        for row in self.cp_df[['CPDate', 'HourEnding', 'Usage']].itertuples():
+            _, cp, hour, usage = row
+            rec += '{},{},{},'.format(cp, hour, usage)
+        
+        # Capacity Obligation Scale
+        rec +=  str(self.cp_df['CapObligScale'].values[0])
+        
+        # Final RPM Zonal
+        rec += ',' + str(self.cp_df['FinalRPMzonal'].values[0])
+        
+        # Forecast Pool Reserve
+        rec += ',' + str(self.cp_df['ForecastPoolResv'].values[0])
+        
+        # Gen Cap Scale
+        rec += ',' + str(self.cp_df['GenCapScale'].values[0])
+        
+        # Loss Expan Factor
+        rec += ',' + str(self.cp_df['LossExpanFactor'].values[0])
+        
+        
+        # Meter
+        rec += ',INT'
+        
+        # Year
+        rec += ',{}'.format(self.plcyear)
+        
+        # PLC and NITS
+        rec += ',{plc},{nits}'.format(**self.__dict__)
+        self.string_record = rec
+
+def filter_rename_drop(df, target):
+    _filt = df[df.ParameterId == target].copy()
+    return _filt.rename(columns={'ParameterValue': target}).drop(labels='ParameterId', axis=1)
