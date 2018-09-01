@@ -202,9 +202,10 @@ class PSEGInterval(PSEG):
         objs = list()
         for k, g in records.groupby(['PremiseId', 'Year', 'RateClass']):
             r = Record(*k)
+            r.meter_type = 'INT'
             r.cp_df = g.sort_values(by='CPDate')[['Year', 'CPDate', 'HourEnding', 'Usage', 'RateClass']]
             r.cp_df['UsageAvg'] = r.cp_df['Usage'].mean()
-        objs.append(r)
+            objs.append(r)
 
         # Join on system params for each object
         for obj in objs:
@@ -378,8 +379,62 @@ class PSEGDemand(PSEG):
         tmp_2['ICap'] = tmp_2['GenCapLoad'] * \
             tmp_2['PFactor_x'] * tmp_2['PFactor_y']
 
+
+        self.compute_nits()
+
         # clean up meta-data
         return meta_organize(self, tmp_2)
+
+    def compute_nits(self):
+        # Get values required
+        records = self.records_.copy ()
+        util = self.get_util_nits()
+        sys = self.get_sys_params_nits().copy()
+
+        # Utility params
+        gen_cap_scale = filter_rename_drop(util, 'GenCapScale')
+        cap_pro_peak_ratio = filter_rename_drop(util, 'CapProfPeakRatio')
+        loss_exp = filter_rename_drop(util, 'LossExpanFactor')
+
+        util_params = pd.merge(
+            pd.merge(gen_cap_scale, cap_pro_peak_ratio, on=['Year', 'RateClass', 'Strata'], how='left'),
+            loss_exp, on=['Year', 'RateClass', 'Strata'], how='left')
+
+        # System Load
+        plcsf = filter_rename_drop(sys, 'PLCScaleFactor')
+        cap_oblig = filter_rename_drop(sys, 'CapObligScale')
+        fpr = filter_rename_drop(sys, 'ForecastPoolResv')
+        final_rpm = filter_rename_drop(sys, 'FinalRPMzonal')
+        sys_load = [plcsf, cap_oblig, fpr, final_rpm]
+
+        # Merge system load
+        sys_params = reduce(lambda left, right: pd.merge(left, right, on=['Year']), sys_load)
+
+        # Initialize all records
+        def dmd_usage_avg(grp):
+            return (grp['SummerCycle'] * grp['Demand']).sum() / grp['SummerCycle'].sum() 
+
+
+        # Initialize all records
+        objs = list()
+        for k, g in records.groupby(['PremiseId', 'Year', 'RateClass']):
+            _g = g.copy()
+            r = Record(*k)
+            _g['UsageAvg'] = dmd_usage_avg(g)
+            r.cp_df = _g.sort_values(by='StartDate')
+            r.meter_type = 'DMD'
+            objs.append(r)
+
+        # Join on system params for each object
+        for obj in objs:
+            obj.cp_df = pd.merge(obj.cp_df, util_params, on=['Year', 'RateClass'], how='left')
+            obj.cp_df = pd.merge(obj.cp_df, sys_params, on=['Year'], how='left')
+            
+            obj.compute_plc()
+            obj.string_builder()
+
+        rw = RecordWriter(objs)
+        rw.write()
 
 
 class PSEGRecipe:
@@ -424,27 +479,43 @@ class RecordWriter:
     def __init__(self, records=None):
         assert(records is not None)
         self.records = records
+        self.meter_type = records[0].meter_type
         
     def write(self, fp=None):
         if os.path.exists('/home/ubuntu/JustEnergy'):
-            fp = '/home/ubuntu/JustEnergy/ppl_interval_nits.csv'
+            fp = '/home/ubuntu/JustEnergy/pseg_{}_nits.csv'.format(self.meter_type)
         elif fp is None:
-            fp = os.path.join(tempfile.gettempdir(), 'pseg_interval_nits.csv')
+            fp = os.path.join(tempfile.gettempdir(), 'pseg_{}_nits.csv'.format(self.meter_type))
         else:
-            fp = os.path.join(os.path.abspath(__file__), 'pseg_interval_nits.csv')
+            fp = os.path.join(os.path.abspath(__file__), 'pseg_{}_nits.csv'.format(self.meter_type))
             
-        header = 'PREMISEID,RATECLASS,RUNDATE,'\
-        'USAGE DATE 1, HOUR ENDING 1, CP 1 USAGE,'\
-        'USAGE DATE 2, HOUR ENDING 2, CP 2 USAGE,'\
-        'USAGE DATE 3, HOUR ENDING 3, CP 3 USAGE,'\
-        'USAGE DATE 4, HOUR ENDING 4, CP 4 USAGE,'\
-        'USAGE DATE 5, HOUR ENDING 5, CP 5 USAGE,'\
-        'CAPOBLIGSCALE, FINALRPMZONAL, FORECASTPOOLRESV, GENCAPSCALE, LOSSEXPANFACTOR,'\
-        'METER TYPE,'\
-        'CAPACITY PLANNNG YEAR,'\
-        'PLC,'\
-        'NITS'
-        
+        if self.meter_type == 'INT':    
+            header = 'PREMISEID,RATECLASS,RUNDATE,'\
+            'USAGE DATE 1, HOUR ENDING 1, CP 1 USAGE,'\
+            'USAGE DATE 2, HOUR ENDING 2, CP 2 USAGE,'\
+            'USAGE DATE 3, HOUR ENDING 3, CP 3 USAGE,'\
+            'USAGE DATE 4, HOUR ENDING 4, CP 4 USAGE,'\
+            'USAGE DATE 5, HOUR ENDING 5, CP 5 USAGE,'\
+            'CAPOBLIGSCALE, FINALRPMZONAL, FORECASTPOOLRESV, GENCAPSCALE, LOSSEXPANFACTOR,'\
+            'CAPPROFPEAKRATIO,METER TYPE,'\
+            'CAPACITY PLANNNG YEAR,'\
+            'PLC,'\
+            'NITS'
+        else:
+            header = 'PREMISEID,RATECLASS,RUNDATE,'\
+            'STARTDATE 1, ENDDATE 1, DEMAND 1 , SUMMER CYCLE, BILL CYCLE,'\
+            'STARTDATE 2, ENDDATE 2, DEMAND 2 , SUMMER CYCLE, BILL CYCLE,'\
+            'STARTDATE 3, ENDDATE 3, DEMAND 3 , SUMMER CYCLE, BILL CYCLE,'\
+            'STARTDATE 4, ENDDATE 4, DEMAND 4 , SUMMER CYCLE, BILL CYCLE,'\
+            'STARTDATE 5, ENDDATE 5, DEMAND 5 , SUMMER CYCLE, BILL CYCLE,'\
+            'STARTDATE 6, ENDDATE 6, DEMAND 6 , SUMMER CYCLE, BILL CYCLE,'\
+            'STARTDATE 7, ENDDATE 7, DEMAND 7 , SUMMER CYCLE, BILL CYCLE,'\
+            'CAPOBLIGSCALE, FINALRPMZONAL, FORECASTPOOLRESV, GENCAPSCALE, LOSSEXPANFACTOR,'\
+            'CAPPROFPEAKRATIO,METER TYPE,'\
+            'CAPACITY PLANNNG YEAR,'\
+            'PLC,'\
+            'NITS'
+            
         with open(fp, 'w') as fout:
             fout.write(header + os.linesep)
             
@@ -467,33 +538,50 @@ class Record:
         self.cp_df = None
         self.plc = None
         self.nits = None
+        self.meter_type = None
         
         self.string_record = None
         
     def compute_plc(self):
         assert(self.cp_df is not None)
+        assert(self.meter_type is not None)
+        
+        factors = ['UsageAvg', 'LossExpanFactor', 'TransLoadScale']
+        
+        if self.meter_type == 'DMD':
+            factors = factors + ['CapProfPeakRatio']
+            
+        
         
         # Add empty rows where missing
         # Set plc to NaN; required 5 values
-        if self.cp_df.shape[0] < 5:
-            self.plc = np.NaN
-            
+        
+        max_row = 5 if self.meter_type == 'INT' else 7
+        if self.cp_df.shape[0] < max_row:
+        
             # Get number of rows to add
-            num_new_rows = 5 - self.cp_df.shape[0]
-            
+            num_new_rows = max_row - self.cp_df.shape[0]
+
             # Empty series to append dataframe
             empty = pd.Series([np.NaN for _ in range(self.cp_df.shape[1])], index=self.cp_df.columns, name='empty')
             for r in range(num_new_rows):
                 self.cp_df = self.cp_df.append(empty)
-            return
+            if self.meter_type == 'INT':
+                self.plc = np.nan
+                return
+            
             
         # Compute PLC
         factors = ['UsageAvg', 'CapObligScale', 'ForecastPoolResv', 'FinalRPMzonal', 'GenCapScale', 'LossExpanFactor']
         self.plc = self.cp_df[factors].product(axis=1).iloc[0]
         
     def compute_nits(self):
+        assert(self.meter_type is not None)
         
         factors = ['UsageAvg', 'LossExpanFactor', 'TransLoadScale']
+        if self.meter_type.upper() == 'DMD':
+            factors = factors + ['CapProfPeakRatio']
+        
         try:
             self.nits = self.cp_df[factors].product(axis=1)
         except KeyError as e:
@@ -503,37 +591,77 @@ class Record:
         return 'Record<premise={premise_id}, rateclass={rateclass}, strata={strata}, year={year}>'.format(**self.__dict__)
     
     def string_builder(self):
-           
+        if self.meter_type == 'INT':
+            # Id, rateclass, rundate
+            rec = '{premise_id},{rateclass},{rundate},'.format(**self.__dict__)
+
+            # coincident peak date, hourending, usage
+            for row in self.cp_df[['CPDate', 'HourEnding', 'Usage']].itertuples():
+                _, cp, hour, usage = row
+                rec += '{},{},{},'.format(cp, hour, usage)
+
+            # Capacity Obligation Scale
+            rec +=  str(self.cp_df['CapObligScale'].values[0])
+
+            # Final RPM Zonal
+            rec += ',' + str(self.cp_df['FinalRPMzonal'].values[0])
+
+            # Forecast Pool Reserve
+            rec += ',' + str(self.cp_df['ForecastPoolResv'].values[0])
+
+            # Gen Cap Scale
+            rec += ',' + str(self.cp_df['GenCapScale'].values[0])
+
+            # Loss Expan Factor
+            rec += ',' + str(self.cp_df['LossExpanFactor'].values[0])
+
+            # Cap Prof Peak
+            rec += ',' + str(self.cp_df['CapProfPeakRatio'].values[0])
+
+
+            # Meter
+            rec += ',' + self.meter_type
+
+            # Year
+            rec += ',{}'.format(self.plcyear)
+
+            # PLC and NITS
+            rec += ',{plc},{nits}'.format(**self.__dict__)
+            self.string_record = rec
+            return
         # Id, rateclass, rundate
         rec = '{premise_id},{rateclass},{rundate},'.format(**self.__dict__)
-        
+
         # coincident peak date, hourending, usage
-        for row in self.cp_df[['CPDate', 'HourEnding', 'Usage']].itertuples():
-            _, cp, hour, usage = row
-            rec += '{},{},{},'.format(cp, hour, usage)
-        
+        for row in self.cp_df[['StartDate', 'EndDate', 'Demand', 'SummerCycle', 'BillCycle']].itertuples():
+            _, sd, ed, dmd, sc, bc = row
+            rec += '{},{},{},{},{},'.format(sd, ed, dmd, sc, bc)
+
         # Capacity Obligation Scale
         rec +=  str(self.cp_df['CapObligScale'].values[0])
-        
+
         # Final RPM Zonal
         rec += ',' + str(self.cp_df['FinalRPMzonal'].values[0])
-        
+
         # Forecast Pool Reserve
         rec += ',' + str(self.cp_df['ForecastPoolResv'].values[0])
-        
+
         # Gen Cap Scale
         rec += ',' + str(self.cp_df['GenCapScale'].values[0])
-        
+
         # Loss Expan Factor
         rec += ',' + str(self.cp_df['LossExpanFactor'].values[0])
-        
+
+        # Cap Prof Peak
+        rec += ',' + str(self.cp_df['CapProfPeakRatio'].values[0])
+
         
         # Meter
-        rec += ',INT'
-        
+        rec += ',' + self.meter_type
+
         # Year
         rec += ',{}'.format(self.plcyear)
-        
+
         # PLC and NITS
         rec += ',{plc},{nits}'.format(**self.__dict__)
         self.string_record = rec
