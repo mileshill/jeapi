@@ -174,38 +174,7 @@ class COMEDInterval(COMED):
         return pd.merge(df, grp, how='left',
                         on=['PremiseId', 'Year'])
 
-    # def get_records(self):
-    #     """Query database for interval records"""
-    #     record_query = """
-    #             select distinct
-    #                     h.PremiseId,
-    #                     Cast(Year(h.UsageDate) as varchar) as Year,
-    #                     RTrim(p.RateClass) as RateClass,
-    #                     RTrim(p.Strata) as Strata,
-    #                     h.Usage
-    #             from HourlyUsage as h
-    #             inner join CoincidentPeak as c
-    #                     on c.UtilityId = h.UtilityId
-    #                     and c.CPDate = h.UsageDate
-    #                     and c.HourEnding = h.HourEnding
-    #             inner join Premise as p
-    #                     on p.UtilityId = h.UtilityId
-    #                     and p.PremiseId = h.PremiseId
-    #             where h.UtilityId = 'COMED'
-    #                     {prem}
-    #             order by h.PremiseId, Year"""
-
-    #     # if single premise, update query for that premise
-    #     if self.premise:
-    #         record_query = record_query.format(
-    #             prem="and h.PremiseId = '%s'" % self.premise)
-    #     # get batch records
-    #     else:
-    #         record_query = record_query.format(prem="")
-
-    #     # return dataframe
-    #     return pd.read_sql(record_query, self.conn)
-
+    
     @staticmethod
     def get_comed_cp_usage(conn: pymssql.Connection, premise: str = None) -> pd.DataFrame:
         """Select all records from COMED Hourly
@@ -439,7 +408,9 @@ class COMEDInterval(COMED):
         df.rename(columns={'DSC_x':'RateClass'}, inplace=True)
         df.reset_index(inplace=True)
 
-        return meta_organize(self, df)
+        return df
+
+        #return meta_organize(self, df)
 
 
 
