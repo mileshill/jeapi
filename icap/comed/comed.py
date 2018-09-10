@@ -2,7 +2,8 @@ import pandas as pd
 import numpy as np
 import pymssql
 from datetime import datetime
-
+import os
+import tempfile
 
 class COMED():
     '''SuperClass for meter types. Loads the system and
@@ -25,6 +26,53 @@ class COMED():
 
         self.normalized_peak_loads = self.get_normalized_peak_loads()
         self.cust_delta = self.get_cust_delta()
+        self.pjm_records = self.get_pjm_cp_records()
+        self.comed_records = self.get_comed_cp_records()
+        self.dsc_records = self.get_delivery_service_class()
+
+    def get_pjm_cp_records(self):
+        query = """
+            select distinct
+                h.PremiseId premise_id, 
+                (cp.CPYearID - 1) year,cp.CPDate pjm_cp_date,
+                AVG(h.Usage) pjm_avg_usage
+            from HourlyUsage h
+            inner join CoincidentPeak cp
+                on cp.CPDate = h.UsageDate AND
+                cp.HourEnding = h.HourEnding
+            where h.UtilityId = 'COMED'
+            group by 
+                h.PremiseId, (cp.CPYearID - 1), cp.CPDate
+            order by h.PremiseId, cp.CPDate
+        """
+        return pd.read_sql(query, self.conn)
+
+    def get_comed_cp_records(self):
+        query = """
+        select distinct
+            h.PremiseId premise_id,
+            (cp.CPYearID - 1) year, cp.CPDate comed_cp_date,
+            cp.ZonalLoad zonal_load, Avg(h.Usage) usage 
+        from HourlyUsage h
+        inner join COMED_CoincidentPeak cp
+            on cp.CPDate = h.UsageDate AND
+            cp.HourEnding = h.HourEnding
+        where h.UtilityId = 'COMED'
+        group by
+            h.PremiseId, (cp.CPYearID - 1), cp.CPDate, cp.ZonalLoad
+        order by h.PremiseId, cp.CPDate
+        """
+        return pd.read_sql(query, self.conn)
+
+    def get_delivery_service_class(self):
+        query = """
+        select
+            PremiseId premise_id,
+            DSC dsc
+        from Premise
+        where UtilityId = 'COMED'
+        """
+        return pd.read_sql(query, self.conn)
 
     def get_normalized_peak_loads(self) -> pd.DataFrame:
         query = '''
@@ -94,36 +142,11 @@ class COMEDInterval(COMED):
         do not possess 5 values per year
         """
 
-        # query
-        query = """
-            select distinct
-                h.PremiseId,
-                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)) as RateClass,
-                RTrim(p.DSC) as DSC,
-                CAST(cp.CPYearId -1 as INT) as Year, 
-                cp.CPDate as CPDatePJM,
-                cp.HourEnding as CPHourEnding,
-                --cp.HourEnding-1 as ADJCPHourEndingPJM, 
-                h.Usage as UsagePJM
-            from [Premise] p
-            inner join [HourlyUsage] h on
-                p.PremiseId = h.PremiseId
-            inner join [CoincidentPeak] cp on
-                cp.UtilityId = h.UtilityId and
-                cp.CPDate = h.UsageDate and
-                cp.HourEnding = h.HourEnding 
-            where
-                h.UtilityId = 'COMED'
-                {prem}
-            order by
-                h.PremiseId, RateClass, DSC, cp.CPDate
-            """
-
         # Updated query from Barsha 7/17/2017
         query = """
         select distinct
                h.PremiseId,
-                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)) as RateClass,
+                iif(RTrim(p.RateClass)  is null, 'NULL', RTrim(p.RateClass)) as RateClass,
                 RTrim(p.DSC) as DSC,
                 CAST(cp.CPYearId -1 as INT) as Year,
                 cp.CPDate as CPDatePJM,
@@ -142,7 +165,7 @@ class COMEDInterval(COMED):
                 {prem}
             group by  -- Changed by Barsha
                 h.PremiseId,
-                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)),
+                iif(RTrim(p.RateClass)  is null, 'NULL', RTrim(p.RateClass)),
                 RTrim(p.DSC),
                 CAST(cp.CPYearId -1 as INT),
                 cp.CPDate,
@@ -182,35 +205,10 @@ class COMEDInterval(COMED):
         do not possess 5 values per year
         """
 
-        # query
-        query = """
-            select distinct
-                h.PremiseId,
-                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)) as RateClass,
-                RTrim(p.DSC) as DSC,
-                CAST(cp.CPYearId -1 as INT) as Year, 
-                cp.CPDate as CPDateCOMED, 
-                cp.HourEnding as CPHourEndingCOMED, 
-                h.Usage as UsageCOMED,
-                ZonalLoad
-            from [HourlyUsage] h
-            inner join [COMED_CoincidentPeak] cp on
-                cp.UtilityId = h.UtilityId and
-                cp.CPDate = h.UsageDate and
-                cp.HourEnding = h.HourEnding
-            inner join [Premise] p on
-                p.PremiseId = h.PremiseId
-            where
-                h.UtilityId = 'COMED'
-                {prem}
-            order by
-                h.PremiseId, RateClass, DSC, cp.CPDate
-            """
-
         query = """
         select distinct
                 h.PremiseId,
-                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)) as RateClass,
+                iif(RTrim(p.RateClass)  is null, 'NULL', RTrim(p.RateClass)) as RateClass,
                 RTrim(p.DSC) as DSC,
                 CAST(cp.CPYearId -1 as INT) as Year,
                 cp.CPDate as CPDateCOMED,
@@ -231,7 +229,7 @@ class COMEDInterval(COMED):
                      --/*
             group by   -- Changed by Barsha
                 h.PremiseId,
-                iif(RTrim(p.RateClass)  is null, 'MILES', RTrim(p.RateClass)),
+                iif(RTrim(p.RateClass)  is null, 'NULL', RTrim(p.RateClass)),
                 RTrim(p.DSC),
                 CAST(cp.CPYearId -1 as INT),
                 cp.CPDate,
@@ -253,7 +251,7 @@ class COMEDInterval(COMED):
 
         # group by premise
         # create filter for len(usage) != 5
-        #df.replace(to_replace=None, value="Miles", inplace=True)
+        #df.replace(to_replace=None, value="NULL", inplace=True)
 
         grp = df.groupby(['PremiseId', 'Year', 'RateClass'])['UsageCOMED'].agg(
             {'CountCOMED': len, 'MeanCOMED': np.mean})
@@ -407,11 +405,55 @@ class COMEDInterval(COMED):
 
         df.rename(columns={'DSC_x':'RateClass'}, inplace=True)
         df.reset_index(inplace=True)
+     
+        self.compute_nits(df)
 
-        return df
+        return meta_organize(self, df)
 
-        #return meta_organize(self, df)
+    def compute_nits(self, df):
+        # Cleanup
+        cmd_icap = df.copy()
+        icap = cmd_icap.drop(labels=['DistLossFactor_y', 'TransLossFactor_y'], axis=1).copy()
+        icap = icap.rename(columns={'DistLossFactor_x': 'DistLossFactor', 'TransLossFactor_x': 'TransLossFactor'})
 
+    
+
+        # Initialize records using PJM CP data
+        records = list()
+        for k, g in self.pjm_records.groupby(['premise_id', 'year']):
+            r = Record(*k) # premise, year 
+            r.pjm_cp_df = g.drop(labels=['premise_id', 'year'], axis=1).copy() 
+            records.append(r)
+
+        # Populate records with COMED CP data
+        cmd_data = self.comed_records.copy()
+        for r in records:
+            prem_data = cmd_data[(cmd_data.premise_id == r.premise_id) & (cmd_data.year == r.year)]
+            data = prem_data.drop(labels=['premise_id', 'year'], axis=1)
+            r.comed_cp_df = data.copy()
+
+        # Add Delivery Service Class
+        for r in records:
+            _dsc = self.dsc_records[self.dsc_records.premise_id == r.premise_id]['dsc'].values[0]
+            r.dsc = _dsc
+
+        # Add existing ICap Caluclations and factors
+        for r in records:
+            prem = r.premise_id
+            year = r.year
+            
+            df = icap[(icap.PremiseId == prem) & (icap.Year == year)]
+            df = df.drop(labels=['PremiseId', 'Year', 'RateClass', 'Strata'], axis=1).copy()
+            r.icap_df = df       
+
+        # Build string
+        for r in records:
+            r.string_builder()
+
+
+        rw = RecordWriter(records)
+        rw.write()
+  
 
 
 class COMEDRecipe:
@@ -448,3 +490,125 @@ def meta_organize(obj_ref, df):
     df['Year'] = df['Year'].apply(add_one)
     return df[keep]
     #return df
+
+class RecordWriter:
+    def __init__(self, records=None):
+        assert(records is not None)
+        self.records = records
+        
+        self.filename = 'comed_interval_nits.csv'
+        self.path = os.path.join('/home/ubuntu/JustEnergy/', self.filename)
+        
+        
+    def write(self):
+        self.write_header()
+        self.write_records()
+        
+    def write_header(self):
+        
+        header = 'PREMISEID, DSC, RUNDATE,'\
+        'PJM CP DATE 1, PJM HOURENDING 1, PJM USAGE 1,'\
+        'PJM CP DATE 2, PJM HOURENDING 2, PJM USAGE 2,'\
+        'PJM CP DATE 3, PJM HOURENDING 3, PJM USAGE 3,'\
+        'PJM CP DATE 4, PJM HOURENDING 4, PJM USAGE 4,'\
+        'PJM CP DATE 5, PJM HOURENDING 5, PJM USAGE 5,'\
+        'COMED CP DATE 1, COMED CP HOURENDING 1, COMED USAGE 1, COMED ZONAL 1,'\
+        'COMED CP DATE 2, COMED CP HOURENDING 2, COMED USAGE 2, COMED ZONAL 2,'\
+        'COMED CP DATE 3, COMED CP HOURENDING 3, COMED USAGE 3, COMED ZONAL 3,'\
+        'COMED CP DATE 4, COMED CP HOURENDING 4, COMED USAGE 4, COMED ZONAL 4,'\
+        'COMED CP DATE 5, COMED CP HOURENDING 5, COMED USAGE 5, COMED ZONAL 5,'\
+        'DISTRIBUTION LOSS, TRANSMISSION LOSS, CUSTOMER DELTA, UFT, UFC, ACUSTCPL,'\
+        'ACUSTPL, ICAP, NITS'
+        
+        with open(self.path, 'w') as fout:
+                fout.write(header + os.linesep)
+        return
+    
+    def write_records(self):
+        with open(self.path, 'a+') as fout:
+            for r in self.records:
+                    fout.write(r.string_record + os.linesep)
+        return
+
+class Record:
+    def __init__(self, premise_id=None, year=None):
+        # PJM CP Data
+        self.premise_id = premise_id
+        self.year = year
+        self.run_date = datetime.now()
+        self.pjm_cp_df = None
+        
+        
+        # Comed CP Data
+        self.comed_cp_df = None
+        
+        self.dsc = None  # Delivery Service Class
+        self.string_record = None
+        self.icap_df = None
+        self.nits = None
+    
+    def compute_nits(self):
+        assert(self.icap_df is not None)
+        acustpl = self.icap_df.AcustPL.iloc[0]
+        dist_loss = self.icap_df.DistLossFactor.iloc[0]
+        trans_loss = self.icap_df.TransLossFactor.iloc[0]
+        uft = self.icap_df.UFT.iloc[0]
+        
+        # nspl = ?
+        self.nits =  acustpl * dist_loss * trans_loss * uft
+
+    def append_empty_rows(self, df):
+        # Get number of rows to add
+        num_new_rows = 5 - df.shape[0]
+
+        # Empty series to append dataframe
+        empty = pd.Series([np.NaN for _ in range(df.shape[1])], index=df.columns, name='empty')
+        for r in range(num_new_rows):
+            df = df.append(empty)
+        return df
+                
+
+    def format_df(self, df):
+        if df.shape[0] > 5:
+            return df.iloc[:5]
+        elif df.shape[0] < 5:
+            return self.append_empty_rows(df)
+        else:
+            return df
+        
+    def string_builder(self):
+        assert(self.pjm_cp_df is not None)
+        assert(self.comed_cp_df is not None)
+        assert(self.icap_df is not None)
+        if self.nits is None:
+            self.compute_nits()
+        
+        rec = ''
+        rec += '{premise_id}, {dsc}, {run_date},'.format(**self.__dict__)
+        
+        # PJM CP Data
+        pjm = self.format_df(self.pjm_cp_df.sort_values(by='pjm_cp_date')) 
+        for row in pjm.itertuples():
+            _, cp, usage = row
+            rec += '{cp}, {hour}, {usage},'.format(cp=cp, hour=None, usage=usage)
+            
+        # COMED CP Data
+        comed = self.format_df(self.comed_cp_df.sort_values(by='comed_cp_date'))
+        for row in comed.itertuples():
+            _, cp, zonal, usage = row
+            data = dict(cp=cp, hour=None, usage=usage, zonal=zonal)
+            rec += '{cp}, {hour}, {usage}, {zonal},'.format(**data)
+            
+        # ICap Data
+        rec += '{},'.format(self.icap_df.DistLossFactor.iloc[0])
+        rec += '{},'.format(self.icap_df.TransLossFactor.iloc[0])
+        rec += '{},'.format(self.icap_df.CustDelta.iloc[0])
+        rec += '{},'.format(self.icap_df.UFT.iloc[0])
+        rec += '{},'.format(self.icap_df.UFC.iloc[0])
+        rec += '{},'.format(self.icap_df.AcustCPL.iloc[0])
+        rec += '{},'.format(self.icap_df.AcustPL.iloc[0])
+        rec += '{},'.format(self.icap_df.ICap.iloc[0])
+        rec += '{}'.format(self.nits)
+        
+            
+        self.string_record = rec
