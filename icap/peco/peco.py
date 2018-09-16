@@ -530,10 +530,25 @@ class PECODemand(PECO):
             na_ratios = _df['NARatio'].values
             na_ratios = np.pad(na_ratios, (0, 5 - len(na_ratios)), 'constant', constant_values=np.NaN)
             r.na_ratio = ','.join(str(x) for x in na_ratios)
-            r.na_avg = _df['NAAvg'].values[0]
-            r.rclf = _df['RCLF'].values[0]
-            r.nspl_scale = _df['NSPLScale'].values[0]
-            r.plcf = _df['PLCScaleFactor'].values[0]
+            try:
+                r.na_avg = _df['NAAvg'].values[0]
+            except IndexError as e:
+                r.na_avg = np.nan
+            
+            try:
+                r.rclf = _df['RCLF'].values[0]
+            except IndexError as e:
+                r.rclf = np.nan
+            
+            try:
+                r.nspl_scale = _df['NSPLScale'].values[0]
+            except IndexError as e:
+                r.nspl_scale = np.nan
+
+            try:
+                r.plcf = _df['PLCScaleFactor'].values[0]
+            except IndexError as e:
+                r.plcf = np.nan
 
             r.compute()
 

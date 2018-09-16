@@ -16,8 +16,8 @@ echo "$(date +'%c') Recipe calculations started."
 
 # Run the JSON builder script.
 # The JSON will be consumed by the dashboard
-echo "$(date +'%c') Launching <result_csv_to_json.py>"
-/home/ubuntu/miniconda3/envs/predictions/bin/python3.5 result_csv_to_json.py
+#echo "$(date +'%c') Launching <result_csv_to_json.py>"
+#/home/ubuntu/miniconda3/envs/predictions/bin/python3.5 result_csv_to_json.py
 # The `result_csv_to_json` will create the ./data directory and populate it. 
 #  This directory structure is required by the Dashboard tool.
 echo "$(date +'c') Update ./data directory for Dashbaord"
@@ -48,8 +48,12 @@ cd /home/ubuntu/archives/${TIMESTAMP}
 #/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp ${TIMESTAMP}_premise_explorer.json s3://just-energy-capacity/results/ 
 
 /home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp recipe.csv s3://just-energy-capacity/results/
-/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp premise_explorer.json s3://just-energy-capacity/results/ 
+#/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp premise_explorer.json s3://just-energy-capacity/results/ 
 
 # Copy NITS
 /home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp peco_interval_nits.csv s3://just-energy-capacity/results/
 /home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp peco_demand_nits.csv s3://just-energy-capacity/results/
+/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp ppl_interval_nits.csv s3://just-energy-capacity/results/
+/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp pseg_INT_nits.csv s3://just-energy-capacity/results/
+/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp pseg_DMD_nits.csv s3://just-energy-capacity/results/
+/home/ubuntu/miniconda3/bin/aws s3 --profile business_labs cp comed_interval_nits.csv s3://just-energy-capacity/results/
