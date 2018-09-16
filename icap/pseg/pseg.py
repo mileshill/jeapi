@@ -585,7 +585,7 @@ class Record:
         try:
             self.nits = self.cp_df[factors].product(axis=1)
         except KeyError as e:
-            raise NotImplementedError
+            self.nits = np.nan
         
     def __repr__(self):
         return 'Record<premise={premise_id}, rateclass={rateclass}, strata={strata}, year={year}>'.format(**self.__dict__)
