@@ -551,11 +551,8 @@ class Record:
         if self.meter_type == 'DMD':
             factors = factors + ['CapProfPeakRatio']
             
-        
-        
         # Add empty rows where missing
         # Set plc to NaN; required 5 values
-        
         max_row = 5 if self.meter_type == 'INT' else 7
         if self.cp_df.shape[0] < max_row:
         
@@ -569,7 +566,6 @@ class Record:
             if self.meter_type == 'INT':
                 self.plc = np.nan
                 return
-            
             
         # Compute PLC
         factors = ['UsageAvg', 'CapObligScale', 'ForecastPoolResv', 'FinalRPMzonal', 'GenCapScale', 'LossExpanFactor']
@@ -591,6 +587,9 @@ class Record:
         return 'Record<premise={premise_id}, rateclass={rateclass}, strata={strata}, year={year}>'.format(**self.__dict__)
     
     def string_builder(self):
+        if self.nits is None:
+            self.compute_nits()
+            
         if self.meter_type == 'INT':
             # Id, rateclass, rundate
             rec = '{premise_id},{rateclass},{rundate},'.format(**self.__dict__)
