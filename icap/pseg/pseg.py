@@ -96,9 +96,10 @@ class PSEG():
                 from SystemLoad
                 where UtilityId = 'PSEG'"""
 
-        return pd.read_sql(sys_query, self.conn)
-
-
+        df = pd.read_sql(sys_query, self.conn)
+        if 'FinalRPMzonal' in df.columns:
+            df = df.rename(columns={'FinalRPMzonal': 'FinalRPMZonal'})
+        return df
 
 
 class PSEGInterval(PSEG):
@@ -188,11 +189,15 @@ class PSEGInterval(PSEG):
             pd.merge(gen_cap_scale, cap_pro_peak_ratio, on=['Year', 'RateClass', 'Strata'], how='left'),
             loss_exp, on=['Year', 'RateClass', 'Strata'], how='left')
 
+        util_params = util_params[~util_params.RateClass.str.contains('-Non')]
+        util_params.RateClass = util_params.RateClass.str.replace('-INT', '')
+        util_params.RateClass = util_params.RateClass.str.strip()
+
         # System Load
         plcsf = filter_rename_drop(sys, 'PLCScaleFactor')
         cap_oblig = filter_rename_drop(sys, 'CapObligScale')
         fpr = filter_rename_drop(sys, 'ForecastPoolResv')
-        final_rpm = filter_rename_drop(sys, 'FinalRPMzonal')
+        final_rpm = filter_rename_drop(sys, 'FinalRPMZonal')
         sys_load = [plcsf, cap_oblig, fpr, final_rpm]
 
         # Merge system load
@@ -399,12 +404,15 @@ class PSEGDemand(PSEG):
         util_params = pd.merge(
             pd.merge(gen_cap_scale, cap_pro_peak_ratio, on=['Year', 'RateClass', 'Strata'], how='left'),
             loss_exp, on=['Year', 'RateClass', 'Strata'], how='left')
+        util_params = util_params[~util_params.RateClass.str.contains('-INT')]
+        util_params['RateClass'] = util_params.RateClass.str.replace('-NON', '')
+        util_params['RateClass'] = util_params.RateClass.str.strip()
 
         # System Load
         plcsf = filter_rename_drop(sys, 'PLCScaleFactor')
         cap_oblig = filter_rename_drop(sys, 'CapObligScale')
         fpr = filter_rename_drop(sys, 'ForecastPoolResv')
-        final_rpm = filter_rename_drop(sys, 'FinalRPMzonal')
+        final_rpm = filter_rename_drop(sys, 'FinalRPMZonal')
         sys_load = [plcsf, cap_oblig, fpr, final_rpm]
 
         # Merge system load
@@ -568,7 +576,7 @@ class Record:
                 return
             
         # Compute PLC
-        factors = ['UsageAvg', 'CapObligScale', 'ForecastPoolResv', 'FinalRPMzonal', 'GenCapScale', 'LossExpanFactor']
+        factors = ['UsageAvg', 'CapObligScale', 'ForecastPoolResv', 'FinalRPMZonal', 'GenCapScale', 'LossExpanFactor']
         self.plc = self.cp_df[factors].product(axis=1).iloc[0]
         
     def compute_nits(self):
@@ -589,7 +597,7 @@ class Record:
     def string_builder(self):
         if self.nits is None:
             self.compute_nits()
-            
+
         if self.meter_type == 'INT':
             # Id, rateclass, rundate
             rec = '{premise_id},{rateclass},{rundate},'.format(**self.__dict__)
@@ -603,7 +611,7 @@ class Record:
             rec +=  str(self.cp_df['CapObligScale'].values[0])
 
             # Final RPM Zonal
-            rec += ',' + str(self.cp_df['FinalRPMzonal'].values[0])
+            rec += ',' + str(self.cp_df['FinalRPMZonal'].values[0])
 
             # Forecast Pool Reserve
             rec += ',' + str(self.cp_df['ForecastPoolResv'].values[0])
@@ -640,7 +648,7 @@ class Record:
         rec +=  str(self.cp_df['CapObligScale'].values[0])
 
         # Final RPM Zonal
-        rec += ',' + str(self.cp_df['FinalRPMzonal'].values[0])
+        rec += ',' + str(self.cp_df['FinalRPMZonal'].values[0])
 
         # Forecast Pool Reserve
         rec += ',' + str(self.cp_df['ForecastPoolResv'].values[0])
@@ -666,5 +674,5 @@ class Record:
         self.string_record = rec
 
 def filter_rename_drop(df, target):
-    _filt = df[df.ParameterId == target].copy()
+    _filt = df[df.ParameterId.str.upper() == target.upper()].copy()
     return _filt.rename(columns={'ParameterValue': target}).drop(labels='ParameterId', axis=1)
