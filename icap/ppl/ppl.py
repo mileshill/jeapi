@@ -231,15 +231,15 @@ class RecordWriter:
             fp = os.path.join(os.path.abspath(__file__), 'ppl_interval_nits.csv')
 
         header = 'PREMISEID,RATECLASS,RUNDATE,' \
-                 'USAGE DATE 1, HOUR ENDING 1, CP 1 USAGE,' \
-                 'USAGE DATE 2, HOUR ENDING 2, CP 2 USAGE,' \
-                 'USAGE DATE 3, HOUR ENDING 3, CP 3 USAGE,' \
-                 'USAGE DATE 4, HOUR ENDING 4, CP 4 USAGE,' \
-                 'USAGE DATE 5, HOUR ENDING 5, CP 5 USAGE,' \
-                 'LOSS FACTOR 1,LOSS FACTOR 2,LOSS FACTOR 3,LOSS FACTOR 4,LOSS FACTOR 5,' \
-                 'RECON FACTOR 1,RECON FACTOR 2,RECON FACTOR 3,RECON FACTOR 4,RECON FACTOR 5,' \
-                 'METER TYPE,' \
-                 'CAPACITY PLANNNG YEAR,' \
+                 'CP_1,HOUR_ENDING_1,CP_1_USAGE,' \
+                 'CP_2,HOUR_ENDING_2,CP_2_USAGE,' \
+                 'CP_3,HOUR_ENDING_3,CP_3_USAGE,' \
+                 'CP_4,HOUR_ENDING_4,CP_4_USAGE,' \
+                 'CP_5,HOUR_ENDING_5,CP_5_USAGE,' \
+                 'LOSS_FACTOR_1,LOSS_FACTOR_2,LOSS_FACTOR_3,LOSS_FACTOR_4,LOSS_FACTOR_5,' \
+                 'RECON_FACTOR_1,RECON_FACTOR_2,RECON_FACTOR_3,RECON_FACTOR_4,RECON_FACTOR_5,' \
+                 'METER_TYPE,' \
+                 'CAPACITY_PLANNNG_YEAR,' \
                  'PLC,' \
                  'NITS'
 

@@ -603,11 +603,11 @@ def write_nits_to_csv(df, meter_type):
     with open(fileout, 'w') as fout:
         # Header
         fout.write('PremiseId, RateClass, Strata, Year, RunDate,\
-        Usage Date 1 (CP 1), Hour Ending 1 (CP 1), CP 1 Usage, NCRatio,\
-        Usage Date 2 (CP 2), Hour Ending 2 (CP 2), CP 2 Usage, NCRatio,\
-        Usage Date 3 (CP 3), Hour Ending 3 (CP 3), CP 3 Usage, NCRatio,\
-        Usage Date 4 (CP 4), Hour Ending 4 (CP 4), CP 4 Usage, NCRatio,\
-        Usage Date 5 (CP 5), Hour Ending 5 (CP 5), CP 5 Usage, NCRatio,\
+        CP_1,Hour_Ending_1,Usage_1,NCRatio,\
+        CP_2,Hour_Ending_2,Usage_2,NCRatio,\
+        CP_3,Hour_Ending_3,Usage_3,NCRatio,\
+        CP_4,Hour_Ending_4,Usage_4,NCRatio,\
+        CP_5,Hour_Ending_5,Usage_5,NCRatio,\
         Rate Class Loss, Meter Type, Capacity Planning Year, PLC/ICAP, NSPL Scale, NITS\n')
 
 
