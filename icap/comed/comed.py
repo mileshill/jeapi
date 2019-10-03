@@ -408,6 +408,8 @@ class COMEDInterval(COMED):
      
         self.compute_nits(df)
 
+
+        df.to_csv(path_or_buf='/home/ubuntu/comed.csv', index=False)
         return meta_organize(self, df)
 
     def compute_nits(self, df):
@@ -549,13 +551,16 @@ class Record:
     
     def compute_nits(self):
         assert(self.icap_df is not None)
-        acustpl = self.icap_df.AcustPL.iloc[0]
-        dist_loss = self.icap_df.DistLossFactor.iloc[0]
-        trans_loss = self.icap_df.TransLossFactor.iloc[0]
-        uft = self.icap_df.UFT.iloc[0]
+        try:
+            acustpl = self.icap_df.AcustPL.iloc[0]
+            dist_loss = self.icap_df.DistLossFactor.iloc[0]
+            trans_loss = self.icap_df.TransLossFactor.iloc[0]
+            uft = self.icap_df.UFT.iloc[0]
+            self.nits =  acustpl * dist_loss * trans_loss * uft
+        except IndexError as e:
+            self.nits = None
         
         # nspl = ?
-        self.nits =  acustpl * dist_loss * trans_loss * uft
 
     def append_empty_rows(self, df):
         # Get number of rows to add
@@ -583,6 +588,9 @@ class Record:
         if self.nits is None:
             self.compute_nits()
         
+        if self.nits is None:
+            self.string_record = "missing data"
+            return
         rec = ''
         rec += '{premise_id}, {dsc}, {run_date},'.format(**self.__dict__)
         

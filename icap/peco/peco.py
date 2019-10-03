@@ -512,7 +512,7 @@ class PECODemand(PECO):
 
             # Pad to ensure demand is always 4
             demand = v['Demand'].values
-            demand = np.pad(demand, (0, 4 - len(demand)), 'constant', constant_values=np.NaN)
+            demand = np.pad(demand, (0, max(4 - len(demand), 0)), 'constant', constant_values=np.NaN)
             r.demand = ','.join(str(x) for x in demand)
             r.avg_demand = v['AvgDmd'].values[0]
             objs.append(r)

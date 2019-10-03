@@ -41,7 +41,9 @@ class ICapDatabase():
                 server = self.server,
                 user = self.user,
                 password = self.password,
-                port = self.port)
+                port = self.port,
+                database='iCAP')
+                
 
         assert isinstance(conn, pymssql.Connection)
         return conn
